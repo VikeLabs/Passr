@@ -6,28 +6,49 @@
     "Mappings": {},
     "Conditions": {},
     "Resources": {
-        "BuildProject": {},
+        "BuildProject": {
+            "Type": "AWs::CodeBuild::Project",
+            "Name": "PassrFrontendBuildProject",
+            "Description": "Build Passr Frontend",
+            "Artifacts": {
+                "Type": "CODEPIPELINE"
+            },
+            "Source": "CODEPIPELINE",
+            "ServiceRole": "",
+            "Environment": {},
+            "TimeoutInMinutes": 5,
+            "Tags": [
+                {
+                    "Key": "project",
+                    "Value": "Passr"
+                },
+                {
+                    "Key": "env",
+                    "Value": "all"
+                }
+            ]
+        },
         "AppPipelineWebhook": {
             "Type": "AWS::CodePipeline::Webhook",
             "Properties": {
-              "Authentication": "GITHUB_HMAC",
-              "AuthenticationConfiguration": {
-                "SecretToken": "{{resolve:secretsmanager:MyGitHubSecret:SecretString:token}}"
-              },
-              "Filters": [
-                {
-                  "JsonPath": "$.ref",
-                  "MatchEquals": "refs/heads/{Branch}"
-                }
-              ],
-              "TargetPipeline": {
-                "Ref": "Pipeline"
-              },
-              "TargetAction": "Source",
-              "Name": "PipelineWebhook",
-              "RegisterWithThirdParty": true
+                "Authentication": "GITHUB_HMAC",
+                "AuthenticationConfiguration": {
+                    "SecretToken": "{{resolve:secretsmanager:MyGitHubSecret:SecretString:token}}"
+                },
+                "Filters": [
+                    {
+                        "JsonPath": "$.ref",
+                        "MatchEquals": "refs/heads/{Branch}"
+                    }
+                ],
+                "TargetPipeline": {
+                    "Ref": "Pipeline"
+                },
+                "TargetAction": "Source",
+                "Name": "PipelineWebhook",
+                "RegisterWithThirdParty": true
             }
-          },
+        },
         "Pipeline": {
             "Type": "AWS::CodePipeline::Pipeline",
             "Properties": {
@@ -44,104 +65,133 @@
                 "Stages": [
                     {
                         "Name": "Source",
-                        "Actions": [{
-                            "ActionTypeId" : {
-                                "Category": "Source",
-                                "Owner": "ThirdParty",
-                                "Provider": "GitHub",
-                                "Version": "1.0"
-                            },
-                            "Configuration" : {
-                                "Owner": "Vikelabs",
-                                "Repo": "Passr",
-                                "Branch": "master",
-                                "OAuth": "{{resolve:secretsmanager:MyGitHubSecret:SecretString:token}}",
-                                "PullForSourceChange": false
-                            },
-                            "Name" : "Get Source",
-                            "OutputArtifacts" : [ { "Name": "SourceArtifact" } ],
-                            "RunOrder" : 1
-                        }
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Source",
+                                    "Owner": "ThirdParty",
+                                    "Provider": "GitHub",
+                                    "Version": "1.0"
+                                },
+                                "Configuration": {
+                                    "Owner": "Vikelabs",
+                                    "Repo": "Passr",
+                                    "Branch": "master",
+                                    "OAuth": "{{resolve:secretsmanager:MyGitHubSecret:SecretString:token}}",
+                                    "PullForSourceChange": false
+                                },
+                                "Name": "Get Source",
+                                "OutputArtifacts": [
+                                    {
+                                        "Name": "SourceArtifact"
+                                    }
+                                ],
+                                "RunOrder": 1
+                            }
                         ]
                     },
                     {
                         "Name": "Build",
-                        "Actions": [{
-                            "ActionTypeId" : {
-                                "Category": "Build",
-                                "Owner": "AWS",
-                                "Provider": "CodeBuild",
-                                "Version": "1"
-                            },
-                            "Configuration" : {
-                                "ProjectName": { "Ref": "BuildProject" }
-                            },
-                            "InputArtifacts" : [ { "Name": "SourceArtifact" } ],
-                            "Name" : "Build Frontend",
-                            "OutputArtifacts" : [ {  "Name": "passr-built" } ],
-                            "RunOrder" : 1
-                          }
-                          ]
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Build",
+                                    "Owner": "AWS",
+                                    "Provider": "CodeBuild",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "ProjectName": {
+                                        "Ref": "BuildProject"
+                                    }
+                                },
+                                "InputArtifacts": [
+                                    {
+                                        "Name": "SourceArtifact"
+                                    }
+                                ],
+                                "Name": "Build Frontend",
+                                "OutputArtifacts": [
+                                    {
+                                        "Name": "passr-built"
+                                    }
+                                ],
+                                "RunOrder": 1
+                            }
+                        ]
                     },
                     {
                         "Name": "Deploy Dev",
-                        "Actions": [{
-                            "ActionTypeId" : {
-                                "Category": "Deploy",
-                                "Owner": "AWS",
-                                "Provider": "Amazon S3",
-                                "Version": "1"
-                            },
-                            "Configuration" : {
-                                "BucketName": "website-bucket",
-                                "Extract": "true"
-                            },
-                            "InputArtifacts" : [ {  "Name": "passr-built" } ],
-                            "Name" : String,
-                            "Namespace" : String,
-                            "RoleArn" : String,
-                            "RunOrder" : 1
-                          }
-                          ]
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Deploy",
+                                    "Owner": "AWS",
+                                    "Provider": "Amazon S3",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "BucketName": "website-bucket",
+                                    "Extract": "true"
+                                },
+                                "InputArtifacts": [
+                                    {
+                                        "Name": "passr-built"
+                                    }
+                                ],
+                                "Name": String,
+                                "Namespace": String,
+                                "RoleArn": String,
+                                "RunOrder": 1
+                            }
+                        ]
                     },
                     {
                         "Name": "Approval",
-                        "Actions": [{
-                            "ActionTypeId" : {
-                                "Category": "Approval",
-                                "Owner": "AWS",
-                                "Provider": "Manual",
-                                "Version": "1"
-                            },
-                            "Configuration" : {
-                                "ExternalEntityLink": "https://dev.passr.ca"
-                            },
-                            "Name" : "AproveProdDeplpy",
-                            "RunOrder" : 1
-                          }
-                          ]
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Approval",
+                                    "Owner": "AWS",
+                                    "Provider": "Manual",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "ExternalEntityLink": "https://dev.passr.ca"
+                                },
+                                "Name": "AproveProdDeplpy",
+                                "RunOrder": 1
+                            }
+                        ]
                     },
                     {
                         "Name": "Deploy Prod",
-                        "Actions": [{
-                            "ActionTypeId" : {
-                                "Category": "Deploy",
-                                "Owner": "AWS",
-                                "Provider": "Amazon S3",
-                                "Version": "1.0"
-                            },
-                            "Configuration" : {
-                                "BucketName": { "Fn::ImportValue": ""},
-                                "Extract": "true"
-                            },
-                            "InputArtifacts" : [ {  "Name": "passr-built" } ],
-                            "Name" : String,
-                            "Namespace" : String,
-                            "Region" : String,
-                            "RoleArn" : String,
-                            "RunOrder" : 1
-                          }
-                          ]
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Deploy",
+                                    "Owner": "AWS",
+                                    "Provider": "Amazon S3",
+                                    "Version": "1.0"
+                                },
+                                "Configuration": {
+                                    "BucketName": {
+                                        "Fn::ImportValue": ""
+                                    },
+                                    "Extract": "true"
+                                },
+                                "InputArtifacts": [
+                                    {
+                                        "Name": "passr-built"
+                                    }
+                                ],
+                                "Name": String,
+                                "Namespace": String,
+                                "Region": String,
+                                "RoleArn": String,
+                                "RunOrder": 1
+                            }
+                        ]
                     }
                 ],
                 "Tags": [

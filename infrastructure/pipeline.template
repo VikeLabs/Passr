@@ -61,7 +61,7 @@
                     "Type": "LINUX_CONTAINER"
                 },
                 "TimeoutInMinutes": 5,
-                "RoleArn": {
+                "SourceRole": {
                     "Fn::GetAtt": [
                         "BuildProjectRole",
                         "Arn"
@@ -95,7 +95,11 @@
                         {
                             "Action": [
                                 "codebuild:BatchGetBuilds",
-                                "codebuild:StartBuild"
+                                "codebuild:StartBuild",
+                                "codebuild:StopBuild",
+                                "codebuild:RetryBuild",
+                                "codebuild:ListBuilds",
+                                "codebuild:ListProjects"
                             ],
                             "Resource": {
                                 "Fn::GetAtt": [
@@ -104,6 +108,13 @@
                                 ]
                             },
                             "Effect": "Allow"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "cloudwatch:*"
+                            ],
+                            "Resource": "*"
                         },
                         {
                             "Effect": "Allow",

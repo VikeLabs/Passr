@@ -15,9 +15,30 @@
                         {
                             "Effect": "Allow",
                             "Action": [
-                                "cloudwatch:*"
+                                "logs:*"
                             ],
                             "Resource": "*"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "S3:Get*",
+                                "S3:List*"
+                            ],
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::ImportValue": "passr-frontend-artifact-bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
@@ -272,7 +293,7 @@
                                     "Version": "1"
                                 },
                                 "Configuration": {
-                                    "Owner": "Vikelabs",
+                                    "Owner": "VikeLabs",
                                     "Repo": "Passr",
                                     "Branch": "master",
                                     "OAuthToken": "{{resolve:secretsmanager:github:SecretString:token}}",

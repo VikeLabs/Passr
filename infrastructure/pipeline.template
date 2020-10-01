@@ -1,0 +1,406 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Passr CodePipeline Stack",
+    "Metadata": {},
+    "Parameters": {},
+    "Mappings": {},
+    "Conditions": {},
+    "Resources": {
+        "BuildProjectPolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "cloudwatch:*"
+                            ],
+                            "Resource": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "BuildProjectRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "Description": "Role for Passr Pipeline Codebuild Project",
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "codebuild.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    {
+                        "Ref": "BuildProjectPolicy"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "Passr"
+                    },
+                    {
+                        "Key": "env",
+                        "Value": "all"
+                    }
+                ]
+            }
+        },
+        "BuildProject": {
+            "Type": "AWS::CodeBuild::Project",
+            "Properties": {
+                "Name": "PassrFrontendBuildProject",
+                "Description": "Build Passr Frontend",
+                "Artifacts": {
+                    "Type": "CODEPIPELINE"
+                },
+                "Source": {
+                    "Type": "CODEPIPELINE"
+                },
+                "Environment": {
+                    "ComputeType": "BUILD_GENERAL1_SMALL",
+                    "Image": "aws/codebuild/amazonlinux2-x86_64-standard:3.0",
+                    "Type": "LINUX_CONTAINER"
+                },
+                "TimeoutInMinutes": 5,
+                "ServiceRole": {
+                    "Fn::GetAtt": [
+                        "BuildProjectRole",
+                        "Arn"
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "Passr"
+                    },
+                    {
+                        "Key": "env",
+                        "Value": "all"
+                    }
+                ]
+            }
+        },
+        "PipelinePolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "codepipeline:*"
+                            ],
+                            "Resource": "*"
+                        },
+                        {
+                            "Action": [
+                                "codebuild:BatchGetBuilds",
+                                "codebuild:StartBuild",
+                                "codebuild:StopBuild",
+                                "codebuild:RetryBuild",
+                                "codebuild:ListBuilds",
+                                "codebuild:ListProjects"
+                            ],
+                            "Resource": {
+                                "Fn::GetAtt": [
+                                    "BuildProject",
+                                    "Arn"
+                                ]
+                            },
+                            "Effect": "Allow"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "cloudwatch:*"
+                            ],
+                            "Resource": "*"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "S3:DeleteObject",
+                                "S3:DeleteObjects",
+                                "S3:GetObject",
+                                "S3:PutObject",
+                                "S3:ListObject*"
+                            ],
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::ImportValue": "passr-frontend-dev-bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                },
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::ImportValue": "passr-frontend-prod-bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                },
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::ImportValue": "passr-frontend-artifact-bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "PipelineRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "Description": "Role for Passr Pipeline",
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "codepipeline.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    {
+                        "Ref": "PipelinePolicy"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "Passr"
+                    },
+                    {
+                        "Key": "env",
+                        "Value": "all"
+                    }
+                ]
+            }
+        },
+        "AppPipelineWebhook": {
+            "Type": "AWS::CodePipeline::Webhook",
+            "Properties": {
+                "Authentication": "GITHUB_HMAC",
+                "AuthenticationConfiguration": {
+                    "SecretToken": "{{resolve:secretsmanager:github:SecretString:token}}"
+                },
+                "Filters": [
+                    {
+                        "JsonPath": "$.ref",
+                        "MatchEquals": "refs/heads/{Branch}"
+                    }
+                ],
+                "TargetPipeline": {
+                    "Ref": "Pipeline"
+                },
+                "TargetPipelineVersion": 1,
+                "TargetAction": "Source",
+                "Name": "PipelineWebhook",
+                "RegisterWithThirdParty": true
+            }
+        },
+        "Pipeline": {
+            "Type": "AWS::CodePipeline::Pipeline",
+            "Properties": {
+                "ArtifactStore": {
+                    "Type": "S3",
+                    "Location": {
+                        "Fn::ImportValue": "passr-frontend-artifact-bucket"
+                    }
+                },
+                "Name": "Passr",
+                "RestartExecutionOnUpdate": true,
+                "RoleArn": {
+                    "Fn::GetAtt": [
+                        "PipelineRole",
+                        "Arn"
+                    ]
+                },
+                "Stages": [
+                    {
+                        "Name": "Source",
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Source",
+                                    "Owner": "ThirdParty",
+                                    "Provider": "GitHub",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "Owner": "Vikelabs",
+                                    "Repo": "Passr",
+                                    "Branch": "master",
+                                    "OAuthToken": "{{resolve:secretsmanager:github:SecretString:token}}",
+                                    "PollForSourceChanges": "false"
+                                },
+                                "Name": "Source",
+                                "OutputArtifacts": [
+                                    {
+                                        "Name": "SourceArtifact"
+                                    }
+                                ],
+                                "RunOrder": 1
+                            }
+                        ]
+                    },
+                    {
+                        "Name": "Build",
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Build",
+                                    "Owner": "AWS",
+                                    "Provider": "CodeBuild",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "ProjectName": {
+                                        "Ref": "BuildProject"
+                                    }
+                                },
+                                "InputArtifacts": [
+                                    {
+                                        "Name": "SourceArtifact"
+                                    }
+                                ],
+                                "Name": "BuildFrontend",
+                                "OutputArtifacts": [
+                                    {
+                                        "Name": "passr-built"
+                                    }
+                                ],
+                                "RunOrder": 1
+                            }
+                        ]
+                    },
+                    {
+                        "Name": "DeployDev",
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Deploy",
+                                    "Owner": "AWS",
+                                    "Provider": "S3",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "BucketName": {
+                                        "Fn::ImportValue": "passr-frontend-dev-bucket"
+                                    },
+                                    "Extract": "true"
+                                },
+                                "InputArtifacts": [
+                                    {
+                                        "Name": "passr-built"
+                                    }
+                                ],
+                                "Name": "DevDeploy",
+                                "RunOrder": 1
+                            }
+                        ]
+                    },
+                    {
+                        "Name": "ProdApproval",
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Approval",
+                                    "Owner": "AWS",
+                                    "Provider": "Manual",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "ExternalEntityLink": "https://dev.passr.ca"
+                                },
+                                "Name": "AproveProdDeplpy",
+                                "RunOrder": 1
+                            }
+                        ]
+                    },
+                    {
+                        "Name": "DeployProd",
+                        "Actions": [
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Deploy",
+                                    "Owner": "AWS",
+                                    "Provider": "S3",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "BucketName": {
+                                        "Fn::ImportValue": "passr-frontend-prod-bucket"
+                                    },
+                                    "Extract": "true"
+                                },
+                                "InputArtifacts": [
+                                    {
+                                        "Name": "passr-built"
+                                    }
+                                ],
+                                "Name": "ProdDeploy",
+                                "RunOrder": 1
+                            }
+                        ]
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "Passr"
+                    },
+                    {
+                        "Key": "env",
+                        "Value": "all"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {}
+}

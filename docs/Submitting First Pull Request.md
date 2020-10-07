@@ -1,8 +1,8 @@
 # Submitting your first pull request for Passr
 
-<p>Your first ticket will be introducing you to creating a pull request and contributing to the Passr project. </br> </br>
+Your first ticket will be introducing you to creating a pull request and contributing to the Passr project. 
 
- If you don't have Git on your machine, [install it](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/set-up-git). </p> 
+ If you don't have Git on your machine, [install it](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/set-up-git). 
 
 ## Fork this Repository
 
@@ -16,7 +16,7 @@ To clone, go to your account and click on the clone button and then click on the
 
 For Example:
 
-```git clone https://github.com/this-is-you/first-contributions.git```
+```git clone https://github.com/this-is-you/Passr.git```
 
 This downloads the repository with git history onto your machine.  Go to the cloned directory by running this command:
 
@@ -35,13 +35,13 @@ To check the status of your changes:
 
 ```git status```
 
-If you are satisfied with your changes and would like to add all changes.
+You you can add the changes you made to the Contributors file by the command:
 
-```git add .``` 
+```git add docs/Contributors.md```
 
 To commit your changes provide a nice descriptive message of your changes using the command:
 
-```git commit -m "Ticket Number- Adds my github account to the contributors file"```
+```git commit -m "Pas-[ticket number] Adds [your name] github account to the contributors file"```
 
 ## Push your changes
 
@@ -51,7 +51,9 @@ You can push your changes to the remote repository by:
 
 ## Create a Pull Request
 
-Go to your Passr repository on github and click on the 'compare & pull request' button to submit the pull request.  You will need at least two approvals in order to merge in your work with any pull request. Provide any necessary details that you think would be useful.
+Go to your Passr repository on github and click on the 'compare & pull request' button to submit the pull request.  Provide any necessary details that you think would be helfpul.
 
-Congratulations, you have submitted your first Passr Pull request!  Celebrate with a little dance or a drink of your choice.
+You will need at least two approvals in order to merge in your work with any pull request. 
+
+:tada: Congratulations, you have submitted your first Passr Pull request!  Celebrate with a little dance or a treat of your choice. :raised_hands: :ice_cream:
 

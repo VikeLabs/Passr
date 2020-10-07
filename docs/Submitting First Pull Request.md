@@ -51,5 +51,7 @@ You can push your changes to the remote repository by:
 
 ## Create a Pull Request
 
-Go to your Passr repository on github and click on the 'compare & pull request' button to submit the pull request.  You will need at least two approvals in order to merge in your work with any pull request. 
+Go to your Passr repository on github and click on the 'compare & pull request' button to submit the pull request.  You will need at least two approvals in order to merge in your work with any pull request. Provide any necessary details that you think would be useful.
+
+Congratulations, you have submitted your first Passr Pull request!  Celebrate with a little dance or a drink of your choice.
 

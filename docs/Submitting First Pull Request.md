@@ -30,7 +30,8 @@ We recommend that you always create your own branch when submitting a pull reque
 
 ## Make changes and commit 
 
-Now you can make changes to the project and commit them.  For this first ticket, add a link to your github account in Markdown to the Contributors list. 
+Now you can make changes to the project and commit them.  For this first ticket, add a link to your github account in Markdown to the Contributors.md file in the `docs` folder.  There should be some already added that you can use as a reference.
+
 To check the status of your changes:
 
 ```git status```

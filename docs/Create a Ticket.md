@@ -1,6 +1,6 @@
 # Creating a Ticket
 
-For our ticketing system we use Jira. Our Jira board can be [found here](https://passr.atlassian.net/). The following document outlines how to write a ticket, and include the necessary information for someone to complete a ticket.
+For our ticketing system we use Jira. Our Jira board can be [found here](https://passr.atlassian.net/). The following document outlines how to write a ticket, and includes the necessary information for someone to complete a ticket.
 
 ## Requirements
 

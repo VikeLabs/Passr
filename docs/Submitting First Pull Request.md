@@ -11,7 +11,7 @@ To clone, go to the Passr account and click on the clone button and then click o
 
 For Example:
 
-```git clone https://github.com/this-is-you/Passr.git```
+```git clone https://github.com/VikeLabs/Passr.git```
 
 This downloads the repository with git history onto your machine.  Go to the cloned directory by running this command:
 

@@ -5,7 +5,7 @@
 Braiden 
 Dina [polygonart6777](https://github.com/polygonart6777)
 Isaiah
-Samantha
+Samantha [Samantha-norrie](https://github.com/Samantha-norrie)
 Seiya
 
 

@@ -23,7 +23,8 @@
                             "Effect": "Allow",
                             "Action": [
                                 "S3:Get*",
-                                "S3:List*"
+                                "S3:List*",
+                                "S3:Put*"
                             ],
                             "Resource": [
                                 {

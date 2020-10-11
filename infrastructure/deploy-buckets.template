@@ -21,7 +21,7 @@
                 "Tags": [
                     {
                         "Key": "project",
-                        "Value": "passr"
+                        "Value": "Passr"
                     },
                     {
                         "Key": "env",
@@ -48,7 +48,7 @@
                 "Tags": [
                     {
                         "Key": "project",
-                        "Value": "passr"
+                        "Value": "Passr"
                     },
                     {
                         "Key": "env",
@@ -75,7 +75,7 @@
                 "Tags": [
                     {
                         "Key": "project",
-                        "Value": "passr"
+                        "Value": "Passr"
                     },
                     {
                         "Key": "env",
@@ -85,6 +85,18 @@
                 "VersioningConfiguration": {
                     "Status": "Enabled"
                 }
+            }
+        },
+        "ToolLambdaFunctions": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": "passr-tool-lambda-functions",
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "Passr"
+                    }
+                ]
             }
         }
     },
@@ -114,6 +126,15 @@
             },
             "Export": {
                 "Name": "passr-frontend-artifact-bucket"
+            }
+        },
+        "PassrToolLambdas": {
+            "Description": "Passr Tool Lambda Functions",
+            "Value": {
+                "Ref": "ToolLambdaFunctions"
+            },
+            "Export": {
+                "Name": "passr-tool-lambda-functions-bucket"
             }
         }
     }

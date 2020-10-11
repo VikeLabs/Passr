@@ -201,6 +201,24 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "lambda:InvokeFunction"
+                            ],
+                            "Resource": [
+                                {
+                                    "Fn::ImportValue": "passr-s3-cache-lambda-arn"
+                                }
+                            ]
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "lambda:ListFunctions"
+                            ],
+                            "Resource": "*"
                         }
                     ]
                 }
@@ -363,6 +381,20 @@
                                 ],
                                 "Name": "DevDeploy",
                                 "RunOrder": 1
+                            },
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Invoke",
+                                    "Owner": "AWS",
+                                    "Provider": "Lambda",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "FunctionName": "",
+                                    "UserParameters": "{ \"MaxAge\": 0, \"Bucket\": \"\"}"
+                                },
+                                "Name": "DevCacheHeaders",
+                                "RunOrder": 2
                             }
                         ]
                     },
@@ -407,6 +439,20 @@
                                 ],
                                 "Name": "ProdDeploy",
                                 "RunOrder": 1
+                            },
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Invoke",
+                                    "Owner": "AWS",
+                                    "Provider": "Lambda",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "FunctionName": "",
+                                    "UserParameters": "{ \"MaxAge\": 600 }"
+                                },
+                                "Name": "ProdCacheHeaders",
+                                "RunOrder": 2
                             }
                         ]
                     }

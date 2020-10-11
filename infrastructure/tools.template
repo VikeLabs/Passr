@@ -7,7 +7,7 @@
     "Conditions": {},
     "Resources": {
         "S3CacheLambdaPolicy": {
-            "Type": "AWS::IAM::Policy",
+            "Type": "AWS::IAM::ManagedPolicy",
             "Properties": {
                 "PolicyDocument": {
                     "Version": "2012-10-17",
@@ -54,17 +54,7 @@
                             ]
                         }
                     ]
-                },
-                "Tags": [
-                    {
-                        "Key": "project",
-                        "Value": "Passr"
-                    },
-                    {
-                        "Key": "env",
-                        "Value": "deploy"
-                    }
-                ]
+                }
             }
         },
         "S3CacheLambdaRole": {
@@ -115,7 +105,10 @@
                 },
                 "Handler": "index.handler",
                 "Role": {
-                    "Ref": "S3CacheLambdaRole"
+                    "Fn::GetAtt": [
+                        "S3CacheLambdaRole",
+                        "Arn"
+                    ]
                 },
                 "Runtime": "nodejs12.x",
                 "FunctionName": "passr-s3-cache-lambda",

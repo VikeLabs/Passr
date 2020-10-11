@@ -13,4 +13,11 @@ export function handler(event: string, context: any){
     })
 }
 
+function processBigThing(command: string, helper: (s: string) => string){
+    console.log(`Processing command: ${command}`)
+    // we now call the helper, for whatever reason we needed;
+    console.log(helper(command))
+    // Maybe do somehting with the result of helper...
+}
+
 export default handler

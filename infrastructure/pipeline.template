@@ -391,20 +391,9 @@
                                 },
                                 "Configuration": {
                                     "FunctionName": {
-                                        "Fn::ImportValue": "passr-s3-cache-lambda-arn"
+                                        "Fn::ImportValue": "passr-s3-cache-lambda-name"
                                     },
-                                    "UserParameters": {
-                                        "Fn::Join": [
-                                            "",
-                                            [
-                                                "{ \"MaxAge\": 0, \"Bucket\": \"",
-                                                {
-                                                    "Fn::ImportValue": "passr-frontend-dev-bucket"
-                                                },
-                                                "\"}"
-                                            ]
-                                        ]
-                                    }
+                                    "UserParameters": "{ \"MaxAge\": 0, \"Bucket\": \"passr-frontend-dev\"}"
                                 },
                                 "Name": "DevCacheHeaders",
                                 "RunOrder": 2
@@ -462,20 +451,9 @@
                                 },
                                 "Configuration": {
                                     "FunctionName": {
-                                        "Fn::ImportValue": "passr-s3-cache-lambda-arn"
+                                        "Fn::ImportValue": "passr-s3-cache-lambda-name"
                                     },
-                                    "UserParameters": {
-                                        "Fn::Join": [
-                                            "",
-                                            [
-                                                "{ \"MaxAge\": 600, \"Bucket\": \"",
-                                                {
-                                                    "Fn::ImportValue": "passr-frontend-prod-bucket"
-                                                },
-                                                "\"}"
-                                            ]
-                                        ]
-                                    }
+                                    "UserParameters": "{ \"MaxAge\": 600, \"Bucket\": \"passr-frontend-prod\"}"
                                 },
                                 "Name": "ProdCacheHeaders",
                                 "RunOrder": 2

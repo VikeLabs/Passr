@@ -15,7 +15,8 @@
                         {
                             "Effect": "Allow",
                             "Action": [
-                                "logs:*"
+                                "logs:*",
+                                "codepipeline:PutJob*"
                             ],
                             "Resource": "*"
                         },
@@ -129,8 +130,8 @@
         }
     },
     "Outputs": {
-        "S3CacheLambda": {
-            "Description": "Passr S3 Cache Lambda ARN",
+        "S3CacheLambdaArn": {
+            "Description": "Passr S3 Cache Lambda Arn",
             "Export": {
                 "Name": "passr-s3-cache-lambda-arn"
             },
@@ -139,6 +140,15 @@
                     "S3CacheLambda",
                     "Arn"
                 ]
+            }
+        },
+        "S3CacheLambdaName": {
+            "Description": "Passr S3 Cache Lambda Name",
+            "Export": {
+                "Name": "passr-s3-cache-lambda-name"
+            },
+            "Value": {
+                "Ref": "S3CacheLambda"
             }
         }
     }

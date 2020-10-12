@@ -5,28 +5,26 @@ const s3 = new S3()
 const codepipeline = new CodePipeline()
 
 export function handler(event: string, context: any){
-    console.log(Object.keys(event))
-
     const jobId = event["CodePipeline.job"].id
-    var putJobFailure = function(message: any) {
-        var params = {
-            jobId: jobId,
+    const putJobFailure = function(message: any) {
+        const params = {
+            jobId,
             failureDetails: {
                 message: JSON.stringify(message),
                 type: 'JobFailed',
-                externalExecutionId: context.awsRequestId
-            }
+                externalExecutionId: context.awsRequestId,
+            },
         }
-        codepipeline.putJobFailureResult(params, function(err, data) {
-            context.fail(message);
+        codepipeline.putJobFailureResult(params, (err, data) => {
+            context.fail(message)
         })
     }
 
-    var putJobSuccess = function(message: any) {
+    const putJobSuccess = function(message: any) {
         const params = {
             jobId
         }
-        codepipeline.putJobSuccessResult(params, function(err, data) {
+        codepipeline.putJobSuccessResult(params, (err, data) => {
             if(err) {
                 context.fail(err)
             } else {
@@ -37,8 +35,6 @@ export function handler(event: string, context: any){
     try {
         const userParams = JSON.parse(event["CodePipeline.job"].data.actionConfiguration.configuration.UserParameters)
         console.log(userParams)
-        console.log(userParams.Bucket)
-        console.log(userParams.MaxAge)
         for(const file of fileToModifyCache){
             const params = {
                 Bucket: userParams.Bucket,

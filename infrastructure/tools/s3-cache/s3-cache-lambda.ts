@@ -36,25 +36,37 @@ export function handler(event: string, context: any){
         const userParams = JSON.parse(event["CodePipeline.job"].data.actionConfiguration.configuration.UserParameters)
         console.log(userParams)
         for(const file of fileToModifyCache){
-            const params = {
+            const getParams = {
                 Bucket: userParams.Bucket,
-                CopySource: `/${userParams.Bucket}/${file}`,
                 Key: file,
-                CacheControl: `max-age=${userParams.MaxAge}`,
-                MetadataDirective: "REPLACE",
+                Range: 'bytes=0-9' // Just get 10 bytes, we don't care about the data here.
             }
-
-            s3.copyObject(params, (err, data) => {
+            s3.getObject(getParams, (err, data) => {
                 if(err) {
-                    console.error(err)
                     putJobFailure(err)
                     return
                 }
+                const copyParams = {
+                    Bucket: userParams.Bucket,
+                    CopySource: `/${userParams.Bucket}/${file}`,
+                    Key: file,
+                    ContentType: data.ContentType,
+                    CacheControl: `max-age=${userParams.MaxAge}`,
+                    MetadataDirective: "REPLACE",
+                }
 
-                console.log(data)
+                s3.copyObject(copyParams, (err, data) => {
+                    if(err) {
+                        console.error(err)
+                        putJobFailure(err)
+                        return
+                    }
+
+                    console.log(data)
+                    putJobSuccess("Successfully set cache headers")
+                })
             })
         }
-        putJobSuccess("Successfully set cache headers")
     } catch (err) {
         console.error(err)
         putJobFailure(err)

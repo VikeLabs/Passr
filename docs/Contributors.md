@@ -5,4 +5,4 @@ Dina
 Isaiah
 Noah
 Samantha
-Seiya
+Seiya [seiyaterada](https://github.com/seiyaterada/)

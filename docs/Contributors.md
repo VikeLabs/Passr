@@ -7,6 +7,7 @@
 * Isaiah [isaiahdoyle](https://github.com/isaiahdoyle)
 * Samantha [Samantha-norrie](https://github.com/Samantha-norrie)
 * Seiya
+* Parikshit [parikshitohri](https://github.com/parikshitohri)
 
 
 ## Past contributors

@@ -201,6 +201,24 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "lambda:InvokeFunction"
+                            ],
+                            "Resource": [
+                                {
+                                    "Fn::ImportValue": "passr-s3-cache-lambda-arn"
+                                }
+                            ]
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "lambda:ListFunctions"
+                            ],
+                            "Resource": "*"
                         }
                     ]
                 }
@@ -363,6 +381,22 @@
                                 ],
                                 "Name": "DevDeploy",
                                 "RunOrder": 1
+                            },
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Invoke",
+                                    "Owner": "AWS",
+                                    "Provider": "Lambda",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "FunctionName": {
+                                        "Fn::ImportValue": "passr-s3-cache-lambda-name"
+                                    },
+                                    "UserParameters": "{ \"MaxAge\": 0, \"Bucket\": \"passr-frontend-dev\"}"
+                                },
+                                "Name": "DevCacheHeaders",
+                                "RunOrder": 2
                             }
                         ]
                     },
@@ -407,6 +441,22 @@
                                 ],
                                 "Name": "ProdDeploy",
                                 "RunOrder": 1
+                            },
+                            {
+                                "ActionTypeId": {
+                                    "Category": "Invoke",
+                                    "Owner": "AWS",
+                                    "Provider": "Lambda",
+                                    "Version": "1"
+                                },
+                                "Configuration": {
+                                    "FunctionName": {
+                                        "Fn::ImportValue": "passr-s3-cache-lambda-name"
+                                    },
+                                    "UserParameters": "{ \"MaxAge\": 600, \"Bucket\": \"passr-frontend-prod\"}"
+                                },
+                                "Name": "ProdCacheHeaders",
+                                "RunOrder": 2
                             }
                         ]
                     }

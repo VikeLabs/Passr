@@ -1,0 +1,155 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Template for tooling",
+    "Metadata": {},
+    "Parameters": {},
+    "Mappings": {},
+    "Conditions": {},
+    "Resources": {
+        "S3CacheLambdaPolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "logs:*",
+                                "codepipeline:PutJob*"
+                            ],
+                            "Resource": "*"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "S3:Get*",
+                                "S3:List*",
+                                "S3:Put*"
+                            ],
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::ImportValue": "passr-frontend-dev-bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                },
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::ImportValue": "passr-frontend-prod-bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "S3CacheLambdaRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "Description": "Role for Passr Pipeline Codebuild Project",
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    {
+                        "Ref": "S3CacheLambdaPolicy"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "Passr"
+                    },
+                    {
+                        "Key": "env",
+                        "Value": "all"
+                    }
+                ]
+            }
+        },
+        "S3CacheLambda": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::ImportValue": "passr-tool-lambda-functions-bucket"
+                    },
+                    "S3Key": "s3-cache-lambda.zip"
+                },
+                "Handler": "index.handler",
+                "Role": {
+                    "Fn::GetAtt": [
+                        "S3CacheLambdaRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "nodejs12.x",
+                "FunctionName": "passr-s3-cache-lambda",
+                "MemorySize": 128,
+                "Timeout": 5,
+                "Description": "Used for changing cache headers on frontend bucket objects",
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "Passr"
+                    },
+                    {
+                        "Key": "env",
+                        "Value": "deploy"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "S3CacheLambdaArn": {
+            "Description": "Passr S3 Cache Lambda Arn",
+            "Export": {
+                "Name": "passr-s3-cache-lambda-arn"
+            },
+            "Value": {
+                "Fn::GetAtt": [
+                    "S3CacheLambda",
+                    "Arn"
+                ]
+            }
+        },
+        "S3CacheLambdaName": {
+            "Description": "Passr S3 Cache Lambda Name",
+            "Export": {
+                "Name": "passr-s3-cache-lambda-name"
+            },
+            "Value": {
+                "Ref": "S3CacheLambda"
+            }
+        }
+    }
+}

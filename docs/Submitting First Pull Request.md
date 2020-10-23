@@ -19,9 +19,9 @@ This downloads the repository with git history onto your machine.  Go to the clo
 
 ## Create a Branch
 
-We recommend that you always create your own branch when submitting a pull request because it is good practice and also keeps the master branch clean.  Create a branch name that is short, without any capitals and describes your work.
+We recommend that you always create your own branch when submitting a pull request because it is good practice and also keeps the master branch clean.  Create a branch name that is short, without any capitals (other than the PAS project name) and describes your work.
 
-```git checkout -b first-contributions-your-name```
+```git checkout -b PAS-[ticket number]-first-contributions-your-name```
 
 ## Make changes and commit 
 
@@ -43,7 +43,7 @@ To commit your changes provide a nice descriptive message of your changes using 
 
 You can push your changes to the remote repository by:
 
-```git push origin first-contributions-your-name```
+```git push origin PAS-[ticket number]-first-contributions-your-name```
 
 ## Create a Pull Request
 

@@ -22,7 +22,6 @@ module.exports = {
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'react/prop-types': 'off',
 		'react/no-unused-prop-types': 'warn',
-		'no-console': 'error',
 		'prettier/prettier': 'warn',
 	},
 	settings: {

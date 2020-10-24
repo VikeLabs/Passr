@@ -11,3 +11,7 @@ Prettier is a code formatter for our Typescript and Javascript files that enforc
 ## [lint-staged](https://github.com/okonet/lint-staged)
 
 Allows us to run linters against staged git files and prevents errors from being introduced to our codebase. This package includes, husky, which lets us take advantage of git hooks and run commands or scripts before committing and pushing to github. We will use this along with ESLint because linting is more beneficial when we can check for errors before committing and pushing up our code. In this way we can ensure the errors don't make it to the repository in github.
+
+# Configuration
+
+## Eslint

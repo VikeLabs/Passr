@@ -1,32 +1,30 @@
 module.exports = {
 	env: {
+		browser: true,
 		es6: true,
 	},
-	parser: '@typescript-eslint/parser',
 	extends: [
+		'eslint:recommended',
 		'plugin:react/recommended',
-		'prettier/@typescript-eslint',
-		'plugin:react-hooks/recommended',
-		'plugin:prettier/recommended',
+		'plugin:@typescript-eslint/recommended',
 	],
+	parser: '@typescript-eslint/parser',
 	parserOptions: {
-		ecmaVersion: 8,
 		ecmaFeatures: {
-			jsx: true,
 			experimentalObjectRestSpread: true,
+			jsx: true,
 		},
+		ecmaVersion: 12,
 		sourceType: 'module',
 	},
+	plugins: ['react', '@typescript-eslint', 'prettier', 'react-hooks'],
 	rules: {
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'react/prop-types': 'off',
 		'react/no-unused-prop-types': 'warn',
-		'react-hooks/rules-of-hooks': 'error',
-		'react-hooks/exhaustive-deps': 'warn',
+		'no-console': 'error',
 		'prettier/prettier': 'warn',
 	},
-	reportUnusedDisabledDirectives: true,
-	root: true,
 	settings: {
 		react: {
 			version: 'detect',

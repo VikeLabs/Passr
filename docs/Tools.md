@@ -24,7 +24,7 @@ Each configuration should be an object and within each object is a value that pr
 
 The scripts object specifies aliases that we can use to access `react-script` commands or in particular, scrips for ESLint and Prettier.
 
-`lint` Runs `eslint` on all files in the src folder that end in ts,js,tsx, and jsx. This allows us to run `npm run lint <somefile.tsx>` on our files.
+`lint` Runs `eslint` on all files in the src folder that end in ts,js,tsx, and jsx. This allows us to run `npm run lint <somefile.tsx>` on our files to check for eslint errors.
 
 `lint:fixed` Runs the `eslint --fixed` command and fixes eslint errrors on all files as above. This allows us to run `npm run lint:fixed <somefile.tsx>` in order to have ESLint fix a file of our choosing.
 
@@ -52,7 +52,7 @@ The scripts object specifies aliases that we can use to access `react-script` co
 
 ### huksy and lint-staged
 
-Husky and lint-staged work together to run ESLint on staged files. Husky uses git hooks to run lint-staged which runs prettier and ESLint on the staged files in the src folder that end in ts,js,tsx, and jsx.
+Husky and lint-staged work together to run ESLint on staged files. Husky uses git hooks to run lint-staged which runs Prettier on and formats the staged files in the src folder that end in ts,js,tsx, and jsx. Husky would also be able to do this with ESLint to not allow commits with ESLint errors but this may be too restrictive at this time, we would rather focus on helping contributors fix ESLint errors after they have pushed up their code.
 
 ## .eslintrc.js
 

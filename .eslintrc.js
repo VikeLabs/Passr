@@ -23,6 +23,7 @@ module.exports = {
 		'react/prop-types': 'off',
 		'react/no-unused-prop-types': 'warn',
 		'prettier/prettier': 'warn',
+		'@typescript-eslint/explicit-module-boundary-types': 'off',
 	},
 	settings: {
 		react: {

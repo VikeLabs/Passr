@@ -40,7 +40,7 @@ The scripts object specifies aliases that we can use to access `react-script` co
 
 [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin) An ESLint plugin which provides lint rules for TypeScript codebases.
 
-[TypeScript ESLint Parser](https://www.npmjs.com/package/@typescript-eslint/parser) An ESLint parser which leverages TypeScript ESTree to allow for ESLint to lint TypeScript source code.
+[TypeScript ESLint Parser](https://www.npmjs.com/package/@typescript-eslint/parser) An ESLint parser which leverages TypeScript ESTree to allow for ESLint to lint TypeScript source code. It parses typescript so that ESLint can read the file.
 
 [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react) React specific linting rules for ESLint
 
@@ -48,11 +48,11 @@ The scripts object specifies aliases that we can use to access `react-script` co
 
 [lint-staged](https://github.com/okonet/lint-staged) Run linters against staged git files and don't let :hankey: slip into your code base! Allows us to run scripts on staged files in git.
 
-[husky](https://github.com/typicode/husky) Git hooks made easy. Husky makes it possible to use git hooks as if their npm scripts.
+[husky](https://github.com/typicode/husky) Git hooks made easy. Husky makes it possible to use git hooks as if they are npm scripts.
 
 ### huksy and lint-staged
 
-Husky and lint-staged work together to run ESLint on staged files. Husky uses git hooks to run lint-staged which runs Prettier on and formats the staged files in the src folder that end in ts,js,tsx, and jsx. Husky would also be able to do this with ESLint to not allow commits with ESLint errors but this may be too restrictive at this time, we would rather focus on helping contributors fix ESLint errors after they have pushed up their code.
+Husky and lint-staged work together to run ESLint on staged files. Husky uses git hooks to run lint-staged which runs Prettier to format staged files in the src folder that end in ts,js,tsx, and jsx. Husky would also be able to do this with ESLint to not allow commits with ESLint errors but this may be too restrictive at this time, we would rather focus on helping contributors fix ESLint errors after they have pushed up their code.
 
 ## .eslintrc.js
 
@@ -74,7 +74,7 @@ Plugins are resolved relative to the config file. In other words, ESLint will lo
 
 ### rules
 
-ESLint comes with a large number of [rules](https://eslint.org/docs/rules/). Because typescript already has quite a bit type restrictions we can turn off the eslint check for `explicit-function-return-type` and `react-prop-types`. It's nice to be able to clean up the code of unused imports, so we make sure to set this as a warning. If someone doesn't have Prettier configured to change after saving on their IDE then we set an ESLint rule to warn about any prettier formatting inconsistencies.
+ESLint comes with a large number of [rules](https://eslint.org/docs/rules/). Because typescript already has many type restrictions we can turn off the eslint check for `explicit-function-return-type` and `react-prop-types`. It's nice to be able to clean up the code of unused imports, so we make sure to set this as a warning. If someone doesn't have Prettier configured to change after saving on their IDE then we set an ESLint rule to warn about any prettier formatting inconsistencies.
 
 ## .eslintignore
 

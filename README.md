@@ -52,7 +52,7 @@ Runs [ESLint](https://eslint.org/) on all (ts,tsx,js,jsx) files in the app, the 
 
 ### `npm run prettier`
 
-Runs [Prettier](https://prettier.io/) to automatically format code automatically on all (ts, tsx, jsx, jsx) files in the app.
+Runs [Prettier](https://prettier.io/) to automatically format code on all (ts, tsx, jsx, jsx) files in the app.
 
 ## Learn More
 

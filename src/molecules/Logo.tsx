@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from '../logo.svg';
 
 interface LogoProps {
     height: string
@@ -8,7 +8,7 @@ interface LogoProps {
 
 function Logo({width, height}:LogoProps) {
     return (
-        <img src={require('../logo.svg')} style={{width: width, height: height}} alt="logo"/>
+        <img src={logo} style={{width: width, height: height}} alt="logo"/>
     )
 }
     

@@ -21,9 +21,9 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"lint": "eslint 'src/**/*.{t,j}s{x,}'",
-		"lint:fix": "eslint --fix 'src/**/*.{t,j}s{x,}'",
-		"prettier": "prettier --write 'src/**/*.{t,j}s{x,}'",
+		"lint": "eslint \"src/**/*.{t,j}s{x,}\"",
+		"lint:fix": "eslint --fix \"src/**/*.{t,j}s{x,}\"",
+		"prettier": "prettier --write \"src/**/*.{t,j}s{x,}\"",
 		"precommit": "lint-staged"
 	},
 	"browserslist": {

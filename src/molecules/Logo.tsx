@@ -8,7 +8,7 @@ interface LogoProps {
 
 function Logo({width, height}:LogoProps) {
     return (
-        <img src={require('../logo.svg')} style={{width: width, height: height}}/>
+        <img src={require('../logo.svg')} style={{width: width, height: height}} alt="logo"/>
     )
 }
     

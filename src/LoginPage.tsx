@@ -15,7 +15,7 @@ function LoginPage() {
 			<button type="button" className="Login-button">Login</button>
       <a
         className="Password-link"
-        href=""
+        href="https://reactjs.org"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -23,7 +23,7 @@ function LoginPage() {
       </a>
 			<a
         className="New-user-link"
-        href=""
+        href="https://reactjs.org"
         target="_blank"
         rel="noopener noreferrer"
       >

@@ -8,8 +8,7 @@ export interface textButtonInterface {
 
 const ButtonStyle = styled.div`
 	color: #bdbdbd;
-	font-family: Montserrat, Arial;
-	font-size: 14px;
+	font-size: 1em;
 	cursor: pointer;
 	&:hover {
 		text-decoration: underline;
@@ -18,8 +17,8 @@ const ButtonStyle = styled.div`
 
 function TextButton({ text, onClick }: textButtonInterface) {
 	return (
-		<ButtonStyle>
-			<p onClick={onClick}>{text}</p>
+		<ButtonStyle onClick={onClick}>
+			<p>{text}</p>
 		</ButtonStyle>
 	);
 }

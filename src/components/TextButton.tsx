@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export interface textButtonInterface {
+export interface TextButtonInterface {
 	text: string;
 	onClick: () => void;
 }
@@ -15,7 +15,7 @@ const ButtonStyle = styled.div`
 	}
 `;
 
-function TextButton({ text, onClick }: textButtonInterface) {
+function TextButton({ text, onClick }: TextButtonInterface) {
 	return (
 		<ButtonStyle onClick={onClick}>
 			<p>{text}</p>

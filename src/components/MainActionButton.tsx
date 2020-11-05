@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,7 +9,6 @@ export interface mainActionButtonInterface {
 const MainButton = styled.button`
 	background-color: #4961e1;
 	color: white;
-	font-family: Montserrat, Arial;
 	font-size: 1em;
 	border-radius: 6px;
 	padding: 0.5rem 2rem;

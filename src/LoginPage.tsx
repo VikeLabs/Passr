@@ -13,115 +13,100 @@ const LoginPageContainer = styled.div`
 	font-style: normal;
 `;
 
+const LoginContents = styled.div`
+	width: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+`;
+
 const PassrLogo = styled.div`
-	position: absolute;
-	height: 80.2px;
-	left: 38.28%;
-	right: 38.32%;
-	top: 8.38%;
-	bottom: 45.47%;
+	width: 100%;
 `;
 
-const LoginButton = styled.div`
-	position: absolute;
-	left: 38.28%;
-	right: 38.32%;
-	top: 60.38%;
-	bottom: 28.47%;
-	height: 44px;
-	width: 277px;
+const InputContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	margin: 1.5em 0;
+	width: 100%;
 `;
 
-const InputLabelEmail = styled.div`
-	height: 18px;
-	left: 0px;
-	right: 28px;
-	top: calc(50% - 18px / 2);
-	left: 38.28%;
-	right: 38.32%;
-	top: 32.38%;
-	bottom: 35.47%;
+const LoginButton = styled.button`
+	width: 100%;
+	margin: 1.5em 0;
+`;
+
+const InputLabel = styled.div`
 	font-weight: 500;
-	font-size: 14px;
-	line-height: 18px;
-	letter-spacing: 0.1px;
+	font-size: 1.2rem;
 	color: #4961e1;
 `;
 
-const InputLabelPassword = styled.div`
-	height: 18px;
-	left: 0px;
-	right: 40px;
-	top: calc(50% - 18px / 2);
-	left: 38.28%;
-	right: 55.32%;
-	top: 45.38%;
-	bottom: 45.47%;
-	font-weight: 500;
-	font-size: 14px;
-	line-height: 20px;
-	letter-spacing: 0.1px;
-	color: #4961e1;
-`;
-
-const InputBoxEmail = styled.div`
-	left: 38.28%;
-	right: 38.32%;
-	top: 35.38%;
-	bottom: 58.47%;
-`;
-
-const InputBoxPassword = styled.div`
-	left: 38.28%;
-	right: 38.32%;
-	top: 48.38%;
-	bottom: 45.47%;
+const InputBox = styled.input`
+	width: 100%;
 `;
 
 const Links = styled.div`
+	font-size: 0.8rem;
 	font-weight: 500;
-	font-size: 14px;
-	line-height: 18px;
-	letter-spacing: 0.1px;
+	display: flex;
+	flex-direction: column;
 `;
 
-const NewUserLink = styled.div`
-	left: 38.28%;
-	right: 38.32%;
-	top: 79.38%;
-	bottom: 45.47%;
-`;
-
-const PasswordLink = styled.div`
-	left: 38.28%;
-	right: 38.32%;
-	top: 73.38%;
-	bottom: 45.47%;
-`;
+function validEmail(email: string) {
+	return !!email.match(/.+@.+\..{2,}/);
+}
 
 function LoginPage() {
+	const [email, setEmail] = useState('');
+	const [emailErr, setEmailErr] = useState(false);
+	const [userPass, setUserPass] = useState('');
+
+	const onSubmit = () => {
+		console.log('Signing in.');
+		console.log(`Username: ${email}`);
+		console.log(`Password: ${userPass.replaceAll(/.{1}/g, '*')}`);
+		if (!validEmail(email)) setEmailErr(true);
+	};
+
 	return (
 		<LoginPageContainer>
-			<PassrLogo>
-				<img src={logo} alt="logo" />
-			</PassrLogo>
-			<InputLabelEmail>
-				<label>Email*</label>
-			</InputLabelEmail>
-			<InputBoxEmail>
-				<input type="text" />
-			</InputBoxEmail>
-			<InputLabelPassword>
-				<label className="Password-label">Password*</label>
-			</InputLabelPassword>
-			<InputBoxPassword>
-				<input type="text" />
-			</InputBoxPassword>
-			<LoginButton>
-				<button type="button">Login</button>
-			</LoginButton>
-			<Links>
-				<PasswordLink>
+			<LoginContents>
+				<PassrLogo>
+					<img src={logo} alt="logo" />
+				</PassrLogo>
+				<InputContainer>
+					<InputLabel>
+						<label>Email *</label>
+					</InputLabel>
+					<InputBox
+						type="text"
+						value={email}
+						onChange={(e) => {
+							if (validEmail(e.target.value)) setEmailErr(false);
+							setEmail(e.target.value);
+						}}
+						onBlur={(e) => {
+							if (!validEmail(e.target.value)) setEmailErr(true);
+						}}
+					/>
+				</InputContainer>
+				<InputContainer>
+					<InputLabel>
+						<label className="Password-label">Password *</label>
+					</InputLabel>
+					<InputBox
+						type="password"
+						value={userPass}
+						onChange={(e) => {
+							setUserPass(e.target.value);
+						}}
+					/>
+				</InputContainer>
+				<Links>
 					<a
 						href="https://reactjs.org"
 						target="_blank"
@@ -129,8 +114,6 @@ function LoginPage() {
 					>
 						Forgot your password?
 					</a>
-				</PasswordLink>
-				<NewUserLink>
 					<a
 						href="https://reactjs.org"
 						target="_blank"
@@ -138,8 +121,15 @@ function LoginPage() {
 					>
 						New user? Create a Passr account
 					</a>
-				</NewUserLink>
-			</Links>
+				</Links>
+				<LoginButton
+					type="button"
+					disabled={emailErr}
+					onClick={onSubmit}
+				>
+					Login
+				</LoginButton>
+			</LoginContents>
 		</LoginPageContainer>
 	);
 }

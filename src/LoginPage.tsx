@@ -9,8 +9,6 @@ const LoginPageContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	background-color: #e5e5e5;
-	font-family: Montserrat, Arial, Helvetica, sans-serif;
-	font-style: normal;
 `;
 
 const LoginContents = styled.div`
@@ -69,7 +67,10 @@ function LoginPage() {
 		console.log('Signing in.');
 		console.log(`Username: ${email}`);
 		console.log(`Password: ${userPass.replaceAll(/.{1}/g, '*')}`);
-		if (!validEmail(email)) setEmailErr(true);
+		if (!validEmail(email)) {
+			setEmailErr(true);
+			return;
+		}
 	};
 
 	return (

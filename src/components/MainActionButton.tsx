@@ -14,7 +14,9 @@ const MainActionButton = styled.button`
 	padding: 0.5rem 2rem;
 	width: 100%;
 	border: none;
-	&:hover { background-color: #354bc4;
+	&:hover {
+		background-color: #354bc4;
+	}
 `;
 
 function MainButton({ children, onClick }: mainActionButtonInterface) {

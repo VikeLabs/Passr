@@ -4,7 +4,7 @@ const Math100Items: CourseItem[] = [
 	{
 		name: 'Assignment 1',
 		weight: 10,
-		grade: 90,
+		grade: { numerator: 9, denominator: 10 },
 	},
 	{
 		name: 'Assignment 2',
@@ -37,7 +37,7 @@ const CSC110Items: CourseItem[] = [
 	{
 		name: 'Assignment 1',
 		weight: 5,
-		grade: 90,
+		grade: { numerator: 9, denominator: 10 },
 	},
 	{
 		name: 'Assignment 2',
@@ -57,7 +57,7 @@ const CSC110Items: CourseItem[] = [
 	{
 		name: 'Assignment 5',
 		weight: 5,
-		grade: 75,
+		grade: { numerator: 3, denominator: 4 },
 	},
 	{
 		name: 'Assignment 6',
@@ -119,7 +119,7 @@ const PHYS111Items: CourseItem[] = [
 	{
 		name: 'Lab 2',
 		weight: 4,
-		grade: 90,
+		grade: { numerator: 7, denominator: 9 },
 	},
 	{
 		name: 'Lab 3',
@@ -136,7 +136,7 @@ const PHYS111Items: CourseItem[] = [
 	{
 		name: 'Midterm',
 		weight: 20,
-		grade: 65,
+		grade: { numerator: 13, denominator: 20 },
 	},
 	{
 		name: 'Final',

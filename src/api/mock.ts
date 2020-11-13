@@ -1,4 +1,4 @@
-import { Semester, Course, CourseItem } from '.';
+import { Semester, Course, CourseItem } from './index';
 
 const Math100Items: CourseItem[] = [
 	{

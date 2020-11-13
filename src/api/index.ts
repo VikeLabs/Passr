@@ -1,4 +1,4 @@
-import { getCurrentSemester } from './api';
+export { getCurrentSemester } from './api';
 
 export interface Fraction {
 	numerator: number;
@@ -21,5 +21,3 @@ export interface Semester {
 	name: string;
 	courses: Course[];
 }
-
-export { getCurrentSemester };

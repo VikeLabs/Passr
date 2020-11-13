@@ -183,7 +183,7 @@ function SignUpPage() {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Already Have an Account? Log in here
+						Already Have an Account? Log in here.
 					</a>
 				</Links>
 				<LoginButton

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+import Logo from './molecules/Logo';
+import logo from '../logo.svg';
+import MainActionButton from './components/MainActionButton';
+import TextButton from './components/TextButton';
 import styled from 'styled-components';
 
 const LoginPageContainer = styled.div`
@@ -19,7 +22,7 @@ const LoginContents = styled.div`
 	align-items: center;
 `;
 
-const PassrLogo = styled.div`
+const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
@@ -32,7 +35,7 @@ const InputContainer = styled.div`
 	width: 100%;
 `;
 
-const LoginButton = styled.button`
+const LoginButton = styled(MainActionButton)`
 	width: 100%;
 	margin: 1.5em 0;
 `;
@@ -47,7 +50,7 @@ const InputBox = styled.input`
 	width: 100%;
 `;
 
-const Links = styled.div`
+const Links = styled(TextButton)`
 	font-size: 0.8rem;
 	font-weight: 500;
 	display: flex;
@@ -56,6 +59,10 @@ const Links = styled.div`
 
 function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
+}
+
+function tempOnClick() {
+	console.log('A click!');
 }
 
 function LoginPage() {
@@ -76,9 +83,7 @@ function LoginPage() {
 	return (
 		<LoginPageContainer>
 			<LoginContents>
-				<PassrLogo>
-					<img src={logo} alt="logo" />
-				</PassrLogo>
+				<PassrLogo width="300px" height="300px" />
 				<InputContainer>
 					<InputLabel>
 						<label>Email *</label>
@@ -107,29 +112,14 @@ function LoginPage() {
 						}}
 					/>
 				</InputContainer>
-				<Links>
-					<a
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Forgot your password?
-					</a>
-					<a
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						New user? Create a Passr account
-					</a>
-				</Links>
-				<LoginButton
-					type="button"
-					disabled={emailErr}
-					onClick={onSubmit}
-				>
-					Login
+				<LoginButton onClick={tempOnClick}>
+					<p>Login</p>
 				</LoginButton>
+				<Links text="Forgot your password?" onClick={tempOnClick} />
+				<Links
+					text="New user? Create a Passr account"
+					onClick={tempOnClick}
+				/>
 			</LoginContents>
 		</LoginPageContainer>
 	);

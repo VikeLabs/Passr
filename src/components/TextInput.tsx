@@ -34,7 +34,10 @@ const Input = styled.input<{ error: boolean }>`
 	${(props) =>
 		props.error &&
 		css`
-			border: 1px solid red; // Need to pick an error colour?
+			outline: auto 4px red; // Need to pick an error colour?
+			&:focus {
+				outline: auto 4px red;
+			}
 		`}
 `;
 
@@ -42,12 +45,31 @@ interface Props {
 	error?: boolean;
 	value: string;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	label?: string;
 	required?: boolean;
-	type?: string;
+	type?: 'text' | 'password';
 }
 
-function TextInput({ error, value, onChange, label, required, type }: Props) {
+/**
+ *
+ * @param error Display error markers (default: false)
+ * @param value Text input value
+ * @param onChange On text input change
+ * @param onBlur On text input blur (optional)
+ * @param label Label for text input (optional)
+ * @param required Add required asterix to label (default: false)
+ * @param type Input type (text/password) (default: text)
+ */
+function TextInput({
+	error = false,
+	value,
+	onChange,
+	onBlur,
+	label,
+	required = false,
+	type = 'text',
+}: Props) {
 	return (
 		<InputContainer>
 			{label && (
@@ -58,9 +80,10 @@ function TextInput({ error, value, onChange, label, required, type }: Props) {
 			)}
 			<Input
 				error={!!error}
-				type={type || 'text'}
+				type={type}
 				value={value}
 				onChange={onChange}
+				onBlur={onBlur}
 			/>
 		</InputContainer>
 	);

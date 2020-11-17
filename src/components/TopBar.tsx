@@ -20,7 +20,7 @@ const TopBarStyle = styled.div`
 function TopBar({ text }: TopBarInterface) {
 	return (
 		<TopBarStyle>
-			<p>Passr</p>
+			<p>{text}</p>
 		</TopBarStyle>
 	);
 }

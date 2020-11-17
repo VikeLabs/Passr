@@ -62,9 +62,11 @@ function compareEmail(email1: string, email2: string) {
 	return !!email1.match(email2);
 }
 
-// to do
 function validPass(password: string) {
-	return !!password.match(/.+@.+\..{2,}/);
+	if (!password.match(/.{8,}/)) return false; // 8 Characters
+	if (!password.match(/[A-Z]/)) return false; // Upper-Case
+	if (!password.match(/[a-z]/)) return false; // Lower-Case
+	return true; // Passed all checks
 }
 
 function comparePass(password1: string, password2: string) {
@@ -74,7 +76,6 @@ function comparePass(password1: string, password2: string) {
 function SignUpPage() {
 	const [email, setEmail] = useState('');
 	const [confirmEmail, setConfirmEmail] = useState('');
-	const [username, setUsername] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
 	const [userPass, setUserPass] = useState('');
 	const [confirmUserPass, setConfirmUserPass] = useState('');
@@ -126,22 +127,9 @@ function SignUpPage() {
 								setEmailErr(false);
 							setConfirmEmail(e.target.value);
 						}}
-						onBlur={(e) => {
+						onBlur={() => {
 							if (!compareEmail(email, confirmEmail))
 								setEmailErr(true);
-						}}
-					/>
-				</InputContainer>
-
-				<InputContainer>
-					<InputLabel>
-						<label>Username *</label>
-					</InputLabel>
-					<InputBox
-						type="text"
-						value={confirmEmail}
-						onChange={(e) => {
-							setUsername(e.target.value);
 						}}
 					/>
 				</InputContainer>
@@ -188,7 +176,7 @@ function SignUpPage() {
 				</Links>
 				<LoginButton
 					type="button"
-					disabled={emailErr}
+					disabled={emailErr || passErr}
 					onClick={onSubmit}
 				>
 					Sign Up

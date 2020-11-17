@@ -57,6 +57,9 @@ const Links = styled(TextButton)`
 	flex-direction: column;
 `;
 
+const LinksWrapper = styled.div`
+	justify-content: flex-start;
+`;
 function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
 }
@@ -115,11 +118,13 @@ function LoginPage() {
 				<LoginButton onClick={tempOnClick}>
 					<p>Login</p>
 				</LoginButton>
-				<Links text="Forgot your password?" onClick={tempOnClick} />
-				<Links
-					text="New user? Create a Passr account"
-					onClick={tempOnClick}
-				/>
+				<LinksWrapper>
+					<Links text="Forgot your password?" onClick={tempOnClick} />
+					<Links
+						text="New user? Create a Passr account"
+						onClick={tempOnClick}
+					/>
+				</LinksWrapper>
 			</LoginContents>
 		</LoginPageContainer>
 	);

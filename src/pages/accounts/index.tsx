@@ -9,6 +9,15 @@ function Accounts() {
 			<Route path={`${path}/sign-in`}>
 				<Login />
 			</Route>
+			<Route path="/">
+				<div
+					style={{
+						backgroundColor: 'pink',
+						height: '100vh',
+						width: '100vw',
+					}}
+				></div>
+			</Route>
 		</Switch>
 	);
 }

@@ -1,25 +1,17 @@
-import React from 'react';
+import React, { Children } from 'react';
+import logo from './logo.svg';
 import './App.css';
-import Logo from './molecules/Logo';
+import MainActionButton from './components/MainActionButton';
+import Dropdown from './components/Dropdown';
+import ProfileDropdown from './components/ProfileDropdown';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">
-				{/* <img src={logo} className="App-logo" alt="logo" /> */}
-				<Logo width="300px" height="300px" />
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
+			<Router>
+				<ProfileDropdown />
+			</Router>
 		</div>
 	);
 }

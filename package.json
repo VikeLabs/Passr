@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@popperjs/core": "^2.5.4",
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
@@ -12,8 +13,10 @@
 		"@types/react-dom": "^16.9.8",
 		"@types/styled-components": "^5.1.4",
 		"eslint-config-prettier": "^6.14.0",
+		"font-awesome": "^4.7.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
+		"react-router-dom": "^5.2.0",
 		"react-scripts": "^4.0.0-next.117",
 		"styled-components": "^5.2.1"
 	},
@@ -40,6 +43,7 @@
 		]
 	},
 	"devDependencies": {
+		"@types/react-router-dom": "^5.1.6",
 		"@typescript-eslint/eslint-plugin": "^4.5.0",
 		"@typescript-eslint/parser": "^4.5.0",
 		"eslint": "^7.12.0",

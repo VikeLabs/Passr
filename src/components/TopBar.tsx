@@ -8,7 +8,7 @@ export interface TopBarInterface {
 const TopBarStyle = styled.div`
 	display: flex;
 	flex-direction: column;
-	font-weight: 600;
+	font-weight: bold;
 	height: 3em;
 	font-size: 1em;
 	letter-spacing: 0.2px;

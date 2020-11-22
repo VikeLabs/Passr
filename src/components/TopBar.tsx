@@ -11,8 +11,8 @@ const TopBarStyle = styled.div`
 	font-weight: bold;
 	height: 3em;
 	font-size: 1em;
-	letter-spacing: 0.2px;
-	text-align: center;
+	justify-content: center;
+	align-items: center;
 	background: #ffffff;
 	color: #002366;
 `;

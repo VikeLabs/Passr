@@ -28,7 +28,7 @@ const InputContainer = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
-	margin: 1.5em 0;
+	margin: 1em 0;
 	width: 100%;
 `;
 
@@ -55,6 +55,7 @@ const Links = styled.div`
 `;
 
 function validEmail(email: string) {
+	console.log('Checking email');
 	return !!email.match(/.+@.+\..{2,}/);
 }
 
@@ -171,7 +172,7 @@ function SignUpPage() {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Already Have an Account? Log in here.
+						Already have an account? Log in here.
 					</a>
 				</Links>
 				<LoginButton

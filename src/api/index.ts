@@ -9,6 +9,7 @@ export interface CourseItem {
 	name: string;
 	weight: number;
 	grade?: number | Fraction;
+	dueDate?: Date;
 }
 
 export interface Course {

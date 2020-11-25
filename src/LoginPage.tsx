@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Logo from './molecules/Logo';
 import logo from '../logo.svg';
-import MainActionButton from './components/MainActionButton';
+import LoginButton from './components/MainActionButton';
 import TextButton from './components/TextButton';
+import TextInput from './components/TextInput';
 import styled from 'styled-components';
 
 const LoginPageContainer = styled.div`
@@ -27,27 +28,15 @@ const PassrLogo = styled(Logo)`
 `;
 
 const InputContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
 	justify-content: center;
-	margin: 1.5em 0;
+	margin: 0 0 1.5em;
 	width: 100%;
 `;
 
-const LoginButton = styled(MainActionButton)`
+const LoginButtonContainer = styled.div`
 	width: 100%;
-	margin: 1.5em 0;
-`;
-
-const InputLabel = styled.div`
-	font-weight: 500;
-	font-size: 1.2rem;
-	color: #4961e1;
-`;
-
-const InputBox = styled.input`
-	width: 100%;
+	margin: 0 0 1.5em;
+	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
 `;
 
 const Links = styled(TextButton)`
@@ -88,11 +77,7 @@ function LoginPage() {
 			<LoginContents>
 				<PassrLogo width="300px" height="300px" />
 				<InputContainer>
-					<InputLabel>
-						<label>Email *</label>
-					</InputLabel>
-					<InputBox
-						type="text"
+					<TextInput
 						value={email}
 						onChange={(e) => {
 							if (validEmail(e.target.value)) setEmailErr(false);
@@ -101,23 +86,26 @@ function LoginPage() {
 						onBlur={(e) => {
 							if (!validEmail(e.target.value)) setEmailErr(true);
 						}}
+						label="Username"
+						required={true}
 					/>
 				</InputContainer>
 				<InputContainer>
-					<InputLabel>
-						<label className="Password-label">Password *</label>
-					</InputLabel>
-					<InputBox
-						type="password"
+					<TextInput
 						value={userPass}
 						onChange={(e) => {
 							setUserPass(e.target.value);
 						}}
+						label="Password"
+						required={true}
+						type="password"
 					/>
 				</InputContainer>
-				<LoginButton onClick={tempOnClick}>
-					<p>Login</p>
-				</LoginButton>
+				<LoginButtonContainer>
+					<LoginButton onClick={tempOnClick}>
+						<p>Login</p>
+					</LoginButton>
+				</LoginButtonContainer>
 				<LinksWrapper>
 					<Links text="Forgot your password?" onClick={tempOnClick} />
 					<Links

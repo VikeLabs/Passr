@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Logo from './molecules/Logo';
-import logo from '../logo.svg';
 import LoginButton from './components/MainActionButton';
 import TextButton from './components/TextButton';
 import TextInput from './components/TextInput';

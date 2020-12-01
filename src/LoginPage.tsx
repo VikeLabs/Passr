@@ -32,10 +32,9 @@ const InputContainer = styled.div`
 	width: 100%;
 `;
 
-const LoginButtonContainer = styled.div`
+const LoginButtonContainer = styled(LoginButton)`
 	width: 100%;
 	margin: 0 0 1.5em;
-	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
 `;
 
 const Links = styled(TextButton)`
@@ -86,7 +85,9 @@ function LoginPage() {
 							if (!validEmail(e.target.value)) setEmailErr(true);
 						}}
 						label="Username"
-						required={true}
+						required
+						error={emailErr}
+						placeholder="Username"
 					/>
 				</InputContainer>
 				<InputContainer>
@@ -98,12 +99,11 @@ function LoginPage() {
 						label="Password"
 						required={true}
 						type="password"
+						placeholder="Password"
 					/>
 				</InputContainer>
-				<LoginButtonContainer>
-					<LoginButton onClick={tempOnClick}>
-						<p>Login</p>
-					</LoginButton>
+				<LoginButtonContainer onClick={onSubmit}>
+					<p>Login</p>
 				</LoginButtonContainer>
 				<LinksWrapper>
 					<Links text="Forgot your password?" onClick={tempOnClick} />

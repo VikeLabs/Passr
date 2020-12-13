@@ -49,6 +49,7 @@ interface Props {
 	label?: string;
 	required?: boolean;
 	type?: 'text' | 'password';
+	placeholder?: string;
 }
 
 /**
@@ -60,6 +61,7 @@ interface Props {
  * @param label Label for text input (optional)
  * @param required Add required asterix to label (default: false)
  * @param type Input type (text/password) (default: text)
+ * @param placeholder Input placeholder
  */
 function TextInput({
 	error = false,
@@ -69,6 +71,7 @@ function TextInput({
 	label,
 	required = false,
 	type = 'text',
+	placeholder = '',
 }: Props) {
 	return (
 		<InputContainer>
@@ -84,6 +87,7 @@ function TextInput({
 				value={value}
 				onChange={onChange}
 				onBlur={onBlur}
+				placeholder={placeholder}
 			/>
 		</InputContainer>
 	);

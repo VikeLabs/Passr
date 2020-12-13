@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+import Logo from './molecules/Logo';
+import LoginButton from './components/MainActionButton';
+import TextButton from './components/TextButton';
+import TextInput from './components/TextInput';
 import styled from 'styled-components';
 
 const LoginPageContainer = styled.div`
@@ -19,43 +22,37 @@ const LoginContents = styled.div`
 	align-items: center;
 `;
 
-const PassrLogo = styled.div`
+const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
 const InputContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
 	justify-content: center;
-	margin: 1.5em 0;
+	margin: 0 0 1.5em;
 	width: 100%;
 `;
 
-const LoginButton = styled.button`
+const LoginButtonContainer = styled(LoginButton)`
 	width: 100%;
-	margin: 1.5em 0;
+	margin: 0 0 1.5em;
 `;
 
-const InputLabel = styled.div`
-	font-weight: 500;
-	font-size: 1.2rem;
-	color: #4961e1;
-`;
-
-const InputBox = styled.input`
-	width: 100%;
-`;
-
-const Links = styled.div`
+const Links = styled(TextButton)`
 	font-size: 0.8rem;
 	font-weight: 500;
 	display: flex;
 	flex-direction: column;
 `;
 
+const LinksWrapper = styled.div`
+	justify-content: flex-start;
+`;
 function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
+}
+
+function tempOnClick() {
+	console.log('A click!');
 }
 
 function LoginPage() {
@@ -76,15 +73,9 @@ function LoginPage() {
 	return (
 		<LoginPageContainer>
 			<LoginContents>
-				<PassrLogo>
-					<img src={logo} alt="logo" />
-				</PassrLogo>
+				<PassrLogo width="300px" height="300px" />
 				<InputContainer>
-					<InputLabel>
-						<label>Email *</label>
-					</InputLabel>
-					<InputBox
-						type="text"
+					<TextInput
 						value={email}
 						onChange={(e) => {
 							if (validEmail(e.target.value)) setEmailErr(false);
@@ -93,43 +84,34 @@ function LoginPage() {
 						onBlur={(e) => {
 							if (!validEmail(e.target.value)) setEmailErr(true);
 						}}
+						label="Username"
+						required
+						error={emailErr}
+						placeholder="Username"
 					/>
 				</InputContainer>
 				<InputContainer>
-					<InputLabel>
-						<label className="Password-label">Password *</label>
-					</InputLabel>
-					<InputBox
-						type="password"
+					<TextInput
 						value={userPass}
 						onChange={(e) => {
 							setUserPass(e.target.value);
 						}}
+						label="Password"
+						required={true}
+						type="password"
+						placeholder="Password"
 					/>
 				</InputContainer>
-				<Links>
-					<a
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Forgot your password?
-					</a>
-					<a
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						New user? Create a Passr account
-					</a>
-				</Links>
-				<LoginButton
-					type="button"
-					disabled={emailErr}
-					onClick={onSubmit}
-				>
-					Login
-				</LoginButton>
+				<LoginButtonContainer onClick={onSubmit}>
+					<p>Login</p>
+				</LoginButtonContainer>
+				<LinksWrapper>
+					<Links text="Forgot your password?" onClick={tempOnClick} />
+					<Links
+						text="New user? Create a Passr account"
+						onClick={tempOnClick}
+					/>
+				</LinksWrapper>
 			</LoginContents>
 		</LoginPageContainer>
 	);

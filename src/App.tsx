@@ -2,8 +2,8 @@ import React, { Children } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import MainActionButton from './components/MainActionButton';
-import Dropdown from './components/Dropdown';
-import ProfileDropdown from './components/ProfileDropdown';
+import DropdownList from './components/DropdownList';
+import ProfileDropdown from './molecules/ProfileDropdown';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 function App() {

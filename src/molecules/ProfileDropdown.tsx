@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DropdownList from '../components/DropdownList';
 import styled from 'styled-components';
-import useComponentVisible from '../components/useComponentVisible';
+import useComponentVisible from '../hooks/useComponentVisible';
 import '../components/Dropdown.css';
 
 const DropdownItems = [

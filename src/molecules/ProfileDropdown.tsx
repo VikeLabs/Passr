@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import DropdownList from '../components/DropdownList';
 import styled from 'styled-components';
 import useComponentVisible from '../hooks/useComponentVisible';
@@ -22,8 +22,6 @@ const DropdownItems = [
 	},
 ];
 
-const { ref, isComponentVisible } = useComponentVisible(true);
-
 const DropdownButton = styled.button`
 	display: inline-block;
 	align-items: center;
@@ -33,17 +31,18 @@ const DropdownButton = styled.button`
 `;
 
 function ProfileDropdown() {
-	const [click, setClick] = useState(false);
-	const [dropdown, setDropdown] = useState(false);
-
+	const ref = useRef<HTMLDivElement>(null);
+	const { isComponentVisible, setIsComponentVisible } = useComponentVisible(
+		ref,
+		true
+	);
 	const handleClick = () => {
-		setClick(!click);
-		setDropdown(!dropdown);
+		setIsComponentVisible(!isComponentVisible);
 	};
 
 	return (
 		<div ref={ref}>
-			{isComponentVisible && (
+			{
 				<DropdownButton
 					className="profile-dropdown"
 					onClick={handleClick}
@@ -51,12 +50,14 @@ function ProfileDropdown() {
 					<i className="fas fa-user-circle" /> TEXT{' '}
 					<i
 						className={
-							click ? 'fas fa-angle-up' : 'fas fa-angle-down'
+							isComponentVisible
+								? 'fas fa-angle-up'
+								: 'fas fa-angle-down'
 						}
 					/>
 				</DropdownButton>
-			)}
-			{dropdown && <DropdownList items={DropdownItems} />}
+			}
+			{isComponentVisible && <DropdownList items={DropdownItems} />}
 		</div>
 	);
 }

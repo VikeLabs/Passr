@@ -19,6 +19,7 @@ const TitleRow = styled.div`
 const ColumnItemHeader = styled.div`
 	display: flex;
 	flex-direction: column;
+	text-align: left;
 	flex-basis: 100%;
 	flex: 1;
 	color: #002366;
@@ -55,15 +56,15 @@ const Table = styled.table`
 `;
 
 const CourseItemTitleSpace = styled.th`
-	padding: 2em;
+	padding: 0.25em;
 `;
 
 const CourseItemTitle = styled.th`
-	padding: 4em;
+	padding: 1em;
 `;
 
 function GradeBookContentContainer() {
-	const onSubmit = () => {
+	const openModal = () => {
 		console.log('Item added!');
 	};
 	return (
@@ -73,7 +74,7 @@ function GradeBookContentContainer() {
 					<h2>Course Items</h2>
 				</ColumnItemHeader>
 				<ButtonColumn>
-					<AddItemButton onClick={onSubmit}>
+					<AddItemButton onClick={openModal}>
 						<p>Add Item</p>
 					</AddItemButton>
 				</ButtonColumn>

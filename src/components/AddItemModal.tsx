@@ -89,7 +89,14 @@ const Overlay = styled.div`
 `;
 
 export interface AddItemInterface {
-	onSubmit: () => void;
+	onSubmit: (data: AddItemData) => void;
+}
+
+export interface AddItemData {
+	name: string;
+	date: string;
+	weight: string;
+	grade: string;
 }
 
 function AddItemModal({ onSubmit }: AddItemInterface) {
@@ -99,22 +106,36 @@ function AddItemModal({ onSubmit }: AddItemInterface) {
 	const [weight, setWeight] = useState('');
 	const [grade, setGrade] = useState('');
 
+	function close() {
+		setStatus('closed');
+	}
+
+	function handleSubmit({ name, date, weight, grade }: AddItemData) {
+		onSubmit({ name, date, weight, grade });
+		close();
+	}
+
 	return (
-		<Overlay onClick={() => setStatus('closed')} className={isOpen}>
+		<Overlay onClick={close} className={isOpen}>
 			<DefaultModal
-				// height="26em"
 				color="#4961E1"
 				header="Add course item"
 				footer={
 					<ButtonField>
 						<Cancel
 							onClick={() => {
-								setStatus('closed');
+								close();
 							}}
 						>
 							Cancel
 						</Cancel>
-						<Submit onClick={() => onSubmit()}>Add Item</Submit>
+						<Submit
+							onClick={() =>
+								handleSubmit({ name, date, weight, grade })
+							}
+						>
+							Add Item
+						</Submit>
 					</ButtonField>
 				}
 			>

@@ -1,19 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-// const Overlay = styled.div`
-// 	position: absolute;
-// 	backdrop-filter: blur(5px);
-// 	height: 100%;
-// 	width: 100%;
-// 	display: flex;
-// 	// justify-content: center;
-// 	align-items: center;
-
-// 	&.closed {
-// 		display: none;
-// 	}
-// `;
 
 const ModalContainer = styled.div`
 	background-color: #ffffff;
@@ -62,16 +48,12 @@ const ButtonContainer = styled.div`
 export interface ModalInterface {
 	color?: string;
 	children: React.ReactNode;
-	header: string;
+	header: string | React.ReactNode;
 	footer: React.ReactNode;
-	// closed: boolean;
 }
 
 function DefaultModal({ color, header, children, footer }: ModalInterface) {
-	// const [isOpen, setStatus] = useState('');
-
 	return (
-		// <Overlay onClick={() => setStatus('closed')} className={isOpen}>
 		<ModalContainer
 			onClick={(e) => {
 				e.stopPropagation();
@@ -83,7 +65,6 @@ function DefaultModal({ color, header, children, footer }: ModalInterface) {
 				<ButtonContainer>{footer}</ButtonContainer>
 			</Footer>
 		</ModalContainer>
-		// </Overlay>
 	);
 }
 

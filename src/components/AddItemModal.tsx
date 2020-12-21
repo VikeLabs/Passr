@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DefaultModal from './DefaultModal';
+import DefaultModal, { Overlay, ButtonField } from './DefaultModal';
 import Logo from '../molecules/Logo';
 import TextInput from './TextInput';
 import CancelButton from './CancelButton';
@@ -11,8 +11,6 @@ const Body = styled.div`
 `;
 
 const Desc = styled.p`
-	margin-left: 0;
-	align-self: left;
 	color: black;
 	font-size: 14px;
 `;
@@ -35,9 +33,6 @@ const InputField = styled.div`
 	color: black;
 	justify-content: center;
 	align-items: center;
-	// > * {
-	// 	width: 10em;
-	// }
 `;
 
 const InputName = styled(TextInput)`
@@ -56,36 +51,12 @@ const InputGrade = styled(TextInput)`
 	grid-area: grade;
 `;
 
-const ButtonField = styled.div`
-	width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-areas: 'cancel submit';
-	grid-gap: 1em;
-	// align-items: center;
-`;
-
 const Cancel = styled(CancelButton)`
-	grid-area: cancel;
-	// width: 20px;
+	grid-area: left;
 `;
 
 const Submit = styled(MainButton)`
-	grid-area: submit;
-`;
-
-const Overlay = styled.div`
-	position: absolute;
-	backdrop-filter: blur(5px);
-	height: 100%;
-	width: 100%;
-	display: flex;
-	// justify-content: center;
-	align-items: center;
-
-	&.closed {
-		display: none;
-	}
+	grid-area: right;
 `;
 
 export interface AddItemInterface {

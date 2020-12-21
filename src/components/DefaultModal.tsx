@@ -1,6 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export const Overlay = styled.div`
+	position: absolute;
+	backdrop-filter: blur(5px);
+	height: 100%;
+	width: 100%;
+	display: flex;
+	// justify-content: center;
+	align-items: center;
+
+	&.closed {
+		display: none;
+	}
+`;
+
+export const ButtonField = styled.div`
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: 'left right';
+	grid-gap: 1em;
+`;
+
 const ModalContainer = styled.div`
 	background-color: #ffffff;
 	position: fixed;
@@ -10,7 +32,7 @@ const ModalContainer = styled.div`
 		'header'
 		'body'
 		'footer';
-	border-radius: 6%;
+	border-radius: 30px;
 	overflow: auto;
 	width: 24em;
 	height: auto;

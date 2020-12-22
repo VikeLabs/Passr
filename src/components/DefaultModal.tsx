@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const Overlay = styled.div`
+export const Overlay = styled.div<{ open: boolean }>`
 	position: absolute;
 	backdrop-filter: blur(5px);
 	height: 100%;
@@ -10,9 +10,15 @@ export const Overlay = styled.div`
 	// justify-content: center;
 	align-items: center;
 
-	&.closed {
-		display: none;
-	}
+	// &.closed {
+	// 	display: none;
+	// }
+
+	${({ open }) =>
+		!open &&
+		`
+			display: none;
+		`}
 `;
 
 export const ButtonField = styled.div`

@@ -71,14 +71,14 @@ export interface AddItemData {
 }
 
 function AddItemModal({ onSubmit }: AddItemInterface) {
-	const [isOpen, setStatus] = useState('');
+	const [open, setOpen] = useState(true);
 	const [name, setName] = useState('');
 	const [date, setDate] = useState('');
 	const [weight, setWeight] = useState('');
 	const [grade, setGrade] = useState('');
 
 	function close() {
-		setStatus('closed');
+		setOpen(false);
 	}
 
 	function handleSubmit({ name, date, weight, grade }: AddItemData) {
@@ -87,7 +87,7 @@ function AddItemModal({ onSubmit }: AddItemInterface) {
 	}
 
 	return (
-		<Overlay onClick={close} className={isOpen}>
+		<Overlay onClick={close} open={open}>
 			<DefaultModal
 				color="#4961E1"
 				header="Add course item"

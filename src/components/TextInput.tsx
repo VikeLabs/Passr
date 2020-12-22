@@ -30,7 +30,6 @@ const Input = styled.input<{ error: boolean }>`
 	border: 1px solid #bdbdbd;
 	border-radius: 10px;
 	outline: none;
-	// outline: auto 1px #bdbdbd;
 	font-size: 0.8em;
 	color: black;
 	width: 10em;

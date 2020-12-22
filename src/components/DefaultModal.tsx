@@ -10,10 +10,6 @@ export const Overlay = styled.div<{ open: boolean }>`
 	// justify-content: center;
 	align-items: center;
 
-	// &.closed {
-	// 	display: none;
-	// }
-
 	${({ open }) =>
 		!open &&
 		`

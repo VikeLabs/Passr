@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const Overlay = styled.div<{ open: boolean }>`
+export const Overlay = styled.div`
 	position: absolute;
 	backdrop-filter: blur(5px);
 	height: 100%;
@@ -9,12 +9,6 @@ export const Overlay = styled.div<{ open: boolean }>`
 	display: flex;
 	// justify-content: center;
 	align-items: center;
-
-	${({ open }) =>
-		!open &&
-		`
-			display: none;
-		`}
 `;
 
 export const ButtonField = styled.div`
@@ -74,21 +68,30 @@ export interface ModalInterface {
 	children: React.ReactNode;
 	header: string | React.ReactNode;
 	footer: React.ReactNode;
+	handleClose: () => void;
 }
 
-function DefaultModal({ color, header, children, footer }: ModalInterface) {
+function DefaultModal({
+	color,
+	header,
+	children,
+	footer,
+	handleClose,
+}: ModalInterface) {
 	return (
-		<ModalContainer
-			onClick={(e) => {
-				e.stopPropagation();
-			}}
-		>
-			<Header style={{ backgroundColor: color }}>{header}</Header>
-			{children}
-			<Footer>
-				<ButtonContainer>{footer}</ButtonContainer>
-			</Footer>
-		</ModalContainer>
+		<Overlay onClick={() => handleClose()}>
+			<ModalContainer
+				onClick={(e) => {
+					e.stopPropagation();
+				}}
+			>
+				<Header style={{ backgroundColor: color }}>{header}</Header>
+				{children}
+				<Footer>
+					<ButtonContainer>{footer}</ButtonContainer>
+				</Footer>
+			</ModalContainer>
+		</Overlay>
 	);
 }
 

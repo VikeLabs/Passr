@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DefaultModal, { Overlay, ButtonField } from './DefaultModal';
+import DefaultModal, { ButtonField } from './DefaultModal';
 import Logo from '../molecules/Logo';
 import TextInput from './TextInput';
 import CancelButton from './CancelButton';
@@ -60,7 +60,8 @@ const Submit = styled(MainButton)`
 `;
 
 export interface AddItemInterface {
-	onSubmit: (data: AddItemData) => void;
+	handleSubmit: (data: AddItemData) => void;
+	handleClose: () => void;
 }
 
 export interface AddItemData {
@@ -70,92 +71,84 @@ export interface AddItemData {
 	grade: string;
 }
 
-function AddItemModal({ onSubmit }: AddItemInterface) {
-	const [open, setOpen] = useState(true);
+function AddItemModal({ handleSubmit, handleClose }: AddItemInterface) {
 	const [name, setName] = useState('');
 	const [date, setDate] = useState('');
 	const [weight, setWeight] = useState('');
 	const [grade, setGrade] = useState('');
 
-	function close() {
-		setOpen(false);
-	}
-
-	function handleSubmit({ name, date, weight, grade }: AddItemData) {
-		onSubmit({ name, date, weight, grade });
-		close();
+	function onSubmit({ name, date, weight, grade }: AddItemData) {
+		handleSubmit({ name, date, weight, grade });
+		handleClose();
 	}
 
 	return (
-		<Overlay onClick={close} open={open}>
-			<DefaultModal
-				color="#4961E1"
-				header="Add course item"
-				footer={
-					<ButtonField>
-						<Cancel
-							onClick={() => {
-								close();
-							}}
-						>
-							Cancel
-						</Cancel>
-						<Submit
-							onClick={() =>
-								handleSubmit({ name, date, weight, grade })
-							}
-						>
-							Add Item
-						</Submit>
-					</ButtonField>
-				}
-			>
-				<Body>
-					<Desc>
-						Add a new course item with any relevant information.
-					</Desc>
-					<BodyLogo>
-						<Logo width="9em" height="9em" />
-					</BodyLogo>
-					<InputField>
-						<InputName
-							error={true}
-							label="Name"
-							value={name}
-							placeholder="Name"
-							onChange={(e) => {
-								setName(e.currentTarget.value);
-							}}
-							required={true}
-						></InputName>
-						<InputDate
-							label="Due Date"
-							value={date}
-							placeholder="Due date"
-							onChange={(e) => {
-								setDate(e.currentTarget.value);
-							}}
-						></InputDate>
-						<InputWeight
-							label="Weight"
-							value={weight}
-							placeholder="Weight"
-							onChange={(e) => {
-								setWeight(e.currentTarget.value);
-							}}
-						></InputWeight>
-						<InputGrade
-							label="Grade"
-							value={grade}
-							placeholder="Grade"
-							onChange={(e) => {
-								setGrade(e.currentTarget.value);
-							}}
-						></InputGrade>
-					</InputField>
-				</Body>
-			</DefaultModal>
-		</Overlay>
+		<DefaultModal
+			color="#4961E1"
+			handleClose={handleClose}
+			header="Add course item"
+			footer={
+				<ButtonField>
+					<Cancel
+						onClick={() => {
+							handleClose();
+						}}
+					>
+						Cancel
+					</Cancel>
+					<Submit
+						onClick={() => onSubmit({ name, date, weight, grade })}
+					>
+						Add Item
+					</Submit>
+				</ButtonField>
+			}
+		>
+			<Body>
+				<Desc>
+					Add a new course item with any relevant information.
+				</Desc>
+				<BodyLogo>
+					<Logo width="9em" height="9em" />
+				</BodyLogo>
+				<InputField>
+					<InputName
+						error={true}
+						label="Name"
+						value={name}
+						placeholder="Name"
+						onChange={(e) => {
+							setName(e.currentTarget.value);
+						}}
+						required={true}
+					></InputName>
+					<InputDate
+						label="Due Date"
+						value={date}
+						placeholder="Due date"
+						onChange={(e) => {
+							setDate(e.currentTarget.value);
+						}}
+					></InputDate>
+					<InputWeight
+						label="Weight"
+						value={weight}
+						placeholder="Weight"
+						onChange={(e) => {
+							setWeight(e.currentTarget.value);
+						}}
+					></InputWeight>
+					<InputGrade
+						label="Grade"
+						value={grade}
+						placeholder="Grade"
+						onChange={(e) => {
+							setGrade(e.currentTarget.value);
+						}}
+					></InputGrade>
+				</InputField>
+			</Body>
+		</DefaultModal>
 	);
 }
 

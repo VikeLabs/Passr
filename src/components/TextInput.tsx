@@ -46,7 +46,7 @@ const Input = styled.input<{ error: boolean }>`
 		css`
 			border: 2px solid #ff8888; // Need to pick an error colour?
 			&:focus {
-				border: 2px solid red;
+				border: 2px solid #ff8888;
 			}
 		`}
 `;

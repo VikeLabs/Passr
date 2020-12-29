@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import MainButton from './MainActionButton';
 
-const MainDeleteButton = styled(MainButton)`
+const DeleteButton = styled(MainButton)`
 	background-color: #b80f0a;
 	color: #ffffff;
 	&:hover {
@@ -9,4 +9,4 @@ const MainDeleteButton = styled(MainButton)`
 	}
 `;
 
-export default MainDeleteButton;
+export default DeleteButton;

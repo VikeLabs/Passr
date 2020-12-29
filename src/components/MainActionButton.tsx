@@ -19,8 +19,16 @@ const MainActionButton = styled.button`
 	}
 `;
 
-function MainButton({ children, onClick }: mainActionButtonInterface) {
-	return <MainActionButton onClick={onClick}>{children}</MainActionButton>;
+function MainButton({
+	children,
+	onClick,
+	...props
+}: mainActionButtonInterface) {
+	return (
+		<MainActionButton onClick={onClick} {...props}>
+			{children}
+		</MainActionButton>
+	);
 }
 
 export default MainButton;

@@ -1,25 +1,13 @@
-import React, { useState } from 'react';
-import DropdownList from './DropdownList';
+import React, { useState, useRef } from 'react';
+import DropdownList, { DropdownItem } from '../components/DropdownList';
 import styled from 'styled-components';
-import './Dropdown.css';
+import useComponentVisible from '../hooks/useComponentVisible';
+import '../components/Dropdown.css';
 
-const DropdownItems = [
-	{
-		title: 'Profile',
-		path: '/profile',
-		cName: ' dropdown-link',
-	},
-	{
-		title: 'Settings',
-		path: '/settings',
-		cName: ' dropdown-link',
-	},
-	{
-		title: 'Sign Out',
-		path: '/signout',
-		cName: ' dropdown-link',
-	},
-];
+interface Props {
+	buttonDisplay: string | React.ReactNode;
+	dropdownItems: DropdownItem[];
+}
 
 const DropdownButton = styled.button`
 	display: inline-block;
@@ -29,26 +17,33 @@ const DropdownButton = styled.button`
 	border: 1px, solid, black;
 `;
 
-function ProfileDropdown() {
-	const [click, setClick] = useState(false);
-	const [dropdown, setDropdown] = useState(false);
-
+function GenericDropdown({ buttonDisplay, dropdownItems, ...props }: Props) {
+	const ref = useRef<HTMLDivElement>(null);
+	const { isComponentVisible, setIsComponentVisible } = useComponentVisible(
+		ref,
+		true
+	);
 	const handleClick = () => {
-		setClick(!click);
-		setDropdown(!dropdown);
+		setIsComponentVisible(!isComponentVisible);
 	};
 
 	return (
-		<div>
-			<DropdownButton className="profile-dropdown" onClick={handleClick}>
-				<i className="fas fa-user-circle" /> TEXT{' '}
-				<i
-					className={click ? 'fas fa-angle-up' : 'fas fa-angle-down'}
-				/>
-			</DropdownButton>
-			{dropdown && <DropdownList items={DropdownItems} />}
+		<div ref={ref}>
+			{
+				<DropdownButton onClick={handleClick}>
+					<i className="fas fa-user-circle" /> {buttonDisplay}
+					<i
+						className={
+							isComponentVisible
+								? 'fas fa-angle-up'
+								: 'fas fa-angle-down'
+						}
+					/>
+				</DropdownButton>
+			}
+			{isComponentVisible && <DropdownList items={dropdownItems} />}
 		</div>
 	);
 }
 
-export default ProfileDropdown;
+export default GenericDropdown;

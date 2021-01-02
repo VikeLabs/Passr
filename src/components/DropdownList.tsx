@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import './Dropdown.css';
 
-interface DropdownItem {
+export interface DropdownItem {
 	path: string;
 	cName: string;
 	title: string;
@@ -12,23 +12,28 @@ interface DropdownItem {
 interface Props {
 	items: DropdownItem[];
 }
-// const DropdownMenuClicked = styled.ul`
-// 	width: 200px;
-// 	position: absolute;
-// 	top: 50px;
-// 	list-style: none;
-// 	text-align: start;
-// 	z-index: 2;
-// 	border: 1px solid rgba(0, 0, 0, 0.04);
-// 	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
-// 	padding: 0;
-// 	margin: 0;
-// 	border-radius: 10px;
-// `;
+const DropdownMenu = styled.ul`
+	width: 200px;
+	position: absolute;
+	top: 50px;
+	list-style: none;
+	text-align: start;
+	z-index: 2;
+	border: 1px solid rgba(0, 0, 0, 0.04);
+	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+	padding: 0;
+	margin: 0;
+	border-radius: 10px;
+`;
 const DropdownMenuItem = styled.li`
 	color: white;
 	cursor: pointer;
 	list-style: none;
+	&:hover {
+		background: #ededed;
+		list-style: none;
+		border-radius: 10px;
+	}
 `;
 const DropdownLink = styled(Link)`
 	display: block;
@@ -37,10 +42,13 @@ const DropdownLink = styled(Link)`
 	text-decoration: none;
 	color: black;
 	padding: 16px;
+	&:hover {
+		color: #4961e1;
+	}
 `;
 function DropdownList(props: Props) {
 	return (
-		<ul className={'dropdown-menu'}>
+		<DropdownMenu>
 			{props.items.map((item, index) => {
 				return (
 					<DropdownMenuItem key={index}>
@@ -50,7 +58,7 @@ function DropdownList(props: Props) {
 					</DropdownMenuItem>
 				);
 			})}
-		</ul>
+		</DropdownMenu>
 	);
 }
 

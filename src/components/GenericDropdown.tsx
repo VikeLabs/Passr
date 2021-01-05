@@ -5,7 +5,7 @@ import useComponentVisible from '../hooks/useComponentVisible';
 import '../components/Dropdown.css';
 
 interface Props {
-	buttonDisplay: string | React.ReactNode;
+	buttonDisplay: React.ReactNode;
 	dropdownItems: DropdownItem[];
 }
 
@@ -31,7 +31,7 @@ function GenericDropdown({ buttonDisplay, dropdownItems, ...props }: Props) {
 		<div ref={ref}>
 			{
 				<DropdownButton onClick={handleClick}>
-					<i className="fas fa-user-circle" /> {buttonDisplay}
+					{buttonDisplay}
 					<i
 						className={
 							isComponentVisible

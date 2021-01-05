@@ -11,21 +11,7 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
-				<GenericDropdown
-					buttonDisplay={'test  '}
-					dropdownItems={[
-						{
-							title: 'Profile',
-							path: '/profile',
-							cName: ' dropdown-link',
-						},
-						{
-							title: 'Settings',
-							path: '/settings',
-							cName: ' dropdown-link',
-						},
-					]}
-				/>
+				<ProfileDropdown />
 			</Router>
 		</div>
 	);

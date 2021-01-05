@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import './Dropdown.css';
 
 export interface DropdownItem {
 	path: string;
-	cName: string;
 	title: string;
 	icon?: string;
 }
@@ -48,7 +46,8 @@ function DropdownList(props: Props) {
 			{props.items.map((item, index) => {
 				return (
 					<DropdownMenuItem key={index}>
-						<DropdownLink className={item.cName} to={item.path}>
+						<DropdownLink to={item.path}>
+							<i className={item.icon} />
 							{item.title}
 						</DropdownLink>
 					</DropdownMenuItem>

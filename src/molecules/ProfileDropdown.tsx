@@ -1,25 +1,23 @@
-import React, { useState, useRef } from 'react';
-import DropdownList from '../components/DropdownList';
+import React, { useRef } from 'react';
 import GenericDropdown from '../components/GenericDropdown';
 import styled from 'styled-components';
 import useComponentVisible from '../hooks/useComponentVisible';
-import '../components/Dropdown.css';
 
 const DropdownItems = [
 	{
 		title: 'Profile',
 		path: '/profile',
-		cName: ' dropdown-link',
+		icon: 'fas fa-user-circle',
 	},
 	{
 		title: 'Settings',
 		path: '/settings',
-		cName: ' dropdown-link',
+		icon: 'fas fa-cog',
 	},
 	{
 		title: 'Sign Out',
 		path: '/signout',
-		cName: ' dropdown-link',
+		icon: 'fas fa-sign-out-alt',
 	},
 ];
 
@@ -41,7 +39,8 @@ function ProfileDropdown() {
 		<GenericDropdown
 			buttonDisplay={
 				<Button>
-					<i className="fas fa-user-circle" /> {'Test'}
+					{'"Name of User"  '}
+					<i className="fas fa-user-circle" />
 				</Button>
 			}
 			dropdownItems={DropdownItems}

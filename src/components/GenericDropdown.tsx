@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import DropdownList, { DropdownItem } from '../components/DropdownList';
 import styled from 'styled-components';
 import useComponentVisible from '../hooks/useComponentVisible';
-import '../components/Dropdown.css';
 
 interface Props {
 	buttonDisplay: React.ReactNode;

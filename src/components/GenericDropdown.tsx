@@ -10,11 +10,15 @@ interface Props {
 }
 
 const DropdownButton = styled.button`
-	display: inline-block;
+	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	height: 50px;
-	width: 100px;
 	border: 1px, solid, black;
+`;
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
 `;
 
 function GenericDropdown({ buttonDisplay, dropdownItems, ...props }: Props) {
@@ -28,7 +32,7 @@ function GenericDropdown({ buttonDisplay, dropdownItems, ...props }: Props) {
 	};
 
 	return (
-		<div ref={ref}>
+		<Container ref={ref}>
 			{
 				<DropdownButton onClick={handleClick}>
 					{buttonDisplay}
@@ -42,7 +46,7 @@ function GenericDropdown({ buttonDisplay, dropdownItems, ...props }: Props) {
 				</DropdownButton>
 			}
 			{isComponentVisible && <DropdownList items={dropdownItems} />}
-		</div>
+		</Container>
 	);
 }
 

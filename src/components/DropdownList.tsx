@@ -13,9 +13,6 @@ interface Props {
 	items: DropdownItem[];
 }
 const DropdownMenu = styled.ul`
-	width: 200px;
-	position: absolute;
-	top: 50px;
 	list-style: none;
 	text-align: start;
 	z-index: 2;
@@ -38,10 +35,9 @@ const DropdownMenuItem = styled.li`
 const DropdownLink = styled(Link)`
 	display: block;
 	height: 100%;
-	width: 100%;
 	text-decoration: none;
 	color: black;
-	padding: 16px;
+	padding: 1em;
 	&:hover {
 		color: #4961e1;
 	}

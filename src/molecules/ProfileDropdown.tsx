@@ -23,6 +23,10 @@ const DropdownItems = [
 	},
 ];
 
+const Button = styled.div`
+	padding: 1em;
+`;
+
 function ProfileDropdown() {
 	const ref = useRef<HTMLDivElement>(null);
 	const { isComponentVisible, setIsComponentVisible } = useComponentVisible(
@@ -36,9 +40,9 @@ function ProfileDropdown() {
 	return (
 		<GenericDropdown
 			buttonDisplay={
-				<>
+				<Button>
 					<i className="fas fa-user-circle" /> {'Test'}
-				</>
+				</Button>
 			}
 			dropdownItems={DropdownItems}
 		/>

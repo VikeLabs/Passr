@@ -87,24 +87,10 @@ function AddItemModal({ handleSubmit, handleClose }: AddItemInterface) {
 			color="#4961E1"
 			handleClose={handleClose}
 			header="Add course item"
-			footer={
-				<ButtonField>
-					<Cancel
-						onClick={() => {
-							handleClose();
-						}}
-					>
-						Cancel
-					</Cancel>
-					<Submit
-						onClick={() => onSubmit({ name, date, weight, grade })}
-					>
-						Add Item
-					</Submit>
-				</ButtonField>
-			}
 			primaryButton="Submit"
+			primaryVar="primary"
 			secondaryButton="Cancel"
+			secondaryVar="alternate"
 			handlePrimary={() => onSubmit({ name, date, weight, grade })}
 		>
 			<Body>

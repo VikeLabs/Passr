@@ -6,20 +6,20 @@ import MainButton from './components/MainActionButton';
 import AddItemModal, { AddItemData } from './components/AddItemModal';
 import DeleteItemModal from './components/DeleteItemModal';
 
-function del() {
-	console.log('assignment deleted');
-}
+// function del() {
+// 	console.log('assignment deleted');
+// }
 
-function add({ name, date, weight, grade }: AddItemData) {
-	console.log(name);
-	console.log(date);
-	console.log(weight);
-	console.log(grade);
-}
+// function add({ name, date, weight, grade }: AddItemData) {
+// 	console.log(name);
+// 	console.log(date);
+// 	console.log(weight);
+// 	console.log(grade);
+// }
 
-function close() {
-	console.log('modal closed');
-}
+// function close() {
+// 	console.log('modal closed');
+// }
 
 function App() {
 	return (
@@ -38,7 +38,7 @@ function App() {
 				<p>
 					Edit <code>src/App.tsx</code> and save to reload.
 				</p>
-				{/* <MainButton variant="delete" onClick={() => del()}>
+				{/* <MainButton variant="primary" onClick={() => del()}>
 					Delete
 				</MainButton> */}
 				<a

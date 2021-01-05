@@ -39,20 +39,10 @@ function DeleteItemModal({ handleDelete, handleClose }: DeleteItemInterface) {
 			color="#B80F0A"
 			handleClose={handleClose}
 			header="Are you sure?"
-			footer={
-				<ButtonField>
-					<Cancel
-						onClick={() => {
-							handleClose();
-						}}
-					>
-						Cancel
-					</Cancel>
-					<Delete onClick={() => onDelete()}>Delete</Delete>
-				</ButtonField>
-			}
 			primaryButton="Delete"
+			primaryVar="negative"
 			secondaryButton="Cancel"
+			secondaryVar="alternate"
 			handlePrimary={onDelete}
 		>
 			<div>

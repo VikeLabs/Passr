@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Logo from './molecules/Logo';
-import DeleteButton from './components/DeleteButton';
 import MainButton from './components/MainActionButton';
 import AddItemModal, { AddItemData } from './components/AddItemModal';
 import DeleteItemModal from './components/DeleteItemModal';

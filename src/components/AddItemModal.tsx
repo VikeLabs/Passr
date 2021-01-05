@@ -103,6 +103,9 @@ function AddItemModal({ handleSubmit, handleClose }: AddItemInterface) {
 					</Submit>
 				</ButtonField>
 			}
+			primaryButton="Submit"
+			secondaryButton="Cancel"
+			handlePrimary={() => onSubmit({ name, date, weight, grade })}
 		>
 			<Body>
 				<Desc>

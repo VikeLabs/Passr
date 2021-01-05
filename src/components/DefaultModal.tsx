@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import CancelButton from './CancelButton';
+import MainButton from './MainActionButton';
 
 export const Overlay = styled.div`
 	position: absolute;
@@ -68,7 +70,10 @@ export interface ModalInterface {
 	children: React.ReactNode;
 	header: string | React.ReactNode;
 	footer: React.ReactNode;
+	primaryButton: string;
+	secondaryButton: string;
 	handleClose: () => void;
+	handlePrimary: () => void;
 }
 
 function DefaultModal({
@@ -76,7 +81,10 @@ function DefaultModal({
 	header,
 	children,
 	footer,
+	primaryButton,
+	secondaryButton,
 	handleClose,
+	handlePrimary,
 }: ModalInterface) {
 	return (
 		<Overlay onClick={() => handleClose()}>
@@ -88,7 +96,16 @@ function DefaultModal({
 				<Header style={{ backgroundColor: color }}>{header}</Header>
 				{children}
 				<Footer>
-					<ButtonContainer>{footer}</ButtonContainer>
+					<ButtonContainer>
+						<ButtonField>
+							<CancelButton onClick={handleClose}>
+								{secondaryButton}
+							</CancelButton>
+							<MainButton onClick={handlePrimary}>
+								{primaryButton}
+							</MainButton>
+						</ButtonField>
+					</ButtonContainer>
 				</Footer>
 			</ModalContainer>
 		</Overlay>

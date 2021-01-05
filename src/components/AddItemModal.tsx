@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DefaultModal, { ButtonField } from './DefaultModal';
+import DefaultModal from './DefaultModal';
 import Logo from '../molecules/Logo';
 import TextInput from './TextInput';
-import CancelButton from './CancelButton';
-import MainButton from './MainActionButton';
 
 const Body = styled.div`
 	height: 20em;
@@ -50,15 +48,6 @@ const InputWeight = styled(TextInput)`
 const InputGrade = styled(TextInput)`
 	grid-area: grade;
 `;
-
-const Cancel = styled(CancelButton)`
-	grid-area: left;
-`;
-
-const Submit = styled(MainButton)`
-	grid-area: right;
-`;
-
 export interface AddItemInterface {
 	handleSubmit: (data: AddItemData) => void;
 	handleClose: () => void;

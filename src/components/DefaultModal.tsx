@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import CancelButton from './CancelButton';
 import MainButton, { Variant } from './MainActionButton';
 
 export const Overlay = styled.div`

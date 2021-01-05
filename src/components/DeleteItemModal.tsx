@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import DefaultModal, { Overlay, ButtonField } from './DefaultModal';
+import DefaultModal from './DefaultModal';
 import Logo from '../molecules/Logo';
-import CancelButton from './CancelButton';
-import DeleteButton from './DeleteButton';
 
 const Desc = styled.p`
 	color: black;
@@ -13,14 +11,6 @@ const Desc = styled.p`
 const BodyLogo = styled.div`
 	justify-content: center;
 	align-items: center;
-`;
-
-const Cancel = styled(CancelButton)`
-	grid-area: right;
-`;
-
-const Delete = styled(DeleteButton)`
-	grid-area: left;
 `;
 
 export interface DeleteItemInterface {

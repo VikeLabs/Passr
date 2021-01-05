@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { variant } from 'styled-system';
 import { inherits } from 'util';
 
+type Variant = 'success' | 'delete';
 export interface mainActionButtonInterface {
 	children: React.ReactNode;
 	onClick: () => void;
+	variant?: Variant;
 }
 
 // const MainActionButton = styled.button`
@@ -37,7 +39,7 @@ export interface mainActionButtonInterface {
 // 	})
 // `;
 
-const MainActionButton = styled('button')(
+const MainActionButton = styled('button')<{ variant: Variant }>(
 	{
 		color: 'white',
 		fontSize: '1em',
@@ -67,10 +69,15 @@ const MainActionButton = styled('button')(
 function MainButton({
 	children,
 	onClick,
+	variant,
 	...props
 }: mainActionButtonInterface) {
 	return (
-		<MainActionButton variant="success" onClick={onClick} {...props}>
+		<MainActionButton
+			variant={variant || 'success'}
+			onClick={onClick}
+			{...props}
+		>
 			{children}
 		</MainActionButton>
 	);

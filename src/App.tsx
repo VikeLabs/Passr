@@ -27,10 +27,10 @@ function App() {
 			<header className="App-header">
 				{/* <img src={logo} className="App-logo" alt="logo" /> */}
 				<Logo width="300px" height="300px" />
-				<DeleteItemModal
+				{/* <DeleteItemModal
 					handleDelete={() => del()}
 					handleClose={() => close()}
-				></DeleteItemModal>
+				></DeleteItemModal> */}
 				{/* <AddItemModal
 					handleSubmit={(data) => add(data)}
 					handleClose={() => close()}
@@ -38,9 +38,9 @@ function App() {
 				<p>
 					Edit <code>src/App.tsx</code> and save to reload.
 				</p>
-				<MainButton variant="success" onClick={() => del()}>
+				{/* <MainButton variant="delete" onClick={() => del()}>
 					Delete
-				</MainButton>
+				</MainButton> */}
 				<a
 					className="App-link"
 					href="https://reactjs.org"

@@ -98,10 +98,16 @@ function DefaultModal({
 				<Footer>
 					<ButtonContainer>
 						<ButtonField>
-							<CancelButton onClick={handleClose}>
+							<CancelButton
+								variant={'delete'}
+								onClick={handleClose}
+							>
 								{secondaryButton}
 							</CancelButton>
-							<MainButton onClick={handlePrimary}>
+							<MainButton
+								variant={'success'}
+								onClick={handlePrimary}
+							>
 								{primaryButton}
 							</MainButton>
 						</ButtonField>

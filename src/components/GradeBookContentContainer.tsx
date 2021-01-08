@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AddButton from './MainActionButton';
 import Grade from './GradeItemAccordion';
+import { CourseItem } from '../api';
 
 const ContentContainer = styled.div`
 	color: #002366;
@@ -67,6 +68,19 @@ function GradeBookContentContainer() {
 	const openModal = () => {
 		console.log('Item added!');
 	};
+	const [courseItem, setCourseItem] = useState<CourseItem>({
+		name: '',
+		weight: 10,
+	});
+	function updateCourseItem(item: CourseItem) {
+		setCourseItem(item);
+		// In the future, this will not call the update state function
+		// Instead it will determine which course item in the course was updated
+		// Then create a new course with the updated item
+		// And call a callback function (likely named updateCourse) passed in as a prop
+		// With the new course, similar to what is done in the accordion item, just one 'level up'
+	}
+
 	return (
 		<ContentContainer>
 			<TitleRow>

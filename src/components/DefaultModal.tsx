@@ -13,6 +13,8 @@ export const Overlay = styled.div`
 `;
 
 export const ButtonField = styled.div`
+	margin-right: 2em;
+	margin-left: 7em;
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -45,7 +47,6 @@ const Header = styled.div`
 	height: 3em;
 	justify-content: center;
 	align-items: center;
-	// font-family: Montserrat;
 	grid-area: header;
 `;
 
@@ -57,11 +58,6 @@ const Footer = styled.div`
 	width: 100%;
 	height: 3.5em;
 	grid-area: footer;
-`;
-
-const ButtonContainer = styled.div`
-	margin-right: 2em;
-	margin-left: auto;
 `;
 
 export interface ModalInterface {
@@ -97,22 +93,20 @@ function DefaultModal({
 				<Header style={{ backgroundColor: color }}>{header}</Header>
 				{children}
 				<Footer>
-					<ButtonContainer>
-						<ButtonField>
-							<MainButton
-								variant={secondaryVar}
-								onClick={handleClose}
-							>
-								{secondaryButton}
-							</MainButton>
-							<MainButton
-								variant={primaryVar}
-								onClick={handlePrimary}
-							>
-								{primaryButton}
-							</MainButton>
-						</ButtonField>
-					</ButtonContainer>
+					<ButtonField>
+						<MainButton
+							variant={secondaryVar}
+							onClick={handleClose}
+						>
+							{secondaryButton}
+						</MainButton>
+						<MainButton
+							variant={primaryVar}
+							onClick={handlePrimary}
+						>
+							{primaryButton}
+						</MainButton>
+					</ButtonField>
 				</Footer>
 			</ModalContainer>
 		</Overlay>

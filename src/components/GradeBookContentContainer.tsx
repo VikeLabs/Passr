@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import AddButton from './MainActionButton';
-import Grade from './GradeItemAccordion';
+// import Grade from './GradeItemAccordion';
 import { CourseItem } from '../api';
 
 const ContentContainer = styled.div`
@@ -54,6 +54,13 @@ const Table = styled.table`
 	text-align: left;
 	font-weight: normal;
 	font-size: small;
+	${css`
+		td,
+		tr,
+		th {
+			border: none;
+		}
+	`}
 `;
 
 const CourseItemTitleSpace = styled.th`

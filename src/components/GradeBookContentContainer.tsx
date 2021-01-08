@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AddButton from './MainActionButton';
+import Grade from './GradeItemAccordion';
 
 const ContentContainer = styled.div`
 	color: #002366;
@@ -50,7 +51,6 @@ const Table = styled.table`
 	width: 100%;
 	color: #828282;
 	text-align: left;
-	text-decoration: underline;
 	font-weight: normal;
 	font-size: small;
 `;

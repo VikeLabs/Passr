@@ -20,7 +20,7 @@ const Container = styled.div`
 	flex-direction: column;
 `;
 
-function GenericDropdown({ buttonDisplay, dropdownItems, ...props }: Props) {
+function GenericDropdown({ buttonDisplay, dropdownItems }: Props) {
 	const ref = useRef<HTMLDivElement>(null);
 	const { isComponentVisible, setIsComponentVisible } = useComponentVisible(
 		ref,

@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import GenericDropdown from '../components/GenericDropdown';
 import styled from 'styled-components';
-import useComponentVisible from '../hooks/useComponentVisible';
 
 const DropdownItems = [
 	{
@@ -26,15 +25,6 @@ const Button = styled.div`
 `;
 
 function ProfileDropdown() {
-	const ref = useRef<HTMLDivElement>(null);
-	const { isComponentVisible, setIsComponentVisible } = useComponentVisible(
-		ref,
-		true
-	);
-	const handleClick = () => {
-		setIsComponentVisible(!isComponentVisible);
-	};
-
 	return (
 		<GenericDropdown
 			buttonDisplay={

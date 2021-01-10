@@ -1,6 +1,8 @@
+import { prependOnceListener } from 'process';
 import React from 'react';
 import styled from 'styled-components';
 import { variant } from 'styled-system';
+import Theme from '../theme';
 
 export type Variant =
 	| 'primary'
@@ -27,7 +29,7 @@ const MainActionButton = styled('button')<{ variant: Variant }>(
 	variant({
 		variants: {
 			primary: {
-				backgroundColor: '#4961e1',
+				backgroundColor: ${props => props.theme.colors.primary[0]},
 				color: '#FFFFFF',
 				'&:hover': {
 					backgroundColor: '#354bc4',

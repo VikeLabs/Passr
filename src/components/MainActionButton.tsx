@@ -1,8 +1,6 @@
-import { prependOnceListener } from 'process';
-import React from 'react';
-import styled from 'styled-components';
-import { variant } from 'styled-system';
-import Theme from '../theme';
+import React, { useContext } from 'react';
+import styled, { ThemeContext, withTheme } from 'styled-components';
+import { variant, buttonStyle } from 'styled-system';
 
 export type Variant =
 	| 'primary'
@@ -10,6 +8,7 @@ export type Variant =
 	| 'positive'
 	| 'negative'
 	| 'alternate';
+
 export interface mainActionButtonInterface {
 	children: React.ReactNode;
 	onClick: () => void;
@@ -17,60 +16,135 @@ export interface mainActionButtonInterface {
 	disabled?: boolean;
 }
 
-const MainActionButton = styled('button')<{ variant: Variant }>(
-	{
-		color: 'white',
-		fontSize: '1em',
-		borderRadius: '6px',
-		padding: '0.5rem 2rem',
-		width: '100%',
-		border: 'none',
-	},
-	variant({
-		variants: {
-			primary: {
-				backgroundColor: ${props => props.theme.colors.primary[0]},
-				color: '#FFFFFF',
-				'&:hover': {
-					backgroundColor: '#354bc4',
-				},
-			},
-			secondary: {
-				backgroundColor: '#FFFFFF',
-				color: '#002366',
-				'&:hover': {
-					backgroundColor: '#E5F2FC',
-				},
-			},
-			positive: {
-				backgroundColor: '#35BEA0',
-				color: '#FFFFFF',
-				'&:hover': {
-					backgroundColor: '#2A967E',
-				},
-			},
-			negative: {
-				backgroundColor: '#b80f0a',
-				color: '#FFFFFF',
-				'&:hover': {
-					backgroundColor: '#880B07',
-				},
-			},
-			alternate: {
-				backgroundColor: '#e0e0e0',
-				color: '#002366',
-				'&:hover': {
-					backgroundColor: '#d0d0d0',
-				},
-			},
-		},
-	})
-);
+// const MainActionButton = styled('button')<{ variant: Variant }>(
+// 	{
+// 		color: 'white',
+// 		fontSize: '1em',
+// 		borderRadius: '6px',
+// 		padding: '0.5rem 2rem',
+// 		width: '100%',
+// 		border: 'none',
+// 	},
+// 	variant({
+// 		variants: {
+// 			primary: {
+// 				backgroundColor: 'primary',
+// 				color: '#FFFFFF',
+// 				'&:hover': {
+// 					backgroundColor: '#354bc4',
+// 				},
+// 			},
+// 			secondary: {
+// 				backgroundColor: '#FFFFFF',
+// 				color: '#002366',
+// 				'&:hover': {
+// 					backgroundColor: '#E5F2FC',
+// 				},
+// 			},
+// 			positive: {
+// 				backgroundColor: '#35BEA0',
+// 				color: '#FFFFFF',
+// 				'&:hover': {
+// 					backgroundColor: '#2A967E',
+// 				},
+// 			},
+// 			negative: {
+// 				backgroundColor: '#b80f0a',
+// 				color: '#FFFFFF',
+// 				'&:hover': {
+// 					backgroundColor: '#880B07',
+// 				},
+// 			},
+// 			alternate: {
+// 				backgroundColor: '#e0e0e0',
+// 				color: '#002366',
+// 				'&:hover': {
+// 					backgroundColor: '#d0d0d0',
+// 				},
+// 			},
+// 		},
+// 	})
+// );
+
+// const MainActionButton = styled('button')(
+// 	{
+// 		fontSize: '1em',
+// 		borderRadius: '6px',
+// 		padding: '0.5rem 2rem',
+// 		width: '100%',
+// 		border: 'none',
+// 	},
+// 	buttonStyle
+// 	// background-color: ${({ theme }) => theme.colors.primary[0]};
+// );
+
+const MainActionButton = styled('button')`
+	font-size: '1em';
+	border-radius: '6px';
+	padding: '0.5rem 2rem';
+	width: '100%';
+	border: 'none';
+	${buttonStyle}
+`;
+
+// const buttonVariants = variant({
+// 	variants: {
+// 		primary: {
+// 			backgroundColor: {theme.colors.primary[0]},
+// 			color: '#FFFFFF',
+// 			'&:hover': {
+// 				backgroundColor: '#354bc4',
+// 			},
+// 		},
+// 		secondary: {
+// 			backgroundColor: '#FFFFFF',
+// 			color: '#002366',
+// 			'&:hover': {
+// 				backgroundColor: '#E5F2FC',
+// 			},
+// 		},
+// 		positive: {
+// 			backgroundColor: '#35BEA0',
+// 			color: '#FFFFFF',
+// 			'&:hover': {
+// 				backgroundColor: '#2A967E',
+// 			},
+// 		},
+// 		negative: {
+// 			backgroundColor: '#b80f0a',
+// 			color: '#FFFFFF',
+// 			'&:hover': {
+// 				backgroundColor: '#880B07',
+// 			},
+// 		},
+// 		alternate: {
+// 			backgroundColor: '#e0e0e0',
+// 			color: '#002366',
+// 			'&:hover': {
+// 				backgroundColor: '#d0d0d0',
+// 			},
+// 		},
+// 	},
+// });
+
+// const MainActionButton = styled('button')<{ variant: Variant }>`
+// 		color: 'white',
+// 		fontSize: '1em',
+// 		borderRadius: '6px',
+// 		padding: '0.5rem 2rem',
+// 		width: '100%',
+// 		border: 'none',
+// 	${buttonVariants}
+// `;
+
+{
+	/* <MainActionButton variant="primary"></MainActionButton>; */
+}
 
 function MainButton({
 	children,
 	onClick,
-	variant,
+	// variant,
 	disabled = false,
 	...props
 }: mainActionButtonInterface) {

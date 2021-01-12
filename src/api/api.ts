@@ -1,3 +1,4 @@
+import { promises } from 'dns';
 import { Fall2020 } from './mock';
 
 export function getCurrentSemester() {

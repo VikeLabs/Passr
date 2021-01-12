@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import AddButton from './MainActionButton';
 // import Grade from './GradeItemAccordion';
-import { CourseItem } from '../api';
+import { Course, CourseItem } from '../api';
+import GradeItemAccordion from './GradeItemAccordion';
 
 const ContentContainer = styled.div`
 	color: #002366;
@@ -71,16 +72,22 @@ const CourseItemTitle = styled.th`
 	padding: 1em;
 `;
 
-function GradeBookContentContainer() {
+interface Props {
+	course: Course;
+	updateCourse: (course: Course) => void;
+}
+
+function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const openModal = () => {
 		console.log('Item added!');
 	};
-	const [courseItem, setCourseItem] = useState<CourseItem>({
-		name: '',
-		weight: 10,
-	});
-	function updateCourseItem(item: CourseItem) {
-		setCourseItem(item);
+	function updateCourseItem(item: CourseItem, index: number) {
+		const newCourseItems = [...course.items];
+		newCourseItems[index] = item;
+		updateCourse({ ...course, items: newCourseItems });
+
+		// Following has been done now...
+
 		// In the future, this will not call the update state function
 		// Instead it will determine which course item in the course was updated
 		// Then create a new course with the updated item
@@ -109,6 +116,19 @@ function GradeBookContentContainer() {
 						<CourseItemTitle>Grade</CourseItemTitle>
 						<CourseItemTitle>Due Date</CourseItemTitle>
 					</tr>
+					{course.items.map((item, index) => {
+						console.log({ item, index });
+						function callback(newItem: CourseItem) {
+							updateCourseItem(newItem, index);
+						}
+						return (
+							<GradeItemAccordion
+								key={item.name + index}
+								item={item}
+								updateItem={callback}
+							/>
+						);
+					})}
 				</Table>
 			</CourseItemRow>
 		</ContentContainer>

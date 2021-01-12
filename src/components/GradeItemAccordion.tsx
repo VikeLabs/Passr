@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
 import DelButton from './MainActionButton';
-import { CourseItem, Fraction } from '../api';
+import { Course, CourseItem, Fraction, getCurrentSemester } from '../api';
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
 	updateItem: (item: CourseItem) => void;
@@ -98,7 +98,6 @@ function GradeItemAccordionExtended({
 
 function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	const { name, weight, grade, dueDate } = item;
-
 	// useEffect(() => {
 	// 	if (grade != tempGrade) setTempGrade(grade);
 	// }, [item]);
@@ -150,7 +149,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 							<TextInput
 								value={gradeToString(grade)}
 								onChange={(e) => {
-									let grade: number | Fraction = Number(
+									const grade: number | Fraction = Number(
 										e.target.value
 									);
 									if (isNaN(grade)) {

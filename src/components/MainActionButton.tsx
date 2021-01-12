@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { buttonStyle } from 'styled-system';
+import { variant, buttonStyle } from 'styled-system';
 
 export type Variant =
 	| 'primary'

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+import Logo from 'molecules/Logo';
 import styled from 'styled-components';
 
 const LoginPageContainer = styled.div`
@@ -96,7 +96,7 @@ function SignUpPage() {
 		<LoginPageContainer>
 			<LoginContents>
 				<PassrLogo>
-					<img src={logo} alt="logo" />
+					<Logo height="100%" width="100%" />
 				</PassrLogo>
 
 				<InputContainer>

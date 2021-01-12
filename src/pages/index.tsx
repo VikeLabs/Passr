@@ -1,14 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GradeBook from '../GradeBook';
-import Accounts from './accounts';
+import { Login, SignUp } from './accounts';
 
 function Pages() {
 	return (
 		<Router>
 			<Switch>
-				<Route path="/accounts">
-					<Accounts />
+				<Route path={`/sign-in`}>
+					<Login />
+				</Route>
+				<Route path="/sign-up">
+					<SignUp />
 				</Route>
 				<Route path="/">
 					<GradeBook />

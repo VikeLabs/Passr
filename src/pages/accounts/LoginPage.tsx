@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Logo from './molecules/Logo';
-import LoginButton from './components/MainActionButton';
-import TextButton from './components/TextButton';
-import TextInput from './components/TextInput';
+import Logo from 'molecules/Logo';
+import LoginButton from 'components/MainActionButton';
+import TextButton from 'components/TextButton';
+import TextInput from 'components/TextInput';
 import styled from 'styled-components';
 
 const LoginPageContainer = styled.div`

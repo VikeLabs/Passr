@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
 import DelButton from './MainActionButton';
-
+import { Course, CourseItem, Fraction, getCurrentSemester } from '../api';
 export interface GradeItemAccordionInterface {
-	itemName: string;
-	itemWeight?: string;
-	itemGrade?: string;
-	itemDueDate?: string;
+	item: CourseItem;
+	updateItem: (item: CourseItem) => void;
 }
 
 const Accordion = styled.tr`
@@ -52,67 +50,32 @@ const DeleteButton = styled(DelButton)`
 const TextContainer = styled.div`
 	margin: 1.5em;
 `;
-/*
-css`
-	td, tr, th {
-		border: none;
-	}
-`
-*/
 
 function submit() {
 	console.log('changed');
 }
-/*
-function GradeItemAccordionExtended({
-	itemName,
-	itemWeight='N/A',
-	grade='N/A',
-	dueDate='N/A',
-}: GradeItemAccordionExtended) {
-	return (
-		<AccordionExtended>
-			<AccordionExtendedComponent></AccordionExtendedComponent>
-			<AccordionExtendedComponent>
-				<TextInput value={itemName} onChange={submit} label="Name" />
-			</AccordionExtendedComponent>
-			<AccordionExtendedComponent>
-				<TextInput
-					value={itemWeight}
-					onChange={submit}
-					label="Weight"
-				/>
-			</AccordionExtendedComponent>
-			<AccordionExtendedComponent>
-				<TextInput value={grade} onChange={submit} label="Grade" />
-			</AccordionExtendedComponent>
-			<AccordionExtendedComponent>
-				<TextInput value={dueDate} onChange={submit} label="Due Date" />
-			</AccordionExtendedComponent>
-		</AccordionExtended>
-	);
-}
-*/
 
-function GradeItemAccordion({
-	itemName,
-	itemWeight = 'N/A',
-	itemGrade = 'N/A',
-	itemDueDate = 'N/A',
-}: GradeItemAccordionInterface) {
-	//const [itemName, setItemName] = useState('');
-	//const [itemWeight, setItemWeight] = useState('');
-	//const [itemGrade, setItemGrade] = useState('');
-	//const [itemDueDate, setItemDueDate] = useState('');
-	const [expandStatus, setStatus] = useState(false);
-	const [expandArrow, setArrow] = useState('>');
+function gradeToString(grade: number | Fraction | undefined) {
+	return '';
+}
+
+function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
+	const { name, weight, grade, dueDate } = item;
+	// useEffect(() => {
+	// 	if (grade != tempGrade) setTempGrade(grade);
+	// }, [item]);
+	const [expanded, setExpanded] = useState(false);
+	const [tempGrade, setTempGrade] = useState(grade);
+
+	function handleChange(change: Partial<CourseItem>) {
+		const newItem = { ...item, ...change };
+		updateItem(newItem);
+	}
 	const toggleItem = () => {
-		if (!expandStatus) {
-			setStatus(true);
-			setArrow('^');
+		if (!expanded) {
+			setExpanded(true);
 		} else {
-			setStatus(false);
-			setArrow('>');
+			setExpanded(false);
 		}
 		console.log('changed');
 	};
@@ -124,42 +87,58 @@ function GradeItemAccordion({
 					<AccordionExtendedComponent>
 						<TextContainer>
 							<TextInput
-								value={itemName}
+								value={name}
 								onChange={(e) => {
-									itemName = e.target.value;
+									// name = e.target.value;
+									handleChange({ name: e.target.value });
 								}}
 								label="Name"
-								placeholder={itemName}
+								placeholder={name}
 							/>
 						</TextContainer>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
 						<TextContainer>
 							<TextInput
-								value={itemWeight}
+								value={weight?.toString() || ''}
 								onChange={submit}
 								label="Weight"
-								placeholder={itemWeight}
+								placeholder="Weight"
 							/>
 						</TextContainer>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
 						<TextContainer>
 							<TextInput
-								value={itemGrade}
-								onChange={submit}
+								value={gradeToString(grade)}
+								onChange={(e) => {
+									const grade: number | Fraction = Number(
+										e.target.value
+									);
+									if (isNaN(grade)) {
+										console.log('ff');
+										// Get numerator and denominator using a regex expression
+										// If the regex fails, we should
+									}
+									// Call a setTempGrade
+								}}
+								onBlur={() => {
+									// Validate tempGrade is valid
+									// Call the handleChage
+									handleChange({ grade: tempGrade });
+								}}
 								label="Grade"
-								placeholder={itemGrade}
+								placeholder="Grade"
 							/>
 						</TextContainer>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
 						<TextContainer>
 							<TextInput
-								value={itemDueDate}
+								value={''}
 								onChange={submit}
 								label="Due Date"
-								placeholder={itemDueDate}
+								placeholder="Due Date"
 							/>
 						</TextContainer>
 					</AccordionExtendedComponent>
@@ -184,23 +163,23 @@ function GradeItemAccordion({
 			<Accordion>
 				<RowComponent>
 					<DropDownArrow onClick={toggleItem}>
-						{expandArrow}
+						{expanded ? '^' : '>'}
 					</DropDownArrow>
 				</RowComponent>
 				<RowComponent>
-					<p>{itemName}</p>
+					<p>{name}</p>
 				</RowComponent>
 				<RowComponent>
-					<p>{itemWeight}</p>
+					<p>{weight}</p>
 				</RowComponent>
 				<RowComponent>
-					<p>{itemGrade}</p>
+					<p>{grade}</p>
 				</RowComponent>
 				<RowComponent>
-					<p>{itemDueDate}</p>
+					<p>{dueDate}</p>
 				</RowComponent>
 			</Accordion>
-			{expandStatus && extended()}
+			{expanded && extended()}
 		</>
 	);
 }

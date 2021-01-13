@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Course, getCurrentSemester } from './api';
 import './App.css';
+import GradeBookContentContainer from './components/GradeBookContentContainer';
 import Logo from './molecules/Logo';
 
 function App() {
+	const [course, setCourse] = useState<Course | null>(null);
+	useEffect(() => {
+		(async () => {
+			const sem = await getCurrentSemester();
+			setCourse(sem.courses[0]);
+		})();
+	}, []);
+
+	useEffect(() => {
+		// Update semester with API
+	}, [course]);
+
+	function updateCourse(course: Course) {
+		setCourse(course);
+	}
 	return (
 		<div className="App">
-			<header className="App-header">
-				{/* <img src={logo} className="App-logo" alt="logo" /> */}
-				<Logo width="300px" height="300px" />
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
+			{course!=null || <h1>Loading</h1>}
+			{course && (
+				<GradeBookContentContainer
+					course={course}
+					updateCourse={updateCourse}
+				/>
+			)}
 		</div>
 	);
 }

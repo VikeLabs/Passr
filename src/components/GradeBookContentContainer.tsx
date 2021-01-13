@@ -1,7 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import AddButton from './MainActionButton';
-import Grade from './GradeItemAccordion';
+// import Grade from './GradeItemAccordion';
+import { Course, CourseItem } from '../api';
+import GradeItemAccordion from './GradeItemAccordion';
 
 const ContentContainer = styled.div`
 	color: #002366;
@@ -53,6 +55,13 @@ const Table = styled.table`
 	text-align: left;
 	font-weight: normal;
 	font-size: small;
+	${css`
+		td,
+		tr,
+		th {
+			border: none;
+		}
+	`}
 `;
 
 const CourseItemTitleSpace = styled.th`
@@ -63,10 +72,29 @@ const CourseItemTitle = styled.th`
 	padding: 1em;
 `;
 
-function GradeBookContentContainer() {
+interface Props {
+	course: Course;
+	updateCourse: (course: Course) => void;
+}
+
+function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const openModal = () => {
 		console.log('Item added!');
 	};
+	function updateCourseItem(item: CourseItem, index: number) {
+		const newCourseItems = [...course.items];
+		newCourseItems[index] = item;
+		updateCourse({ ...course, items: newCourseItems });
+
+		// Following has been done now...
+
+		// In the future, this will not call the update state function
+		// Instead it will determine which course item in the course was updated
+		// Then create a new course with the updated item
+		// And call a callback function (likely named updateCourse) passed in as a prop
+		// With the new course, similar to what is done in the accordion item, just one 'level up'
+	}
+
 	return (
 		<ContentContainer>
 			<TitleRow>
@@ -88,6 +116,19 @@ function GradeBookContentContainer() {
 						<CourseItemTitle>Grade</CourseItemTitle>
 						<CourseItemTitle>Due Date</CourseItemTitle>
 					</tr>
+					{course.items.map((item, index) => {
+						console.log({ item, index });
+						function callback(newItem: CourseItem) {
+							updateCourseItem(newItem, index);
+						}
+						return (
+							<GradeItemAccordion
+								key={item.name + index}
+								item={item}
+								updateItem={callback}
+							/>
+						);
+					})}
 				</Table>
 			</CourseItemRow>
 		</ContentContainer>

@@ -8,100 +8,92 @@ export const Overlay = styled.div`
 	height: 100%;
 	width: 100%;
 	display: flex;
-	// justify-content: center;
+	justify-content: center;
 	align-items: center;
 `;
 
 export const ButtonField = styled.div`
-	margin-right: 2em;
-	margin-left: 7em;
+	margin-right: 1em;
+	margin-left: 10.5em;
 	width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-areas: 'left right';
+	display: flex;
+	justify-content: right;
 	grid-gap: 1em;
 `;
 
 const ModalContainer = styled.div`
 	background-color: #ffffff;
 	position: fixed;
-	display: grid;
-	grid-template-rows: auto 1fr auto;
-	grid-template-areas:
-		'header'
-		'body'
-		'footer';
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: space-between;
 	border-radius: 30px;
 	overflow: auto;
 	width: 24em;
 	height: auto;
-	&:not {
-		background-color: red;
-	}
 `;
 
-const Header = styled.div`
-	background-color: #777777;
+const Header = styled.div<{ headerColor: string }>`
+	background-color: ${(props) => props.headerColor};
 	display: flex;
 	width: 100%;
-	height: 3em;
+	height: 2.5em;
 	justify-content: center;
 	align-items: center;
-	grid-area: header;
 `;
 
-// Footer
 const Footer = styled.div`
 	display: flex;
 	align-items: center;
 	background-color: #f8f8f8;
 	width: 100%;
 	height: 3.5em;
-	grid-area: footer;
 `;
 
 export interface ModalInterface {
-	color?: string;
+	headerColor?: string;
 	children: React.ReactNode;
 	header: string | React.ReactNode;
 	primaryButton: string;
-	primaryVar: Variant;
-	secondaryVar: Variant;
 	secondaryButton: string;
+	primaryVariant?: Variant;
+	secondaryVariant?: Variant;
 	handleClose: () => void;
 	handlePrimary: () => void;
 }
 
 function DefaultModal({
-	color,
+	headerColor = '#777777',
 	header,
 	children,
 	primaryButton,
-	primaryVar,
+	primaryVariant,
 	secondaryButton,
-	secondaryVar,
+	secondaryVariant,
 	handleClose,
 	handlePrimary,
 }: ModalInterface) {
 	return (
-		<Overlay onClick={() => handleClose()}>
+		<Overlay onClick={handleClose}>
 			<ModalContainer
 				onClick={(e) => {
-					e.stopPropagation();
+					e.stopPropagation(); // Prevents modal from closing on click
 				}}
 			>
-				<Header style={{ backgroundColor: color }}>{header}</Header>
+				<Header headerColor={headerColor}>{header}</Header>
 				{children}
 				<Footer>
 					<ButtonField>
 						<MainButton
-							variant={secondaryVar}
+							variant={secondaryVariant || 'secondary'}
 							onClick={handleClose}
 						>
 							{secondaryButton}
 						</MainButton>
 						<MainButton
-							variant={primaryVar}
+							variant={primaryVariant || 'primary'}
 							onClick={handlePrimary}
 						>
 							{primaryButton}

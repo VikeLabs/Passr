@@ -5,7 +5,7 @@ import Logo from '../molecules/Logo';
 
 const Desc = styled.p`
 	color: black;
-	font-size: 14px;
+	font-size: 1rem;
 `;
 
 const BodyLogo = styled.div`
@@ -26,18 +26,18 @@ function DeleteItemModal({ handleDelete, handleClose }: DeleteItemInterface) {
 
 	return (
 		<DefaultModal
-			color="#B80F0A"
+			headerColor="#B80F0A"
 			handleClose={handleClose}
 			header="Are you sure?"
+			primaryVariant="negative"
+			secondaryVariant="alternate"
 			primaryButton="Delete"
-			primaryVar="negative"
 			secondaryButton="Cancel"
-			secondaryVar="alternate"
 			handlePrimary={onDelete}
 		>
 			<div>
 				<Desc>
-					This action cannot be undone, are you sure you want to
+					This action cannot be undone. Are you sure you want to
 					delete this course item?
 				</Desc>
 				<BodyLogo>

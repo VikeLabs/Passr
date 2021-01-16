@@ -15,10 +15,10 @@ const ButtonStyle = styled.div`
 	}
 `;
 
-function TextButton({ text, onClick }: TextButtonInterface) {
+function TextButton({ text, onClick, ...props }: TextButtonInterface) {
 	return (
-		<ButtonStyle onClick={onClick}>
-			<p>{text}</p>
+		<ButtonStyle onClick={onClick} {...props}>
+			{text}
 		</ButtonStyle>
 	);
 }

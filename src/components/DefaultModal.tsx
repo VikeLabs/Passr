@@ -15,12 +15,19 @@ export const Overlay = styled.div`
 `;
 
 export const ButtonField = styled.div`
-	margin-right: 1em;
-	padding: 0 1em;
-	width: 50%;
-	display: flex;
-	justify-content: end;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 0.25fr;
+	grid-template-areas: '. abort proceed .';
+	width: 100%;
 	grid-gap: 1em;
+`;
+
+export const AbortButton = styled(MainButton)`
+	grid-area: abort;
+`;
+
+export const ProceedButton = styled(MainButton)`
+	grid-area: proceed;
 `;
 
 const ModalContainer = styled.div`
@@ -28,8 +35,7 @@ const ModalContainer = styled.div`
 	position: fixed;
 	display: flex;
 	justify-content: center;
-	flex-direction: row;
-	flex-wrap: wrap;
+	flex-direction: column;
 	align-content: space-between;
 	border-radius: 30px;
 	overflow: auto;
@@ -48,7 +54,6 @@ const Header = styled.div<{ headerColor: string }>`
 
 const Footer = styled.div`
 	display: flex;
-	justify-content: right;
 	align-items: center;
 	background-color: #f8f8f8;
 	width: 100%;
@@ -89,18 +94,18 @@ function DefaultModal({
 				{children}
 				<Footer>
 					<ButtonField>
-						<MainButton
+						<AbortButton
 							variant={secondaryVariant || 'secondary'}
 							onClick={handleClose}
 						>
 							{secondaryButton}
-						</MainButton>
-						<MainButton
+						</AbortButton>
+						<ProceedButton
 							variant={primaryVariant || 'primary'}
 							onClick={handlePrimary}
 						>
 							{primaryButton}
-						</MainButton>
+						</ProceedButton>
 					</ButtonField>
 				</Footer>
 			</ModalContainer>

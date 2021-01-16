@@ -6,6 +6,7 @@ const InputContainer = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
+	width: 100%;
 `;
 
 const LabelContainer = styled.div`
@@ -15,8 +16,8 @@ const LabelContainer = styled.div`
 
 const Label = styled.p`
 	font-size: 0.75em;
-	margin: 0;
 	color: #4961e1;
+	margin: 0;
 	margin-bottom: 0.5em;
 `;
 
@@ -26,15 +27,15 @@ const Asterix = styled(Label)`
 `;
 
 const Input = styled.input<{ error: boolean }>`
-	border: none;
 	border: 1px solid #bdbdbd;
+	box-sizing: border-box;
 	border-radius: 10px;
 	outline: none;
 	font-size: 0.8em;
 	color: black;
-	width: 11em;
-	height: 2em;
-	padding: 0.25em;
+	width: 100%;
+	height: 100%;
+	padding: 0.5em;
 	&:focus {
 		border: 1px solid #aaaaaa;
 	}

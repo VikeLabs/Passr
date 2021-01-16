@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Logo from 'molecules/Logo';
 import styled from 'styled-components';
 
-const LoginPageContainer = styled.div`
+const SignUpPageContainer = styled.div`
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -11,7 +11,7 @@ const LoginPageContainer = styled.div`
 	background-color: #e5e5e5;
 `;
 
-const LoginContents = styled.div`
+const SignUpContents = styled.div`
 	width: 250px;
 	display: flex;
 	flex-direction: column;
@@ -32,7 +32,7 @@ const InputContainer = styled.div`
 	width: 100%;
 `;
 
-const LoginButton = styled.button`
+const SignUpButton = styled.button`
 	width: 100%;
 	margin: 1.5em 0;
 `;
@@ -93,8 +93,8 @@ function SignUpPage() {
 	};
 
 	return (
-		<LoginPageContainer>
-			<LoginContents>
+		<SignUpPageContainer>
+			<SignUpContents>
 				<PassrLogo>
 					<Logo height="100%" width="100%" />
 				</PassrLogo>
@@ -175,15 +175,15 @@ function SignUpPage() {
 						Already have an account? Log in here.
 					</a>
 				</Links>
-				<LoginButton
+				<SignUpButton
 					type="button"
 					disabled={emailErr || passErr}
 					onClick={onSubmit}
 				>
 					Sign Up
-				</LoginButton>
-			</LoginContents>
-		</LoginPageContainer>
+				</SignUpButton>
+			</SignUpContents>
+		</SignUpPageContainer>
 	);
 }
 export default SignUpPage;

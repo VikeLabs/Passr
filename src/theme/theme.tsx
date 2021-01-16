@@ -1,6 +1,5 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { colorStyle } from 'styled-system';
 
 const baseTheme = {
 	fonts: ['Montserrat'],

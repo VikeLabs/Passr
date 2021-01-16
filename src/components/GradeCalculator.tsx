@@ -5,7 +5,7 @@ import { getCurrentSemester } from '../api/api';
 const semester = getCurrentSemester();
 
 function currentGradeCalculator(course: Course) {
-	course.items.map((item, index) => {
+	course.items.map((item) => {
 		return item.grade;
 	});
 }

@@ -3,21 +3,19 @@ import Logo from '../molecules/Logo';
 import styled from 'styled-components';
 import MainActionButton, { Variant } from './MainActionButton';
 import { Semester, Course } from '../api';
-//import Fall2020 from '../api/mock';
 export interface SideBarInterface {
 	currentSemester: Semester;
 }
 const SideBarContainer = styled.div`
 	background-color: #4961e1;
 	height: 100%;
-	width: 200px;
+	width: 100%;
 	justify-content: center;
 	text-align: center;
-	position: fixed;
+	font-weight: bold;
 `;
 const ListOfCoursesContainer = styled.ol`
 	font-size: large;
-	font-weight: bold;
 	padding: 0;
 `;
 const CourseItem = styled.li`
@@ -35,9 +33,9 @@ const CourseItem = styled.li`
 const SideBarImage = styled(Logo)`
 	background-color: #4961e1;
 `;
-
-const ButtonContainer = styled.div`
-	padding: 4em;
+const AddCourseButtonContainer = styled.div`
+	margin: 2em 1em;
+	font-size: small;
 `;
 
 function AddCourse() {
@@ -53,14 +51,16 @@ function CourseList({ courses }: { courses: Course[] }) {
 		</ListOfCoursesContainer>
 	);
 }
-function SideBar({ currentSemester }: SideBarInterface) {
+function SideBar({ currentSemester, ...props }: SideBarInterface) {
 	return (
-		<SideBarContainer>
-			<SideBarImage width="4em" height="4em" />
+		<SideBarContainer {...props}>
+			<SideBarImage width="8em" height="8em" />
 			<CourseList courses={currentSemester.courses} />
-			<MainActionButton onClick={AddCourse} variant="secondary">
-				Add course
-			</MainActionButton>
+			<AddCourseButtonContainer>
+				<MainActionButton onClick={AddCourse} variant="secondary">
+					Add course
+				</MainActionButton>
+			</AddCourseButtonContainer>
 		</SideBarContainer>
 	);
 }

@@ -27,7 +27,8 @@ const InputField = styled.div`
 	grid-template-rows: 1fr 1.5fr;
 	grid-template-areas:
 		'name date'
-		'weight grade'
+		'weight grade';
+	grid-column-gap: 2em;
 	color: black;
 	justify-content: center;
 	align-items: center;
@@ -73,13 +74,13 @@ function AddItemModal({ handleSubmit, handleClose }: AddItemInterface) {
 
 	return (
 		<DefaultModal
-			color="#4961E1"
+			headerColor="#4961E1"
 			handleClose={handleClose}
 			header="Add course item"
 			primaryButton="Submit"
-			primaryVar="primary"
+			primaryVariant="primary"
 			secondaryButton="Cancel"
-			secondaryVar="alternate"
+			secondaryVariant="alternate"
 			handlePrimary={() => onSubmit({ name, date, weight, grade })}
 		>
 			<Body>

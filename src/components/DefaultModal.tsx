@@ -5,6 +5,8 @@ import MainButton, { Variant } from './MainActionButton';
 export const Overlay = styled.div`
 	position: absolute;
 	backdrop-filter: blur(5px);
+	background-color: rgba(10, 10, 20, 0.5);
+	backdrop-filter: blur(0.2em);
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -14,10 +16,10 @@ export const Overlay = styled.div`
 
 export const ButtonField = styled.div`
 	margin-right: 1em;
-	margin-left: 10.5em;
-	width: 100%;
+	padding: 0 1em;
+	width: 50%;
 	display: flex;
-	justify-content: right;
+	justify-content: end;
 	grid-gap: 1em;
 `;
 
@@ -31,7 +33,7 @@ const ModalContainer = styled.div`
 	align-content: space-between;
 	border-radius: 30px;
 	overflow: auto;
-	width: 24em;
+	width: 25em;
 	height: auto;
 `;
 
@@ -46,6 +48,7 @@ const Header = styled.div<{ headerColor: string }>`
 
 const Footer = styled.div`
 	display: flex;
+	justify-content: right;
 	align-items: center;
 	background-color: #f8f8f8;
 	width: 100%;

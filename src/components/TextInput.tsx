@@ -32,7 +32,7 @@ const Input = styled.input<{ error: boolean }>`
 	outline: none;
 	font-size: 0.8em;
 	color: black;
-	width: 10em;
+	width: 11em;
 	height: 2em;
 	padding: 0.25em;
 	&:focus {

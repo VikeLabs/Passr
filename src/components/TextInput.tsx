@@ -26,17 +26,27 @@ const Asterix = styled(Label)`
 `;
 
 const Input = styled.input<{ error: boolean }>`
-	border-radius: 4px;
-	font-size: 0.8em;
 	border: none;
-	width: 100%;
+	border: 1px solid #bdbdbd;
+	border-radius: 10px;
+	outline: none;
+	font-size: 0.8em;
+	color: black;
+	width: 11em;
+	height: 2em;
 	padding: 0.25em;
+	&:focus {
+		border: 1px solid #aaaaaa;
+	}
+	&::placeholder {
+		color: #bdbdbd;
+	}
 	${(props) =>
 		props.error &&
 		css`
-			outline: auto 4px red; // Need to pick an error colour?
+			border: 2px solid #ff8888; // Need to pick an error colour?
 			&:focus {
-				outline: auto 4px red;
+				border: 2px solid #ff8888;
 			}
 		`}
 `;

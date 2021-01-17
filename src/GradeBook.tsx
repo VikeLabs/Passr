@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Logo from './molecules/Logo';
+import SideBarContent from './components/SideBar';
+import { Fall2020 } from './api/mock';
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -8,10 +9,9 @@ const GradeBookContainer = styled.div`
 	background-color: orange;
 	display: grid;
 	grid-template-columns: 1fr 6fr 1fr;
-	grid-template-rows: 4fr 7fr 52fr;
+	grid-template-rows: 4fr 59fr;
 	grid-template-areas:
-		'logo header account'
-		'logo main-content main-content'
+		'sidebar header account'
 		'sidebar main-content main-content';
 
 	@media (max-width: 600px) {
@@ -23,13 +23,7 @@ const GradeBookContainer = styled.div`
 	}
 `;
 
-const LogoContainer = styled.div`
-	background-color: hotpink;
-	grid-area: logo;
-`;
-
-const Sidebar = styled.div`
-	background-color: lime;
+const SideBar = styled(SideBarContent)`
 	grid-area: sidebar;
 	@media (max-width: 600px) {
 		display: none;
@@ -63,11 +57,8 @@ const Header = styled(TheHeader)`
 function GradeBook() {
 	return (
 		<GradeBookContainer>
-			<LogoContainer>
-				<Logo width="100%" height="100%" />
-			</LogoContainer>
 			<Header />
-			<Sidebar />
+			<SideBar currentSemester={Fall2020} />
 			<MainContent />
 			<Account />
 		</GradeBookContainer>

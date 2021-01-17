@@ -30,7 +30,7 @@ const CourseItem = styled.li`
 		list-style: none;
 	}
 `;
-const SideBarImage = styled(Logo)`
+const SideBarLogo = styled(Logo)`
 	background-color: #4961e1;
 `;
 const AddCourseButtonContainer = styled.div`
@@ -45,8 +45,8 @@ function AddCourse() {
 function CourseList({ courses }: { courses: Course[] }) {
 	return (
 		<ListOfCoursesContainer>
-			{courses.map((item, index) => {
-				return <CourseItem key={index}>{item.name}</CourseItem>;
+			{courses.map((item, key) => {
+				return <CourseItem key={item.name}>{item.name}</CourseItem>;
 			})}
 		</ListOfCoursesContainer>
 	);
@@ -54,7 +54,7 @@ function CourseList({ courses }: { courses: Course[] }) {
 function SideBar({ currentSemester, ...props }: SideBarInterface) {
 	return (
 		<SideBarContainer {...props}>
-			<SideBarImage width="8em" height="8em" />
+			<SideBarLogo width="8em" height="8em" />
 			<CourseList courses={currentSemester.courses} />
 			<AddCourseButtonContainer>
 				<MainActionButton onClick={AddCourse} variant="secondary">

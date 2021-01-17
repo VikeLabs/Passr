@@ -5,31 +5,38 @@ import Logo from '../molecules/Logo';
 import TextInput from './TextInput';
 
 const Body = styled.div`
-	height: 20em;
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-template-rows: 1fr 4fr 5fr;
+	grid-template-areas:
+		'desc'
+		'logo'
+		'inputs';
+	justify-items: center;
 `;
 
 const Desc = styled.p`
-	color: black;
-	font-size: 14px;
+	grid-area: desc;
+	font-size: 0.8rem;
+	margin: 1em 0 0 0.2em;
 `;
 
-const BodyLogo = styled.div`
+const BodyLogo = styled(Logo)`
 	grid-area: logo;
-	justify-content: center;
-	align-items: center;
 `;
 
 const InputField = styled.div`
-	grid-area: input;
-	margin: 0 2em;
+	grid-area: inputs;
+	padding: 0 0 0.5em 0;
+	margin: 0 2.2em 0 2em;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1.5fr;
+	grid-template-rows: 1fr 1fr;
 	grid-template-areas:
 		'name date'
 		'weight grade';
 	grid-column-gap: 2em;
-	color: black;
 	justify-content: center;
 	align-items: center;
 `;
@@ -87,12 +94,9 @@ function AddItemModal({ handleSubmit, handleClose }: AddItemInterface) {
 				<Desc>
 					Add a new course item with any relevant information.
 				</Desc>
-				<BodyLogo>
-					<Logo width="9em" height="9em" />
-				</BodyLogo>
+				<BodyLogo width="13em" height="100%" />
 				<InputField>
 					<InputName
-						error={true}
 						label="Name"
 						value={name}
 						placeholder="Name"

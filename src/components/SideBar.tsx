@@ -45,8 +45,8 @@ function AddCourse() {
 function CourseList({ courses }: { courses: Course[] }) {
 	return (
 		<ListOfCoursesContainer>
-			{courses.map((item, key) => {
-				return <CourseItem key={item.name}>{item.name}</CourseItem>;
+			{courses.map((item, name) => {
+				return <CourseItem key={name}>{item.name}</CourseItem>;
 			})}
 		</ListOfCoursesContainer>
 	);

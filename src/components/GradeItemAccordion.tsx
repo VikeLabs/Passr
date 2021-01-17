@@ -56,7 +56,12 @@ function submit() {
 }
 
 function gradeToString(grade: number | Fraction | undefined) {
-	return '';
+	if (grade == undefined) {
+		return 'N/A';
+	} else if (!isNaN(grade)) {
+		return `${grade}`;
+	}
+	return `${grade.numerator}/${grade.denominator}`;
 }
 
 function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
@@ -100,7 +105,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 					<AccordionExtendedComponent>
 						<TextContainer>
 							<TextInput
-								value={weight?.toString() || ''}
+								value={weight?.toString() || 'N/A'}
 								onChange={submit}
 								label="Weight"
 								placeholder="Weight"
@@ -116,7 +121,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 										e.target.value
 									);
 									if (isNaN(grade)) {
-										console.log('ff');
+										grade = getFraction(grade);
 										// Get numerator and denominator using a regex expression
 										// If the regex fails, we should
 									}

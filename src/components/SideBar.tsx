@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../molecules/Logo';
 import styled from 'styled-components';
-import MainActionButton, { Variant } from './MainActionButton';
+import MainActionButton from './MainActionButton';
 import { Semester, Course } from '../api';
 export interface SideBarInterface {
 	currentSemester: Semester;

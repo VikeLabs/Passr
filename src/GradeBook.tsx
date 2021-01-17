@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Logo from './molecules/Logo';
 import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
 

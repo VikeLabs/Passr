@@ -57,11 +57,23 @@ function submit() {
 
 function gradeToString(grade: number | Fraction | undefined) {
 	if (grade == undefined) {
-		return 'N/A';
-	} else if (!isNaN(grade)) {
-		return `${grade}`;
+		return '';
+	} else if (typeof grade === 'object') {
+		return `${grade.numerator}/${grade.denominator}`;
 	}
-	return `${grade.numerator}/${grade.denominator}`;
+	return `${grade}`;
+}
+
+function parseGrade(s: string) {
+	const fractionRegex = /([\d+]\.?[\d+])\/([\d+]\.?[\d+])/;
+	const match = s.match(fractionRegex);
+	if (!isNaN(Number(s))) {
+		return Number(s);
+	} else if (match) {
+		return { numerator: Number(match[1]), denominator: Number(match[2]) };
+	} else {
+		return undefined;
+	}
 }
 
 function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
@@ -70,7 +82,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	// 	if (grade != tempGrade) setTempGrade(grade);
 	// }, [item]);
 	const [expanded, setExpanded] = useState(false);
-	const [tempGrade, setTempGrade] = useState(grade);
+	const [tempGrade, setTempGrade] = useState(gradeToString(grade));
 
 	function handleChange(change: Partial<CourseItem>) {
 		const newItem = { ...item, ...change };
@@ -115,22 +127,13 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 					<AccordionExtendedComponent>
 						<TextContainer>
 							<TextInput
-								value={gradeToString(grade)}
+								value={tempGrade}
 								onChange={(e) => {
-									const grade: number | Fraction = Number(
-										e.target.value
-									);
-									if (isNaN(grade)) {
-										grade = getFraction(grade);
-										// Get numerator and denominator using a regex expression
-										// If the regex fails, we should
-									}
-									// Call a setTempGrade
+									setTempGrade(e.target.value);
 								}}
 								onBlur={() => {
-									// Validate tempGrade is valid
-									// Call the handleChage
-									handleChange({ grade: tempGrade });
+									const parsedGrade = parseGrade(tempGrade);
+									handleChange({ grade: parsedGrade });
 								}}
 								label="Grade"
 								placeholder="Grade"
@@ -178,7 +181,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 					<p>{weight}</p>
 				</RowComponent>
 				<RowComponent>
-					<p>{grade}</p>
+					<p>{gradeToString(grade)}</p>
 				</RowComponent>
 				<RowComponent>
 					<p>{dueDate}</p>

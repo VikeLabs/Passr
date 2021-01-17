@@ -12,6 +12,7 @@ export interface mainActionButtonInterface {
 	children: React.ReactNode;
 	onClick: () => void;
 	variant?: Variant;
+	disabled?: boolean;
 }
 
 const MainActionButton = styled('button')<{ variant: Variant }>(
@@ -68,6 +69,7 @@ function MainButton({
 	children,
 	onClick,
 	variant,
+	disabled = false,
 	...props
 }: mainActionButtonInterface) {
 	return (
@@ -75,6 +77,7 @@ function MainButton({
 			variant={variant || 'primary'}
 			onClick={onClick}
 			{...props}
+			disabled={disabled}
 		>
 			{children}
 		</MainActionButton>

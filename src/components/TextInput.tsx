@@ -30,8 +30,9 @@ const Input = styled.input<{ error: boolean }>`
 	border: 1px solid #bdbdbd;
 	box-sizing: border-box;
 	border-radius: 10px;
+	box-sizing: border-box;
 	outline: none;
-	font-size: 0.8em;
+	font-size: inherit;
 	color: black;
 	width: 100%;
 	height: 100%;
@@ -83,9 +84,10 @@ function TextInput({
 	required = false,
 	type = 'text',
 	placeholder = '',
+	...props
 }: Props) {
 	return (
-		<InputContainer>
+		<InputContainer {...props}>
 			{label && (
 				<LabelContainer>
 					<Label>{label}</Label>

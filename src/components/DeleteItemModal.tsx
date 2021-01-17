@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import DefaultModal from './DefaultModal';
 import Logo from '../molecules/Logo';
 
-const Desc = styled.p`
-	color: black;
-	font-size: 1rem;
-`;
-
-const BodyLogo = styled.div`
+const Body = styled.div`
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+`;
+
+const Desc = styled.p`
+	font-size: 0.8em;
+	text-align: center;
+`;
+
+const BodyLogo = styled(Logo)`
+	margin: 1em;
 `;
 
 export interface DeleteItemInterface {
@@ -35,15 +41,13 @@ function DeleteItemModal({ handleDelete, handleClose }: DeleteItemInterface) {
 			secondaryButton="Cancel"
 			handlePrimary={onDelete}
 		>
-			<div>
+			<Body>
 				<Desc>
 					This action cannot be undone. Are you sure you want to
 					delete this course item?
 				</Desc>
-				<BodyLogo>
-					<Logo height="9em" width="9em" />
-				</BodyLogo>
-			</div>
+				<BodyLogo height="8em" width="100%" />
+			</Body>
 		</DefaultModal>
 	);
 }

@@ -39,17 +39,19 @@ const ModalContainer = styled.div`
 	align-content: space-between;
 	border-radius: 30px;
 	overflow: auto;
-	width: 25em;
+	width: 30em;
 	height: auto;
 `;
 
 const Header = styled.div<{ headerColor: string }>`
 	background-color: ${(props) => props.headerColor};
+	color: white;
 	display: flex;
 	width: 100%;
-	height: 2.5em;
+	height: 3em;
 	justify-content: center;
 	align-items: center;
+	font-size: 1.2em;
 `;
 
 const Footer = styled.div`
@@ -57,7 +59,7 @@ const Footer = styled.div`
 	align-items: center;
 	background-color: #f8f8f8;
 	width: 100%;
-	height: 3.5em;
+	height: 4.2em;
 `;
 
 export interface ModalInterface {

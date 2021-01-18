@@ -13,7 +13,7 @@ const Accordion = styled.tr`
 	color: #4f4f4f;
 	padding: 2em;
 	justify-content: center;
-	line-height: 14em;
+	line-height: 8em;
 	transition: line-height 14em ease-out;
 	border: #ffffff;
 	text-decoration: none;
@@ -24,6 +24,7 @@ const RowComponent = styled.td`
 	font-weight: bold;
 	font-size: large;
 	border: none;
+	margin: 1.5em;
 `;
 const DropDownArrow = styled.button`
 	border: none;
@@ -102,30 +103,29 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 				<AccordionExtended>
 					<AccordionExtendedComponent></AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<TextContainer>
+						<RowComponent>
 							<TextInput
 								value={name}
 								onChange={(e) => {
-									// name = e.target.value;
 									handleChange({ name: e.target.value });
 								}}
 								label="Name"
 								placeholder={name}
 							/>
-						</TextContainer>
+						</RowComponent>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<TextContainer>
+						<RowComponent>
 							<TextInput
 								value={weight?.toString() || 'N/A'}
 								onChange={submit}
 								label="Weight"
 								placeholder="Weight"
 							/>
-						</TextContainer>
+						</RowComponent>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<TextContainer>
+						<RowComponent>
 							<TextInput
 								value={tempGrade}
 								onChange={(e) => {
@@ -138,23 +138,23 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 								label="Grade"
 								placeholder="Grade"
 							/>
-						</TextContainer>
+						</RowComponent>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<TextContainer>
+						<RowComponent>
 							<TextInput
 								value={''}
 								onChange={submit}
 								label="Due Date"
 								placeholder="Due Date"
 							/>
-						</TextContainer>
+						</RowComponent>
 					</AccordionExtendedComponent>
 				</AccordionExtended>
 				<AccordionExtended>
 					<AccordionExtendedComponent></AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<DeleteButton onClick={submit}>
+						<DeleteButton onClick={submit} variant="primary">
 							Delete Item
 						</DeleteButton>
 					</AccordionExtendedComponent>
@@ -171,7 +171,13 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 			<Accordion>
 				<RowComponent>
 					<DropDownArrow onClick={toggleItem}>
-						{expanded ? '^' : '>'}
+						<i
+							className={
+								expanded
+									? 'fas fa-angle-down'
+									: 'fas fa-angle-right'
+							}
+						/>
 					</DropDownArrow>
 				</RowComponent>
 				<RowComponent>
@@ -181,10 +187,10 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 					<p>{weight}</p>
 				</RowComponent>
 				<RowComponent>
-					<p>{gradeToString(grade)}</p>
+					<p>{gradeToString(grade) || 'N/A'}</p>
 				</RowComponent>
 				<RowComponent>
-					<p>{dueDate}</p>
+					<p>{dueDate?.toDateString() || 'N/A'}</p>
 				</RowComponent>
 			</Accordion>
 			{expanded && extended()}

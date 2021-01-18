@@ -9,10 +9,13 @@ const Math100Items: CourseItem[] = [
 	{
 		name: 'Assignment 2',
 		weight: 5,
+		grade: { numerator: 8, denominator: 10 },
+		dueDate: new Date('January 20, 2021'),
 	},
 	{
 		name: 'Assignment 3',
 		weight: 5,
+		dueDate: new Date('February 16, 2021'),
 	},
 	{
 		name: 'Midterm 1',

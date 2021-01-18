@@ -69,7 +69,7 @@ const CourseItemTitleSpace = styled.th`
 `;
 
 const CourseItemTitle = styled.th`
-	padding: 1em;
+	padding-top: 1em;
 `;
 
 interface Props {

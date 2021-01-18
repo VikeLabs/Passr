@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import Logo from 'molecules/Logo';
 import styled from 'styled-components';
+import MainButton from 'components/MainActionButton';
+import TextButton from 'components/TextButton';
+import TextInput from 'components/TextInput';
+import { useHistory } from 'react-router-dom';
 
 const SignUpPageContainer = styled.div`
 	min-height: 100vh;
@@ -12,46 +16,35 @@ const SignUpPageContainer = styled.div`
 `;
 
 const SignUpContents = styled.div`
-	width: 250px;
+	max-width: 300px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+	grid-gap: 1em;
 `;
 
-const PassrLogo = styled.div`
+const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
-const InputContainer = styled.div`
+const SignUpButton = styled(MainButton)`
+	width: 100%;
+	padding: 1em;
+`;
+
+const TextLinkContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-	margin: 1em 0;
+	justify-content: flex-start;
 	width: 100%;
 `;
 
-const SignUpButton = styled.button`
-	width: 100%;
-	margin: 1.5em 0;
-`;
-
-const InputLabel = styled.div`
+const TextLink = styled(TextButton)`
+	font-size: 1rem;
 	font-weight: 500;
-	font-size: 1.2rem;
-	color: #4961e1;
-`;
-
-const InputBox = styled.input`
-	width: 100%;
-`;
-
-const Links = styled.div`
-	font-size: 0.8rem;
-	font-weight: 500;
-	display: flex;
-	flex-direction: column;
+	margin: 0.5em;
+	word-wrap: break-word;
 `;
 
 function validEmail(email: string) {
@@ -82,6 +75,8 @@ function SignUpPage() {
 	const [confirmUserPass, setConfirmUserPass] = useState('');
 	const [passErr, setPassErr] = useState(false);
 
+	const history = useHistory();
+
 	const onSubmit = () => {
 		console.log('Creating Account.');
 		console.log(`Username: ${email}`);
@@ -95,93 +90,72 @@ function SignUpPage() {
 	return (
 		<SignUpPageContainer>
 			<SignUpContents>
-				<PassrLogo>
-					<Logo height="100%" width="100%" />
-				</PassrLogo>
+				<PassrLogo width="300px" height="300px" />
 
-				<InputContainer>
-					<InputLabel>
-						<label>Email *</label>
-					</InputLabel>
-					<InputBox
-						type="text"
-						value={email}
-						onChange={(e) => {
-							if (validEmail(e.target.value)) setEmailErr(false);
-							setEmail(e.target.value);
-						}}
-						onBlur={(e) => {
-							if (!validEmail(e.target.value)) setEmailErr(true);
-						}}
-					/>
-				</InputContainer>
+				<TextInput
+					label="Email"
+					required
+					placeholder={'example@example.com'}
+					type="text"
+					value={email}
+					onChange={(e) => {
+						if (validEmail(e.target.value)) setEmailErr(false);
+						setEmail(e.target.value);
+					}}
+					onBlur={(e) => {
+						if (!validEmail(e.target.value)) setEmailErr(true);
+					}}
+				/>
+				<TextInput
+					label="Confirm Email"
+					required
+					placeholder="example@example.com"
+					type="text"
+					value={confirmEmail}
+					onChange={(e) => {
+						if (compareEmail(email, confirmEmail))
+							setEmailErr(false);
+						setConfirmEmail(e.target.value);
+					}}
+					onBlur={() => {
+						if (!compareEmail(email, confirmEmail))
+							setEmailErr(true);
+					}}
+				/>
+				<TextInput
+					label="Password"
+					required
+					type="password"
+					value={userPass}
+					onChange={(e) => {
+						if (validPass(e.target.value)) setPassErr(false);
+						setUserPass(e.target.value);
+					}}
+				/>
 
-				<InputContainer>
-					<InputLabel>
-						<label>Confirm Email *</label>
-					</InputLabel>
-					<InputBox
-						type="text"
-						value={confirmEmail}
-						onChange={(e) => {
-							if (compareEmail(email, confirmEmail))
-								setEmailErr(false);
-							setConfirmEmail(e.target.value);
-						}}
-						onBlur={() => {
-							if (!compareEmail(email, confirmEmail))
-								setEmailErr(true);
-						}}
-					/>
-				</InputContainer>
+				<TextInput
+					label="Confirm Password"
+					required
+					type="password"
+					value={confirmUserPass}
+					onChange={(e) => {
+						if (comparePass(userPass, confirmUserPass))
+							setPassErr(false);
+						setConfirmUserPass(e.target.value);
+					}}
+				/>
 
-				<InputContainer>
-					<InputLabel>
-						<label className="Password-label">Password *</label>
-					</InputLabel>
-					<InputBox
-						type="password"
-						value={userPass}
-						onChange={(e) => {
-							if (validPass(e.target.value)) setPassErr(false);
-							setUserPass(e.target.value);
-						}}
-					/>
-				</InputContainer>
-
-				<InputContainer>
-					<InputLabel>
-						<label className="Password-label">
-							Confirm Password *
-						</label>
-					</InputLabel>
-					<InputBox
-						type="password"
-						value={confirmUserPass}
-						onChange={(e) => {
-							if (comparePass(userPass, confirmUserPass))
-								setPassErr(false);
-							setConfirmUserPass(e.target.value);
-						}}
-					/>
-				</InputContainer>
-
-				<Links>
-					<a
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Already have an account? Log in here.
-					</a>
-				</Links>
-				<SignUpButton
-					type="button"
-					disabled={emailErr || passErr}
-					onClick={onSubmit}
-				>
+				<SignUpButton disabled={emailErr || passErr} onClick={onSubmit}>
 					Sign Up
 				</SignUpButton>
+				<TextLinkContainer>
+					<TextLink
+						text="Already have an account? Sign in here."
+						onClick={() => {
+							history.push('/sign-in');
+						}}
+					/>
+				</TextLinkContainer>
 			</SignUpContents>
 		</SignUpPageContainer>
 	);

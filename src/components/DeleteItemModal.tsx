@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import DefaultModal from './DefaultModal';
 import Logo from '../molecules/Logo';
 
@@ -24,15 +24,19 @@ export interface DeleteItemInterface {
 	handleClose: () => void;
 }
 
+// const red = (props) => props.theme.colors.negative[0];
+
 function DeleteItemModal({ handleDelete, handleClose }: DeleteItemInterface) {
 	function onDelete() {
 		handleDelete();
 		handleClose();
 	}
 
+	const theme = useContext(ThemeContext);
+
 	return (
 		<DefaultModal
-			headerColor="#B80F0A"
+			headerColor={theme.colors.negative[0]}
 			handleClose={handleClose}
 			header="Are you sure?"
 			primaryVariant="negative"

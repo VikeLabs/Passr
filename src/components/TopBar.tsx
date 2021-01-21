@@ -14,7 +14,7 @@ const TopBarStyle = styled.div`
 	justify-content: center;
 	align-items: center;
 	background: #ffffff;
-	color: #002366;
+	color: ${(props) => props.theme.colors.text};
 `;
 
 function TopBar({ text }: TopBarInterface) {

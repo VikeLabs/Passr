@@ -82,7 +82,7 @@ const MainActionButton = styled('button')`
 	font-size: 1em;
 	border-radius: 12px;
 	padding: 0.5rem 2rem;
-	width: 4em;
+	width: 100%;
 	border: none;
 	${buttonStyle}
 `;

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from 'molecules/Logo';
 import MainButton from 'components/MainActionButton';
 import TextButton from 'components/TextButton';
 import TextInput from 'components/TextInput';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
+import { CognitoUser } from '@aws-amplify/auth';
+import { userInfo } from 'os';
 
 const SignInPageContainer = styled.div`
 	min-height: 100vh;
@@ -53,18 +56,39 @@ function validEmail(email: string) {
 
 function SignInPage() {
 	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
-	const [userPass, setUserPass] = useState('');
+	const [signInError, setSignInError] = useState(false);
 
 	const history = useHistory();
 
-	const onSubmit = () => {
+	useEffect(() => {
+		Auth.currentAuthenticatedUser()
+			.then(() => {
+				history.push('/');
+			})
+			.catch(() => {
+				console.log('User not signed in.');
+			});
+	});
+
+	const onSubmit = async () => {
 		console.log('Signing in.');
-		console.log(`Username: ${email}`);
-		console.log(`Password: ${userPass.replaceAll(/.{1}/g, '*')}`);
 		if (!validEmail(email)) {
 			setEmailErr(true);
 			return;
+		}
+		try {
+			const user = await Auth.signIn({
+				username: email,
+				password,
+			});
+			if (user) {
+				history.push('/');
+			}
+		} catch (err) {
+			console.error(err);
+			setSignInError(true);
 		}
 	};
 
@@ -87,9 +111,9 @@ function SignInPage() {
 					placeholder="Username"
 				/>
 				<TextInput
-					value={userPass}
+					value={password}
 					onChange={(e) => {
-						setUserPass(e.target.value);
+						setPassword(e.target.value);
 					}}
 					label="Password"
 					required={true}
@@ -99,6 +123,7 @@ function SignInPage() {
 				<SignInButton disabled={emailErr} onClick={onSubmit}>
 					Sign In
 				</SignInButton>
+				{signInError && <h1>Could not sign in.</h1>}
 				<TextLinkContainer>
 					<TextLink
 						text="Forgot your password?"

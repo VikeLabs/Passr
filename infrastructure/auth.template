@@ -84,5 +84,22 @@
 			}
 		}
 	},
-	"Outputs": {}
+	"Outputs": {
+		"DevUserPoolId": {
+			"Value": {
+				"Ref": "DevUserPool"
+			},
+			"Export": {
+				"Name": "DevUserPoolId"
+			}
+		},
+		"DevUserPoolClientId": {
+			"Value": {
+				"Ref": "DevUserPoolClient"
+			},
+			"Export": {
+				"Name": "DevUserPoolClientId"
+			}
+		}
+	}
 }

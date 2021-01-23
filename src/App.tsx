@@ -2,6 +2,8 @@ import React from 'react';
 import Pages from './pages';
 import MainButton from './components/MainActionButton';
 import DeleteItemModal from 'components/DeleteItemModal';
+import SignIn from './pages/accounts/SignInPage';
+import GradeBook from './GradeBook';
 
 function click() {
 	console.log('clicked!');
@@ -27,13 +29,15 @@ function App() {
 	// 			5
 	// 		</MainButton>
 	// 	</div>
+	// // );
+	// return (
+	// 	<DeleteItemModal
+	// 		handleClose={() => console.log('c')}
+	// 		handleDelete={() => console.log('d')}
+	// 	></DeleteItemModal>
 	// );
-	return (
-		<DeleteItemModal
-			handleClose={() => console.log('c')}
-			handleDelete={() => console.log('d')}
-		></DeleteItemModal>
-	);
+	// return <SignIn></SignIn>;
+	return <GradeBook></GradeBook>;
 }
 
 export default App;

@@ -12,7 +12,7 @@ const SignInPageContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: #e5e5e5;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
 
 const SignInContents = styled.div`

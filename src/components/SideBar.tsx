@@ -7,7 +7,7 @@ export interface SideBarInterface {
 	currentSemester: Semester;
 }
 const SideBarContainer = styled.div`
-	background-color: #4961e1;
+	background-color: ${({ theme }) => theme.colors.primary[0]};
 	height: 100%;
 	width: 100%;
 	justify-content: center;
@@ -19,19 +19,19 @@ const ListOfCoursesContainer = styled.ol`
 	padding: 0;
 `;
 const CourseItem = styled.li`
-	color: #e5f2fc;
+	color: ${({ theme }) => theme.colors.secondary[0]};
 	cursor: pointer;
 	padding-top: 1em;
 	padding-bottom: 1em;
 	list-style: none;
 	&:hover {
-		background-color: #f2f2f2;
-		color: #002366;
+		background-color: ${({ theme }) => theme.colors.secondary[1]};
+		color: ${({ theme }) => theme.colors.text[1]};
 		list-style: none;
 	}
 `;
 const SideBarLogo = styled(Logo)`
-	background-color: #4961e1;
+	background-color: ${({ theme }) => theme.colors.primary[0]};
 `;
 const AddCourseButtonContainer = styled.div`
 	margin: 2em 1em;

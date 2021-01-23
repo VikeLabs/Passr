@@ -13,8 +13,8 @@ const TopBarStyle = styled.div`
 	font-size: 1em;
 	justify-content: center;
 	align-items: center;
-	background: #ffffff;
-	color: ${(props) => props.theme.colors.text};
+	background: ${(props) => props.theme.colors.white};
+	color: ${(props) => props.theme.colors.text[1]};
 `;
 
 function TopBar({ text }: TopBarInterface) {

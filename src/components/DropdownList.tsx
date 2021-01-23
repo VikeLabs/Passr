@@ -25,7 +25,7 @@ const DropdownMenuItem = styled.li`
 	cursor: pointer;
 	list-style: none;
 	&:hover {
-		background: #ededed;
+		background: ${({ theme }) => theme.colors.gray};
 		list-style: none;
 		border-radius: 10px;
 	}
@@ -34,10 +34,10 @@ const DropdownLink = styled(Link)`
 	display: block;
 	height: 100%;
 	text-decoration: none;
-	color: black;
+	color: ${({ theme }) => theme.colors.text[2]};
 	padding: 1em;
 	&:hover {
-		color: #4961e1;
+		color: ${({ theme }) => theme.colors.primary[0]};
 	}
 `;
 function DropdownList(props: Props) {

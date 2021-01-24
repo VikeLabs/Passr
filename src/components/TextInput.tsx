@@ -15,7 +15,7 @@ const LabelContainer = styled.div`
 `;
 
 const Label = styled.p`
-	font-size: 0.75em;
+	font-size: ${({ theme }) => theme.fontSizes.xs};
 	color: ${({ theme }) => theme.colors.primary[0]};
 	margin: 0;
 	margin-bottom: 0.5em;

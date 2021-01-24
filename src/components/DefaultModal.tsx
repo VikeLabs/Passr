@@ -19,6 +19,7 @@ export const ButtonField = styled.div`
 	grid-template-columns: 1fr 1fr 1fr 0.25fr;
 	grid-template-areas: '. abort proceed .';
 	width: 100%;
+	height: 60%;
 	grid-gap: 1em;
 `;
 
@@ -51,13 +52,13 @@ const Header = styled.div<{ headerColor: string }>`
 	height: 3em;
 	justify-content: center;
 	align-items: center;
-	font-size: 1.2em;
+	font-size: ${({ theme }) => theme.fontSizes.m};
 `;
 
 const Footer = styled.div`
 	display: flex;
 	align-items: center;
-	background-color: ${({ theme }) => theme.colors.main[0]};
+	background-color: ${({ theme }) => theme.colors.main[1]};
 	width: 100%;
 	height: 4.2em;
 `;

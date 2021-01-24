@@ -52,7 +52,7 @@ const Table = styled.table`
 	text-align: left;
 	text-decoration: underline;
 	font-weight: normal;
-	font-size: small;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
 const CourseItemTitleSpace = styled.th`

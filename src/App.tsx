@@ -10,7 +10,7 @@ function click() {
 }
 
 function App() {
-	// return <Pages />;
+	return <Pages />;
 	// return (
 	// 	<div>
 	// 		<MainButton variant={'primary'} onClick={click}>
@@ -37,7 +37,7 @@ function App() {
 	// 	></DeleteItemModal>
 	// );
 	// return <SignIn></SignIn>;
-	return <GradeBook></GradeBook>;
+	// return <GradeBook></GradeBook>;
 }
 
 export default App;

@@ -11,7 +11,7 @@ const Body = styled.div`
 `;
 
 const Desc = styled.p`
-	font-size: 0.8em;
+	font-size: ${({ theme }) => theme.fontSizes.xs};
 	text-align: center;
 `;
 

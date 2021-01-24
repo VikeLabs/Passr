@@ -2,13 +2,12 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 const baseTheme = {
-	fonts: ['Montserrat'],
 	fontSizes: {
-		xs: 12,
-		s: 16,
-		m: 20,
-		l: 24,
-		xl: 28,
+		xs: '0.8rem',
+		s: '1rem',
+		m: '1.2rem',
+		l: '1.4rem',
+		xl: '1.8rem',
 	},
 	colors: {
 		main: ['#ffffff', '#f8f8f8'],
@@ -17,7 +16,7 @@ const baseTheme = {
 		primary: ['#4961e1', '#354bc4'],
 		secondary: ['#e5f2fC', '#f2f2f2'],
 		positive: ['#35bea0', '#2a967e'],
-		negative: ['#b80f0a', '#880B07'],
+		negative: ['#b80f0a', '#990c08'],
 		alternate: ['#e0e0e0', '#d0d0d0'],
 		error: '#ff8888',
 	},

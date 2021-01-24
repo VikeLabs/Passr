@@ -17,7 +17,7 @@ export interface mainActionButtonInterface {
 }
 
 const MainActionButton = styled('button')`
-	font-size: 1em;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 	border-radius: 12px;
 	padding: 0.5rem 2rem;
 	width: 100%;

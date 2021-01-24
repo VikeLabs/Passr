@@ -10,7 +10,7 @@ const TopBarStyle = styled.div`
 	flex-direction: column;
 	font-weight: bold;
 	height: 3em;
-	font-size: 1em;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 	justify-content: center;
 	align-items: center;
 	background: ${(props) => props.theme.colors.white};

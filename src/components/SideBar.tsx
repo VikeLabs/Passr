@@ -15,7 +15,7 @@ const SideBarContainer = styled.div`
 	font-weight: bold;
 `;
 const ListOfCoursesContainer = styled.ol`
-	font-size: large;
+	font-size: ${({ theme }) => theme.fontSizes.m};
 	padding: 0;
 `;
 const CourseItem = styled.li`
@@ -35,7 +35,7 @@ const SideBarLogo = styled(Logo)`
 `;
 const AddCourseButtonContainer = styled.div`
 	margin: 2em 1em;
-	font-size: small;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
 function AddCourse() {

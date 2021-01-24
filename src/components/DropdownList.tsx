@@ -12,6 +12,7 @@ interface Props {
 }
 const DropdownMenu = styled.ul`
 	list-style: none;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 	text-align: start;
 	z-index: 2;
 	border: 1px solid rgba(0, 0, 0, 0.04);
@@ -25,7 +26,7 @@ const DropdownMenuItem = styled.li`
 	cursor: pointer;
 	list-style: none;
 	&:hover {
-		background: ${({ theme }) => theme.colors.gray};
+		background: ${({ theme }) => theme.colors.main[1]};
 		list-style: none;
 		border-radius: 10px;
 	}

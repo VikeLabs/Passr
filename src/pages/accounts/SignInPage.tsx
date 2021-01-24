@@ -41,7 +41,7 @@ const TextLinkContainer = styled.div`
 `;
 
 const TextLink = styled(TextButton)`
-	font-size: 1rem;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 	font-weight: 500;
 	margin: 0.5em;
 	word-wrap: break-word;

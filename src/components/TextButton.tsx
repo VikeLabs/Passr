@@ -8,7 +8,7 @@ export interface TextButtonInterface {
 
 const ButtonStyle = styled.div`
 	color: ${({ theme }) => theme.colors.gray[2]};
-	font-size: 1em;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 	cursor: pointer;
 	&:hover {
 		text-decoration: underline;

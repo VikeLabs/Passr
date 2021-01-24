@@ -176,7 +176,7 @@ function SignUpPage() {
 							setPassword({ ...password, value: e.target.value });
 						}
 					}}
-					onBlur={(e) => {
+					onBlur={() => {
 						if (!validPass(password.value)) {
 							setPassword({ ...password, error: true });
 						}

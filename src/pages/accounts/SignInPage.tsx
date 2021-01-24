@@ -6,7 +6,6 @@ import TextInput from 'components/TextInput';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
-import { CognitoUser } from '@aws-amplify/auth';
 
 const SignInPageContainer = styled.div`
 	min-height: 100vh;
@@ -48,8 +47,6 @@ const TextLink = styled(TextButton)`
 	margin: 0.5em;
 	word-wrap: break-word;
 `;
-
-const ResendCodeLink = styled(MainButton)``;
 
 function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
@@ -110,10 +107,10 @@ function SignInPage() {
 					onBlur={(e) => {
 						if (!validEmail(e.target.value)) setEmailErr(true);
 					}}
-					label="Username"
+					label="Email"
 					required
 					error={emailErr}
-					placeholder="Username"
+					placeholder="Email"
 				/>
 				<TextInput
 					value={password}

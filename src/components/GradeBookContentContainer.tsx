@@ -123,7 +123,7 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 						}
 						return (
 							<GradeItemAccordion
-								key={item.name + index}
+								key={index}
 								item={item}
 								updateItem={callback}
 							/>

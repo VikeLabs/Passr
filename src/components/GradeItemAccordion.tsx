@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
 import DelButton from './MainActionButton';
-import { Course, CourseItem, Fraction, getCurrentSemester } from '../api';
+import { CourseItem, Fraction } from '../api';
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
 	updateItem: (item: CourseItem) => void;
@@ -46,10 +46,7 @@ const AccordionExtendedComponent = styled.td`
 const DeleteButton = styled(DelButton)`
 	background-color: #ffffff;
 	color: #b80f0a;
-`;
-
-const TextContainer = styled.div`
-	margin: 1.5em;
+	margin-right: 2em;
 `;
 
 function submit() {
@@ -66,8 +63,9 @@ function gradeToString(grade: number | Fraction | undefined) {
 }
 
 function parseGrade(s: string) {
-	const fractionRegex = /([\d+]\.?[\d+])\/([\d+]\.?[\d+])/;
+	const fractionRegex = /([\d]*\.?[\d]+)\/([\d]*\.?[\d]+)/;
 	const match = s.match(fractionRegex);
+	console.log({ parseGradeMatch: match });
 	if (!isNaN(Number(s))) {
 		return Number(s);
 	} else if (match) {
@@ -83,7 +81,10 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	// 	if (grade != tempGrade) setTempGrade(grade);
 	// }, [item]);
 	const [expanded, setExpanded] = useState(false);
+	const [tempName, setTempName] = useState(name);
+	const [tempWeight, setTempWeight] = useState(weight?.toString() || '');
 	const [tempGrade, setTempGrade] = useState(gradeToString(grade));
+	const [tempDate, setTempDate] = useState('');
 
 	function handleChange(change: Partial<CourseItem>) {
 		const newItem = { ...item, ...change };
@@ -95,7 +96,6 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 		} else {
 			setExpanded(false);
 		}
-		console.log('changed');
 	};
 	const extended = () => {
 		return (
@@ -105,20 +105,32 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 					<AccordionExtendedComponent>
 						<RowComponent>
 							<TextInput
-								value={name}
+								value={tempName}
 								onChange={(e) => {
-									handleChange({ name: e.target.value });
+									setTempName(e.target.value);
+								}}
+								onBlur={() => {
+									handleChange({ name: tempName });
 								}}
 								label="Name"
-								placeholder={name}
+								placeholder="Name"
 							/>
 						</RowComponent>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
 						<RowComponent>
 							<TextInput
-								value={weight?.toString() || 'N/A'}
-								onChange={submit}
+								value={tempWeight}
+								onChange={(e) => {
+									setTempWeight(e.target.value);
+								}}
+								onBlur={() => {
+									handleChange({
+										weight: isNaN(Number(tempWeight))
+											? undefined
+											: Number(tempWeight),
+									});
+								}}
 								label="Weight"
 								placeholder="Weight"
 							/>
@@ -143,8 +155,15 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 					<AccordionExtendedComponent>
 						<RowComponent>
 							<TextInput
-								value={''}
-								onChange={submit}
+								value={tempDate}
+								onChange={(e) => {
+									setTempDate(e.target.value);
+								}}
+								onBlur={() => {
+									handleChange({
+										dueDate: new Date(tempDate),
+									});
+								}}
 								label="Due Date"
 								placeholder="Due Date"
 							/>
@@ -154,7 +173,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 				<AccordionExtended>
 					<AccordionExtendedComponent></AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<DeleteButton onClick={submit} variant="primary">
+						<DeleteButton onClick={submit} variant="negative">
 							Delete Item
 						</DeleteButton>
 					</AccordionExtendedComponent>

@@ -5,6 +5,7 @@ import MainButton from 'components/MainActionButton';
 import TextButton from 'components/TextButton';
 import TextInput from 'components/TextInput';
 import { useHistory } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
 
 const SignUpPageContainer = styled.div`
 	min-height: 100vh;
@@ -47,13 +48,14 @@ const TextLink = styled(TextButton)`
 	word-wrap: break-word;
 `;
 
+interface FieldValidation {
+	value: string;
+	error: boolean;
+}
+
 function validEmail(email: string) {
 	console.log('Checking email');
 	return !!email.match(/.+@.+\..{2,}/);
-}
-
-function compareEmail(email1: string, email2: string) {
-	return !!email1.match(email2);
 }
 
 function validPass(password: string) {
@@ -63,27 +65,46 @@ function validPass(password: string) {
 	return true; // Passed all checks
 }
 
-function comparePass(password1: string, password2: string) {
-	return !!password1.match(password2);
-}
-
 function SignUpPage() {
-	const [email, setEmail] = useState('');
-	const [confirmEmail, setConfirmEmail] = useState('');
-	const [emailErr, setEmailErr] = useState(false);
-	const [userPass, setUserPass] = useState('');
-	const [confirmUserPass, setConfirmUserPass] = useState('');
-	const [passErr, setPassErr] = useState(false);
+	const [email, setEmail] = useState<FieldValidation>({
+		value: '',
+		error: false,
+	});
+	const [confirmEmail, setConfirmEmail] = useState<FieldValidation>({
+		value: '',
+		error: false,
+	});
+	const [password, setPassword] = useState<FieldValidation>({
+		value: '',
+		error: false,
+	});
+	const [confirmPass, setConfirmPass] = useState<FieldValidation>({
+		value: '',
+		error: false,
+	});
 
 	const history = useHistory();
 
-	const onSubmit = () => {
-		console.log('Creating Account.');
-		console.log(`Username: ${email}`);
-		console.log(`Password: ${userPass.replaceAll(/.{1}/g, '*')}`);
-		if (!validEmail(email)) {
-			setEmailErr(true);
+	const onSubmit = async () => {
+		if (!validEmail(email.value)) {
+			setEmail({ ...email, error: true });
 			return;
+		}
+		try {
+			const { user, userConfirmed } = await Auth.signUp({
+				username: email.value,
+				password: password.value,
+			});
+			console.log({ user });
+			if (userConfirmed) {
+				history.push('/');
+			} else {
+				history.push(
+					`/confirm-sign-up?email=${encodeURI(email.value)}`
+				);
+			}
+		} catch (err) {
+			console.error(err);
 		}
 	};
 
@@ -97,13 +118,20 @@ function SignUpPage() {
 					required
 					placeholder={'example@example.com'}
 					type="text"
-					value={email}
+					value={email.value}
+					error={email.error}
 					onChange={(e) => {
-						if (validEmail(e.target.value)) setEmailErr(false);
-						setEmail(e.target.value);
+						if (validEmail(e.target.value)) {
+							console.log('Valid email...');
+							setEmail({ value: e.target.value, error: false });
+						} else {
+							setEmail({ ...email, value: e.target.value });
+						}
 					}}
 					onBlur={(e) => {
-						if (!validEmail(e.target.value)) setEmailErr(true);
+						if (!validEmail(e.target.value)) {
+							setEmail({ ...email, error: true });
+						}
 					}}
 				/>
 				<TextInput
@@ -111,25 +139,47 @@ function SignUpPage() {
 					required
 					placeholder="example@example.com"
 					type="text"
-					value={confirmEmail}
+					value={confirmEmail.value}
+					error={confirmEmail.error}
 					onChange={(e) => {
-						if (compareEmail(email, confirmEmail))
-							setEmailErr(false);
-						setConfirmEmail(e.target.value);
+						if (email.value === e.target.value) {
+							setConfirmEmail({
+								value: e.target.value,
+								error: false,
+							});
+						} else {
+							setConfirmEmail({
+								...confirmEmail,
+								value: e.target.value,
+							});
+						}
 					}}
 					onBlur={() => {
-						if (!compareEmail(email, confirmEmail))
-							setEmailErr(true);
+						if (email.value !== confirmEmail.value) {
+							setConfirmEmail({ ...confirmEmail, error: true });
+						}
 					}}
 				/>
 				<TextInput
 					label="Password"
 					required
 					type="password"
-					value={userPass}
+					value={password.value}
+					error={password.error}
 					onChange={(e) => {
-						if (validPass(e.target.value)) setPassErr(false);
-						setUserPass(e.target.value);
+						if (validPass(e.target.value)) {
+							setPassword({
+								value: e.target.value,
+								error: false,
+							});
+						} else {
+							setPassword({ ...password, value: e.target.value });
+						}
+					}}
+					onBlur={(e) => {
+						if (!validPass(password.value)) {
+							setPassword({ ...password, error: true });
+						}
 					}}
 				/>
 
@@ -137,15 +187,37 @@ function SignUpPage() {
 					label="Confirm Password"
 					required
 					type="password"
-					value={confirmUserPass}
+					value={confirmPass.value}
+					error={confirmPass.error}
 					onChange={(e) => {
-						if (comparePass(userPass, confirmUserPass))
-							setPassErr(false);
-						setConfirmUserPass(e.target.value);
+						if (password.value === e.target.value) {
+							setConfirmPass({
+								value: e.target.value,
+								error: false,
+							});
+						} else {
+							setConfirmPass({
+								...confirmPass,
+								value: e.target.value,
+							});
+						}
+					}}
+					onBlur={() => {
+						if (password.value !== confirmPass.value) {
+							setConfirmPass({ ...confirmPass, error: true });
+						}
 					}}
 				/>
 
-				<SignUpButton disabled={emailErr || passErr} onClick={onSubmit}>
+				<SignUpButton
+					disabled={
+						email.error ||
+						password.error ||
+						confirmPass.error ||
+						confirmEmail.error
+					}
+					onClick={onSubmit}
+				>
 					Sign Up
 				</SignUpButton>
 				<TextLinkContainer>

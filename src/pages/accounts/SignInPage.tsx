@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
-import { userInfo } from 'os';
 
 const SignInPageContainer = styled.div`
 	min-height: 100vh;
@@ -50,6 +49,8 @@ const TextLink = styled(TextButton)`
 	word-wrap: break-word;
 `;
 
+const ResendCodeLink = styled(MainButton)``;
+
 function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
 }
@@ -58,7 +59,7 @@ function SignInPage() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
-	const [signInError, setSignInError] = useState(false);
+	const [userPassError, setUserPassError] = useState(false);
 
 	const history = useHistory();
 
@@ -70,7 +71,7 @@ function SignInPage() {
 			.catch(() => {
 				console.log('User not signed in.');
 			});
-	});
+	}, []);
 
 	const onSubmit = async () => {
 		console.log('Signing in.');
@@ -88,7 +89,11 @@ function SignInPage() {
 			}
 		} catch (err) {
 			console.error(err);
-			setSignInError(true);
+			if (err.code === 'UserNotConfirmedException') {
+				history.push(`/confirm-sign-up?email=${encodeURI(email)}`);
+			} else {
+				setUserPassError(true);
+			}
 		}
 	};
 
@@ -123,7 +128,7 @@ function SignInPage() {
 				<SignInButton disabled={emailErr} onClick={onSubmit}>
 					Sign In
 				</SignInButton>
-				{signInError && <h1>Could not sign in.</h1>}
+				{userPassError && <h1>Could not sign in.</h1>}
 				<TextLinkContainer>
 					<TextLink
 						text="Forgot your password?"

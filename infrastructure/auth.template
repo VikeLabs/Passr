@@ -46,7 +46,7 @@
 					"email"
 				],
 				"VerificationMessageTemplate": {
-					"DefaultEmailOption": "CONFIRM_WITH_LINK",
+					"DefaultEmailOption": "CONFIRM_WITH_CODE",
 					"EmailMessage": "Verify your email using this code: {####}\n\n If you need any assistance verifying your email, please contant help@passr.ca",
 					"EmailSubject": "Passr | Verify your email address",
 					"EmailMessageByLink": "Verify your email using this link: {##passr##}\n\n If you need any assistance verifying your email, please contant help@passr.ca",
@@ -80,6 +80,10 @@
 				],
 				"SupportedIdentityProviders": [
 					"COGNITO"
+				],
+				"ExplicitAuthFlows": [
+					"ALLOW_USER_PASSWORD_AUTH",
+					"ALLOW_REFRESH_TOKEN_AUTH"
 				]
 			}
 		}

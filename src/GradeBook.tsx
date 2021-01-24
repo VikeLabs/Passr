@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
-import Dropdown from './molecules/ProfileDropdown';
-import DeleteItemModal from './components/DeleteItemModal';
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -61,12 +59,7 @@ function GradeBook() {
 		<GradeBookContainer>
 			<Header />
 			<SideBar currentSemester={Fall2020} />
-			<MainContent>
-				<DeleteItemModal
-					handleDelete={() => console.log('d')}
-					handleClose={() => console.log('close')}
-				></DeleteItemModal>
-			</MainContent>
+			<MainContent />
 			<Account />
 		</GradeBookContainer>
 	);

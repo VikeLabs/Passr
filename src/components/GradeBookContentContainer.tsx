@@ -118,14 +118,11 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 					</tr>
 					{course.items.map((item, index) => {
 						console.log({ item, index });
-						function callback(newItem: CourseItem) {
-							updateCourseItem(newItem, index);
-						}
 						return (
 							<GradeItemAccordion
 								key={index}
 								item={item}
-								updateItem={callback}
+								updateItem={(newItem) => updateCourseItem(newItem, index)}
 							/>
 						);
 					})}

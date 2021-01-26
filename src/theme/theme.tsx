@@ -1,7 +1,22 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider, DefaultTheme } from 'styled-components';
 
-const baseTheme = {
+export interface BaseTheme {
+	fontSizes: { xs: string; s: string; m: string; l: string; xl: string };
+	colors: {
+		main: [string, string];
+		text: [string, string, string];
+		gray: [string, string, string, string];
+		primary: [string, string];
+		secondary: [string, string];
+		positive: [string, string];
+		negative: [string, string];
+		alternate: [string, string];
+		error: string;
+	};
+}
+
+const baseTheme: BaseTheme = {
 	fontSizes: {
 		xs: '0.8rem',
 		s: '1rem',
@@ -11,8 +26,8 @@ const baseTheme = {
 	},
 	colors: {
 		main: ['#ffffff', '#f8f8f8'],
-		gray: ['#ededed', '#d5d5d5', '#bdbdbd', '#828282'],
 		text: ['#ffffff', '#002366', '#000000'],
+		gray: ['#ededed', '#d5d5d5', '#bdbdbd', '#828282'],
 		primary: ['#4961e1', '#354bc4'],
 		secondary: ['#e5f2fC', '#f2f2f2'],
 		positive: ['#35bea0', '#2a967e'],
@@ -22,8 +37,47 @@ const baseTheme = {
 	},
 };
 
-const theme = {
-	...baseTheme,
+export interface ButtonVariants {
+	buttons: {
+		primary: {
+			color: string;
+			backgroundColor: string;
+			'&:hover': {
+				backgroundColor: string;
+			};
+		};
+		secondary: {
+			color: string;
+			backgroundColor: string;
+			'&:hover': {
+				backgroundColor: string;
+			};
+		};
+		positive: {
+			color: string;
+			backgroundColor: string;
+			'&:hover': {
+				backgroundColor: string;
+			};
+		};
+		negative: {
+			color: string;
+			backgroundColor: string;
+			'&:hover': {
+				backgroundColor: string;
+			};
+		};
+		alternate: {
+			color: string;
+			backgroundColor: string;
+			'&:hover': {
+				backgroundColor: string;
+			};
+		};
+	};
+}
+
+const buttonVariants: ButtonVariants = {
 	buttons: {
 		primary: {
 			color: baseTheme.colors.text[0],
@@ -33,10 +87,10 @@ const theme = {
 			},
 		},
 		secondary: {
-			backgroundColor: baseTheme.colors.main,
 			color: baseTheme.colors.text[1],
+			backgroundColor: baseTheme.colors.main[0],
 			'&:hover': {
-				backgroundColor: baseTheme.colors.secondary,
+				backgroundColor: baseTheme.colors.secondary[1],
 			},
 		},
 		positive: {
@@ -63,12 +117,13 @@ const theme = {
 	},
 };
 
-interface themeInterface {
-	children: React.ReactNode;
-}
+const theme: DefaultTheme = {
+	...baseTheme,
+	...buttonVariants,
+};
 
-function Theme({ children }: themeInterface) {
+const Theme: React.FC = ({ children }) => {
 	return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-}
+};
 
 export default Theme;

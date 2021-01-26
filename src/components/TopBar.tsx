@@ -10,11 +10,11 @@ const TopBarStyle = styled.div`
 	flex-direction: column;
 	font-weight: bold;
 	height: 3em;
-	font-size: 1em;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 	justify-content: center;
 	align-items: center;
-	background: #ffffff;
-	color: #002366;
+	background: ${({ theme }) => theme.colors.main[0]};
+	color: ${({ theme }) => theme.colors.text[1]};
 `;
 
 function TopBar({ text }: TopBarInterface) {

@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import MainButton, { Variant } from './MainActionButton';
 
 export const Overlay = styled.div`
@@ -19,6 +19,7 @@ export const ButtonField = styled.div`
 	grid-template-columns: 1fr 1fr 1fr 0.25fr;
 	grid-template-areas: '. abort proceed .';
 	width: 100%;
+	height: 60%;
 	grid-gap: 1em;
 `;
 
@@ -31,7 +32,7 @@ export const ProceedButton = styled(MainButton)`
 `;
 
 const ModalContainer = styled.div`
-	background-color: #ffffff;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 	position: fixed;
 	display: flex;
 	justify-content: center;
@@ -44,20 +45,20 @@ const ModalContainer = styled.div`
 `;
 
 const Header = styled.div<{ headerColor: string }>`
-	background-color: ${(props) => props.headerColor};
-	color: white;
+	background-color: ${({ headerColor }) => headerColor};
+	color: ${({ theme }) => theme.colors.text[0]};
 	display: flex;
 	width: 100%;
 	height: 3em;
 	justify-content: center;
 	align-items: center;
-	font-size: 1.2em;
+	font-size: ${({ theme }) => theme.fontSizes.m};
 `;
 
 const Footer = styled.div`
 	display: flex;
 	align-items: center;
-	background-color: #f8f8f8;
+	background-color: ${({ theme }) => theme.colors.main[1]};
 	width: 100%;
 	height: 4.2em;
 `;
@@ -75,7 +76,7 @@ export interface ModalInterface {
 }
 
 function DefaultModal({
-	headerColor = '#777777',
+	headerColor,
 	header,
 	children,
 	primaryButton,
@@ -85,6 +86,7 @@ function DefaultModal({
 	handleClose,
 	handlePrimary,
 }: ModalInterface) {
+	const theme = useContext(ThemeContext);
 	return (
 		<Overlay onClick={handleClose}>
 			<ModalContainer
@@ -92,7 +94,9 @@ function DefaultModal({
 					e.stopPropagation(); // Prevents modal from closing on click
 				}}
 			>
-				<Header headerColor={headerColor}>{header}</Header>
+				<Header headerColor={headerColor || theme.colors.gray[1]}>
+					{header}
+				</Header>
 				{children}
 				<Footer>
 					<ButtonField>

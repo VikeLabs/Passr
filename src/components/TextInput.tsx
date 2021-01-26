@@ -15,19 +15,19 @@ const LabelContainer = styled.div`
 `;
 
 const Label = styled.p`
-	font-size: 0.75em;
-	color: #4961e1;
+	font-size: ${({ theme }) => theme.fontSizes.xs};
+	color: ${({ theme }) => theme.colors.primary[0]};
 	margin: 0;
 	margin-bottom: 0.5em;
 `;
 
 const Asterix = styled(Label)`
-	color: #bf080a;
+	color: ${({ theme }) => theme.colors.negative[0]};
 	padding-left: 0.25em;
 `;
 
 const Input = styled.input<{ error: boolean }>`
-	border: 1px solid #bdbdbd;
+	border: 1px solid ${({ theme }) => theme.colors.gray[2]};
 	box-sizing: border-box;
 	border-radius: 10px;
 	box-sizing: border-box;
@@ -38,17 +38,17 @@ const Input = styled.input<{ error: boolean }>`
 	height: 100%;
 	padding: 0.5em;
 	&:focus {
-		border: 1px solid #aaaaaa;
+		border: 1px solid ${({ theme }) => theme.colors.gray[3]};
 	}
 	&::placeholder {
-		color: #bdbdbd;
+		color: ${({ theme }) => theme.colors.gray[2]};
 	}
 	${(props) =>
 		props.error &&
 		css`
-			border: 2px solid #ff8888; // Need to pick an error colour?
+			border: 2px solid ${props.theme.colors.error}; // Need to pick an error colour?
 			&:focus {
-				border: 2px solid #ff8888;
+				border: 2px solid ${props.theme.colors.error};
 			}
 		`}
 `;

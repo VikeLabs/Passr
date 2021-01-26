@@ -12,6 +12,7 @@ interface Props {
 }
 const DropdownMenu = styled.ul`
 	list-style: none;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 	text-align: start;
 	z-index: 2;
 	border: 1px solid rgba(0, 0, 0, 0.04);
@@ -25,7 +26,7 @@ const DropdownMenuItem = styled.li`
 	cursor: pointer;
 	list-style: none;
 	&:hover {
-		background: #ededed;
+		background: ${({ theme }) => theme.colors.main[1]};
 		list-style: none;
 		border-radius: 10px;
 	}
@@ -34,10 +35,10 @@ const DropdownLink = styled(Link)`
 	display: block;
 	height: 100%;
 	text-decoration: none;
-	color: black;
+	color: ${({ theme }) => theme.colors.text[2]};
 	padding: 1em;
 	&:hover {
-		color: #4961e1;
+		color: ${({ theme }) => theme.colors.primary[0]};
 	}
 `;
 function DropdownList(props: Props) {

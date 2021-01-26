@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from 'molecules/Logo';
 import styled from 'styled-components';
 import MainButton from 'components/MainActionButton';
@@ -85,11 +85,38 @@ function SignUpPage() {
 
 	const history = useHistory();
 
-	const onSubmit = async () => {
+	useEffect(() => {
+		const listener = (event: KeyboardEvent) => {
+			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+				handleSubmit();
+			}
+		};
+		document.addEventListener('keydown', listener);
+		return () => {
+			document.removeEventListener('keydown', listener);
+		};
+	}, [email, password, confirmEmail, confirmPass]);
+
+	const handleSubmit = async () => {
 		if (!validEmail(email.value)) {
 			setEmail({ ...email, error: true });
 			return;
 		}
+
+		if (email.value !== confirmEmail.value) {
+			setConfirmEmail({ ...confirmEmail, error: true });
+			return;
+		}
+
+		if (!validPass(password.value)) {
+			setPassword({ ...password, error: true });
+			return;
+		}
+
+		if (password.value !== confirmPass.value) {
+			setConfirmPass({ ...confirmPass, error: true });
+		}
+
 		try {
 			const { user, userConfirmed } = await Auth.signUp({
 				username: email.value,
@@ -216,7 +243,8 @@ function SignUpPage() {
 						confirmPass.error ||
 						confirmEmail.error
 					}
-					onClick={onSubmit}
+					variant="primary"
+					onClick={handleSubmit}
 				>
 					Sign Up
 				</SignUpButton>

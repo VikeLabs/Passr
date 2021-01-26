@@ -70,8 +70,20 @@ function SignInPage() {
 			});
 	}, []);
 
-	const onSubmit = async () => {
-		console.log('Signing in.');
+	useEffect(() => {
+		const listener = (event: KeyboardEvent) => {
+			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+				console.log('Enter pressed!');
+				handleSubmit();
+			}
+		};
+		document.addEventListener('keydown', listener);
+		return () => {
+			document.removeEventListener('keydown', listener);
+		};
+	}, [email, password]);
+
+	const handleSubmit = async () => {
 		if (!validEmail(email)) {
 			setEmailErr(true);
 			return;
@@ -122,7 +134,11 @@ function SignInPage() {
 					type="password"
 					placeholder="Password"
 				/>
-				<SignInButton disabled={emailErr} onClick={onSubmit}>
+				<SignInButton
+					variant="primary"
+					disabled={emailErr}
+					onClick={handleSubmit}
+				>
 					Sign In
 				</SignInButton>
 				{userPassError && <h1>Could not sign in.</h1>}

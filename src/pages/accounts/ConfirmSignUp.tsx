@@ -49,6 +49,19 @@ function ConfirmSignUp() {
 		}
 	}, []);
 
+	useEffect(() => {
+		const listener = (event: KeyboardEvent) => {
+			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+				console.log('Enter pressed!');
+				handleSubmit();
+			}
+		};
+		document.addEventListener('keydown', listener);
+		return () => {
+			document.removeEventListener('keydown', listener);
+		};
+	}, [email, code]);
+
 	const handleSubmit = async () => {
 		try {
 			await Auth.confirmSignUp(email, code);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import Logo from 'molecules/Logo';
 import styled from 'styled-components';
 import MainButton from 'components/MainActionButton';
@@ -13,7 +13,7 @@ const SignUpPageContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.colors.main[0]};
+	background-color: ${({ theme }) => theme.colors.main[1]};
 `;
 
 const SignUpContents = styled.div`
@@ -48,9 +48,13 @@ const TextLink = styled(TextButton)`
 	word-wrap: break-word;
 `;
 
-interface FieldValidation {
+interface InputData {
 	value: string;
 	error: boolean;
+}
+
+function inputReducer(state: InputData, action: Partial<InputData>) {
+	return { ...state, ...action };
 }
 
 function validEmail(email: string) {
@@ -65,23 +69,22 @@ function validPass(password: string) {
 	return true; // Passed all checks
 }
 
+const initialInputValue: InputData = {
+	value: '',
+	error: false,
+};
+
 function SignUpPage() {
-	const [email, setEmail] = useState<FieldValidation>({
-		value: '',
-		error: false,
-	});
-	const [confirmEmail, setConfirmEmail] = useState<FieldValidation>({
-		value: '',
-		error: false,
-	});
-	const [password, setPassword] = useState<FieldValidation>({
-		value: '',
-		error: false,
-	});
-	const [confirmPass, setConfirmPass] = useState<FieldValidation>({
-		value: '',
-		error: false,
-	});
+	const [email, emailDispatch] = useReducer(inputReducer, initialInputValue);
+	const [confirmEmail, setConfirmEmail] = useReducer(
+		inputReducer,
+		initialInputValue
+	);
+	const [password, setPassword] = useReducer(inputReducer, initialInputValue);
+	const [confirmPass, setConfirmPass] = useReducer(
+		inputReducer,
+		initialInputValue
+	);
 
 	const history = useHistory();
 
@@ -99,22 +102,22 @@ function SignUpPage() {
 
 	const handleSubmit = async () => {
 		if (!validEmail(email.value)) {
-			setEmail({ ...email, error: true });
+			emailDispatch({ error: true });
 			return;
 		}
 
 		if (email.value !== confirmEmail.value) {
-			setConfirmEmail({ ...confirmEmail, error: true });
+			setConfirmEmail({ error: true });
 			return;
 		}
 
 		if (!validPass(password.value)) {
-			setPassword({ ...password, error: true });
+			setPassword({ error: true });
 			return;
 		}
 
 		if (password.value !== confirmPass.value) {
-			setConfirmPass({ ...confirmPass, error: true });
+			setConfirmPass({ error: true });
 		}
 
 		try {
@@ -149,15 +152,17 @@ function SignUpPage() {
 					error={email.error}
 					onChange={(e) => {
 						if (validEmail(e.target.value)) {
-							console.log('Valid email...');
-							setEmail({ value: e.target.value, error: false });
-						} else {
-							setEmail({ ...email, value: e.target.value });
+							emailDispatch({
+								error: false,
+							});
 						}
+						emailDispatch({
+							value: e.target.value,
+						});
 					}}
-					onBlur={(e) => {
-						if (!validEmail(e.target.value)) {
-							setEmail({ ...email, error: true });
+					onBlur={() => {
+						if (!validEmail(email.value)) {
+							emailDispatch({ error: true });
 						}
 					}}
 				/>
@@ -171,19 +176,16 @@ function SignUpPage() {
 					onChange={(e) => {
 						if (email.value === e.target.value) {
 							setConfirmEmail({
-								value: e.target.value,
 								error: false,
 							});
-						} else {
-							setConfirmEmail({
-								...confirmEmail,
-								value: e.target.value,
-							});
 						}
+						setConfirmEmail({
+							value: e.target.value,
+						});
 					}}
 					onBlur={() => {
 						if (email.value !== confirmEmail.value) {
-							setConfirmEmail({ ...confirmEmail, error: true });
+							setConfirmEmail({ error: true });
 						}
 					}}
 				/>
@@ -196,16 +198,14 @@ function SignUpPage() {
 					onChange={(e) => {
 						if (validPass(e.target.value)) {
 							setPassword({
-								value: e.target.value,
 								error: false,
 							});
-						} else {
-							setPassword({ ...password, value: e.target.value });
 						}
+						setPassword({ value: e.target.value });
 					}}
 					onBlur={() => {
 						if (!validPass(password.value)) {
-							setPassword({ ...password, error: true });
+							setPassword({ error: true });
 						}
 					}}
 				/>
@@ -219,19 +219,16 @@ function SignUpPage() {
 					onChange={(e) => {
 						if (password.value === e.target.value) {
 							setConfirmPass({
-								value: e.target.value,
 								error: false,
 							});
-						} else {
-							setConfirmPass({
-								...confirmPass,
-								value: e.target.value,
-							});
 						}
+						setConfirmPass({
+							value: e.target.value,
+						});
 					}}
 					onBlur={() => {
 						if (password.value !== confirmPass.value) {
-							setConfirmPass({ ...confirmPass, error: true });
+							setConfirmPass({ error: true });
 						}
 					}}
 				/>

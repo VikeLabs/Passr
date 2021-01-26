@@ -22,7 +22,7 @@ const ConfirmSignUpContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: #e5e5e5;
+	background-color: ${({ theme }) => theme.colors.main[1]};
 `;
 
 const ConfirmButton = styled(MainButton)`
@@ -30,7 +30,7 @@ const ConfirmButton = styled(MainButton)`
 	width: 100%;
 `;
 const ResendButton = styled(TextButton)`
-	color: #666666;
+	color: ${({ theme }) => theme.colors.gray[3]};
 `;
 
 function ConfirmSignUp() {

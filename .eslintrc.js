@@ -25,6 +25,13 @@ module.exports = {
 		'react/no-unused-prop-types': 'warn',
 		'prettier/prettier': 'warn',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/naming-convention': [
+			'error',
+			{
+				format: ['PascalCase'],
+				selector: ['typeLike'],
+			},
+		],
 	},
 	settings: {
 		react: {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import Logo from 'molecules/Logo';
 import styled from 'styled-components';
 import MainButton from 'components/MainActionButton';

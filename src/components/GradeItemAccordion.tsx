@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
 import DelButton from './MainActionButton';
-import { CourseItem, Fraction } from '../api';
+import { CourseItem, Fraction } from 'api';
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
 	updateItem: (item: CourseItem) => void;

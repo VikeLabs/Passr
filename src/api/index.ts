@@ -16,6 +16,7 @@ export interface Course {
 	name: string;
 	crn?: number;
 	items: CourseItem[];
+	desiredGrade?: number;
 }
 
 export interface Semester {

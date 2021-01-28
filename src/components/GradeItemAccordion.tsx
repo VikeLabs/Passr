@@ -77,9 +77,6 @@ function parseGrade(s: string) {
 
 function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	const { name, weight, grade, dueDate } = item;
-	// useEffect(() => {
-	// 	if (grade != tempGrade) setTempGrade(grade);
-	// }, [item]);
 	const [expanded, setExpanded] = useState(false);
 	const [tempName, setTempName] = useState(name);
 	const [tempWeight, setTempWeight] = useState(weight?.toString() || '');
@@ -90,13 +87,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 		const newItem = { ...item, ...change };
 		updateItem(newItem);
 	}
-	const toggleItem = () => {
-		if (!expanded) {
-			setExpanded(true);
-		} else {
-			setExpanded(false);
-		}
-	};
+
 	const extended = () => {
 		return (
 			<>
@@ -189,7 +180,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 		<>
 			<Accordion>
 				<RowComponent>
-					<DropDownArrow onClick={toggleItem}>
+					<DropDownArrow onClick={() => setExpanded(!expanded)}>
 						<i
 							className={
 								expanded

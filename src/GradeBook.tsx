@@ -40,17 +40,7 @@ const Account = styled.div`
 	background-color: magenta;
 `;
 
-// Another Component File
-const TheHeaderContainer = styled.div`
-	background-color: cyan;
-`;
-
-function TheHeader() {
-	return <TheHeaderContainer />;
-}
-// End of Another Component File
-
-const Header = styled(TheHeader)`
+const Header = styled.div`
 	grid-area: header;
 `;
 

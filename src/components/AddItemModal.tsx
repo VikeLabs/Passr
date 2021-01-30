@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import DefaultModal from './DefaultModal';
 import Logo from '../molecules/Logo';
 import TextInput from './TextInput';
@@ -18,7 +18,7 @@ const Body = styled.div`
 
 const Desc = styled.p`
 	grid-area: desc;
-	font-size: 0.8rem;
+	font-size: ${({ theme }) => theme.fontSizes.xs};
 	margin: 1em 0 0 0.2em;
 `;
 
@@ -74,6 +74,8 @@ function AddItemModal({ handleSubmit, handleClose }: AddItemInterface) {
 	const [weight, setWeight] = useState('');
 	const [grade, setGrade] = useState('');
 
+	const theme = useContext(ThemeContext);
+
 	function onSubmit({ name, date, weight, grade }: AddItemData) {
 		handleSubmit({ name, date, weight, grade });
 		handleClose();
@@ -81,7 +83,7 @@ function AddItemModal({ handleSubmit, handleClose }: AddItemInterface) {
 
 	return (
 		<DefaultModal
-			headerColor="#4961E1"
+			headerColor={theme.colors.primary[0]}
 			handleClose={handleClose}
 			header="Add course item"
 			primaryButton="Submit"

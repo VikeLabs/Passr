@@ -4,6 +4,7 @@ import MainButton from 'components/MainActionButton';
 import TextButton from 'components/TextButton';
 import TextInput from 'components/TextInput';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const SignInPageContainer = styled.div`
 	min-height: 100vh;
@@ -11,7 +12,7 @@ const SignInPageContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: #e5e5e5;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
 
 const SignInContents = styled.div`
@@ -40,23 +41,22 @@ const TextLinkContainer = styled.div`
 `;
 
 const TextLink = styled(TextButton)`
-	font-size: 0.8rem;
+	font-size: ${({ theme }) => theme.fontSizes.s};
 	font-weight: 500;
 	margin: 0.5em;
+	word-wrap: break-word;
 `;
 
 function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
 }
 
-function tempOnClick() {
-	console.log('A click!');
-}
-
 function SignInPage() {
 	const [email, setEmail] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
 	const [userPass, setUserPass] = useState('');
+
+	const history = useHistory();
 
 	const onSubmit = () => {
 		console.log('Signing in.');
@@ -96,15 +96,17 @@ function SignInPage() {
 					type="password"
 					placeholder="Password"
 				/>
-				<SignInButton onClick={onSubmit}>Sign In</SignInButton>
+				<SignInButton disabled={emailErr} onClick={onSubmit}>
+					Sign In
+				</SignInButton>
 				<TextLinkContainer>
 					<TextLink
 						text="Forgot your password?"
-						onClick={tempOnClick}
+						onClick={() => history.push('/forgot')}
 					/>
 					<TextLink
 						text="New user? Create a Passr account"
-						onClick={tempOnClick}
+						onClick={() => history.push('/sign-up')}
 					/>
 				</TextLinkContainer>
 			</SignInContents>

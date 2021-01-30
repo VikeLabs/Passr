@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import AddButton from './MainActionButton';
-// import Grade from './GradeItemAccordion';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 
@@ -85,14 +84,6 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 		const newCourseItems = [...course.items];
 		newCourseItems[index] = item;
 		updateCourse({ ...course, items: newCourseItems });
-
-		// Following has been done now...
-
-		// In the future, this will not call the update state function
-		// Instead it will determine which course item in the course was updated
-		// Then create a new course with the updated item
-		// And call a callback function (likely named updateCourse) passed in as a prop
-		// With the new course, similar to what is done in the accordion item, just one 'level up'
 	}
 
 	return (
@@ -122,7 +113,9 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 							<GradeItemAccordion
 								key={index}
 								item={item}
-								updateItem={(newItem) => updateCourseItem(newItem, index)}
+								updateItem={(newItem) =>
+									updateCourseItem(newItem, index)
+								}
 							/>
 						);
 					})}

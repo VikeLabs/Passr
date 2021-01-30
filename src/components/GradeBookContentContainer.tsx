@@ -5,7 +5,7 @@ import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 
 const ContentContainer = styled.div`
-	color: #002366;
+	color: ${(props) => props.theme.colors.text[1]};
 	font-weight: bold;
 `;
 
@@ -15,7 +15,7 @@ const TitleRow = styled.div`
 	flex-wrap: wrap;
 	width: 100%;
 	border-style: hidden hidden solid hidden;
-	color: #828282;
+	color: ${(props) => props.theme.colors.gray[1]};
 `;
 
 const ColumnItemHeader = styled.div`
@@ -24,7 +24,7 @@ const ColumnItemHeader = styled.div`
 	text-align: left;
 	flex-basis: 100%;
 	flex: 1;
-	color: #002366;
+	color: ${(props) => props.theme.colors.text[1]};
 `;
 
 const ButtonColumn = styled.div`
@@ -37,7 +37,7 @@ const ButtonColumn = styled.div`
 
 const AddItemButton = styled(AddButton)`
 	margin: 1.5em;
-	color: #002366;
+	color: ${(props) => props.theme.colors.text[1]};
 `;
 
 const CourseItemRow = styled.div`
@@ -50,17 +50,10 @@ const CourseItemRow = styled.div`
 
 const Table = styled.table`
 	width: 100%;
-	color: #828282;
+	color: ${(props) => props.theme.colors.gray[1]};
 	text-align: left;
 	font-weight: normal;
-	font-size: small;
-	${css`
-		td,
-		tr,
-		th {
-			border: none;
-		}
-	`}
+	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
 const CourseItemTitleSpace = styled.th`

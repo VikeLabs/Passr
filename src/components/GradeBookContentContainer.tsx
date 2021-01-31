@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import AddButton from './MainActionButton';
+import { Course, CourseItem } from '../api';
+import GradeItemAccordion from './GradeItemAccordion';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
@@ -50,7 +52,6 @@ const Table = styled.table`
 	width: 100%;
 	color: ${(props) => props.theme.colors.gray[1]};
 	text-align: left;
-	text-decoration: underline;
 	font-weight: normal;
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
@@ -60,13 +61,24 @@ const CourseItemTitleSpace = styled.th`
 `;
 
 const CourseItemTitle = styled.th`
-	padding: 1em;
+	padding-top: 1em;
 `;
 
-function GradeBookContentContainer() {
+interface Props {
+	course: Course;
+	updateCourse: (course: Course) => void;
+}
+
+function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const openModal = () => {
 		console.log('Item added!');
 	};
+	function updateCourseItem(item: CourseItem, index: number) {
+		const newCourseItems = [...course.items];
+		newCourseItems[index] = item;
+		updateCourse({ ...course, items: newCourseItems });
+	}
+
 	return (
 		<ContentContainer>
 			<TitleRow>
@@ -88,6 +100,18 @@ function GradeBookContentContainer() {
 						<CourseItemTitle>Grade</CourseItemTitle>
 						<CourseItemTitle>Due Date</CourseItemTitle>
 					</tr>
+					{course.items.map((item, index) => {
+						console.log({ item, index });
+						return (
+							<GradeItemAccordion
+								key={index}
+								item={item}
+								updateItem={(newItem) =>
+									updateCourseItem(newItem, index)
+								}
+							/>
+						);
+					})}
 				</Table>
 			</CourseItemRow>
 		</ContentContainer>

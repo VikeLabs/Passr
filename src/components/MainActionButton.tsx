@@ -7,8 +7,7 @@ export type Variant =
 	| 'secondary'
 	| 'positive'
 	| 'negative'
-	| 'alternate'
-	| 'disabled';
+	| 'alternate';
 
 export interface MainActionButtonInterface {
 	children: React.ReactNode;
@@ -26,6 +25,10 @@ const MainActionButton = styled('button')`
 	outline: none;
 	box-shadow: none;
 	${buttonStyle}
+	:disabled {
+		background-color: #c2c2c2;
+		color: #4d4d4d;
+	}
 `;
 
 function MainButton({

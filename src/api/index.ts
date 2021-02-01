@@ -1,4 +1,5 @@
 export { getCurrentSemester } from './api';
+export type Grade = number | Fraction | undefined;
 
 export interface Fraction {
 	numerator: number;
@@ -7,8 +8,8 @@ export interface Fraction {
 
 export interface CourseItem {
 	name: string;
-	weight?: number;
-	grade?: number | Fraction;
+	weight: number;
+	grade: Grade;
 	dueDate?: Date;
 }
 

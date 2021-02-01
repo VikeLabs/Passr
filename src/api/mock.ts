@@ -150,6 +150,7 @@ const PHYS111Items: CourseItem[] = [
 const PHYS111: Course = {
 	name: 'PHYS 111',
 	items: PHYS111Items,
+	desiredGrade: 60,
 };
 
 export const Fall2020: Semester = {

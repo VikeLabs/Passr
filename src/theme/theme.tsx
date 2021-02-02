@@ -12,6 +12,7 @@ export interface BaseTheme {
 		positive: [string, string];
 		negative: [string, string];
 		alternate: [string, string];
+		disabled: [string, string];
 		error: string;
 	};
 }
@@ -33,6 +34,7 @@ const baseTheme: BaseTheme = {
 		positive: ['#35bea0', '#2a967e'],
 		negative: ['#b80f0a', '#990c08'],
 		alternate: ['#e0e0e0', '#d0d0d0'],
+		disabled: ['#4D4D4D', '#C2C2C2'],
 		error: '#ff8888',
 	},
 };
@@ -74,6 +76,10 @@ export interface ButtonVariants {
 				backgroundColor: string;
 			};
 		};
+		disabled: {
+			color: string;
+			backgroundColor: string;
+		};
 	};
 }
 
@@ -113,6 +119,10 @@ const buttonVariants: ButtonVariants = {
 			'&:hover': {
 				backgroundColor: baseTheme.colors.alternate[1],
 			},
+		},
+		disabled: {
+			backgroundColor: baseTheme.colors.disabled[0],
+			color: baseTheme.colors.disabled[1],
 		},
 	},
 };

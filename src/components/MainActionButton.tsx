@@ -22,7 +22,13 @@ const MainActionButton = styled('button')`
 	padding: 0.5rem 2rem;
 	width: 100%;
 	border: none;
+	outline: none;
+	box-shadow: none;
 	${buttonStyle}
+	:disabled {
+		background-color: #c2c2c2;
+		color: #4d4d4d;
+	}
 `;
 
 function MainButton({

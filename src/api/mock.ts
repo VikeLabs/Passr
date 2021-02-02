@@ -15,6 +15,7 @@ const Math100Items: CourseItem[] = [
 	{
 		name: 'Assignment 3',
 		weight: 5,
+
 		dueDate: new Date('February 16, 2021'),
 	},
 	{
@@ -150,6 +151,7 @@ const PHYS111Items: CourseItem[] = [
 const PHYS111: Course = {
 	name: 'PHYS 111',
 	items: PHYS111Items,
+	desiredGrade: 60,
 };
 
 export const Fall2020: Semester = {

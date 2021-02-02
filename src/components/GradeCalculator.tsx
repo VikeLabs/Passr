@@ -14,7 +14,7 @@ function normalize(grade?: Grade) {
 }
 
 function currentGradeCalculator(course: Course) {
-	//earnedGrade / sum of weights with grades
+	// earnedGrade / sum of weights with grades
 	return (
 		earnedGradeCalculator(course) /
 		course.items
@@ -24,7 +24,7 @@ function currentGradeCalculator(course: Course) {
 }
 
 function earnedGradeCalculator(course: Course) {
-	//Grades * Weights
+	// Grades * Weights
 	const normalizedGrade = course.items.reduce((acc, item) => {
 		return acc + normalize(item.weight) * normalize(item.grade);
 	}, 0);
@@ -36,7 +36,7 @@ function earnedGradeCalculator(course: Course) {
 }
 
 function lostGradeCalculator(course: Course) {
-	//Sum of (weight - (grade * weight))
+	// Sum of (weight - (grade * weight))
 	return (
 		course.items
 			.filter((item) => item.grade != undefined)
@@ -51,23 +51,24 @@ function lostGradeCalculator(course: Course) {
 }
 
 function averageGradeNeededCalculator(course: Course) {
-	//Gets sum of weights of course items with grades not defined yet
-	const gradeRemaining = course.items
+	// Gets sum of weights of course items with grades not defined yet
+	if (course.desiredGrade === undefined) {
+		return 0;
+	}
+	const weightRemaining = course.items
 		.filter((item) => item.grade === undefined)
 		.reduce((acc, item) => {
 			return acc + item.weight;
 		}, 0);
-	if (course.desiredGrade === undefined) {
-		return 0;
-	}
-	//Calculates average grades needed on rest of course items to get desired grade
+
+	// Calculates average grades needed on rest of course items to get desired grade
 	const gradeNeeded =
-		(earnedGradeCalculator(course) - course.desiredGrade) /
-		(-1 * gradeRemaining);
+		(course.desiredGrade - earnedGradeCalculator(course)) / weightRemaining;
 
 	if (gradeNeeded < 0) {
 		return 0;
-	} else return gradeNeeded * 100;
+	}
+	return gradeNeeded * 100;
 }
 
 export {

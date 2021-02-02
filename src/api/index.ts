@@ -9,7 +9,7 @@ export interface Fraction {
 export interface CourseItem {
 	name: string;
 	weight: number;
-	grade: Grade;
+	grade?: Grade;
 	dueDate?: Date;
 }
 

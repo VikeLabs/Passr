@@ -15,23 +15,20 @@ const Math100Items: CourseItem[] = [
 	{
 		name: 'Assignment 3',
 		weight: 5,
-		grade: undefined,
+
 		dueDate: new Date('February 16, 2021'),
 	},
 	{
 		name: 'Midterm 1',
 		weight: 20,
-		grade: undefined,
 	},
 	{
 		name: 'Midterm 2',
 		weight: 20,
-		grade: undefined,
 	},
 	{
 		name: 'Final',
 		weight: 40,
-		grade: undefined,
 	},
 ];
 
@@ -69,17 +66,14 @@ const CSC110Items: CourseItem[] = [
 	{
 		name: 'Assignment 6',
 		weight: 5,
-		grade: undefined,
 	},
 	{
 		name: 'Assignment 7',
 		weight: 5,
-		grade: undefined,
 	},
 	{
 		name: 'Assignment 8',
 		weight: 5,
-		grade: undefined,
 	},
 	{
 		name: 'Midterm 1',
@@ -94,7 +88,6 @@ const CSC110Items: CourseItem[] = [
 	{
 		name: 'Midterm 3',
 		weight: 20,
-		grade: undefined,
 	},
 ];
 
@@ -117,12 +110,10 @@ const PHYS111Items: CourseItem[] = [
 	{
 		name: 'Assignment 3',
 		weight: 5,
-		grade: undefined,
 	},
 	{
 		name: 'Assignment 4',
 		weight: 5,
-		grade: undefined,
 	},
 	{
 		name: 'Lab 1',
@@ -137,17 +128,14 @@ const PHYS111Items: CourseItem[] = [
 	{
 		name: 'Lab 3',
 		weight: 4,
-		grade: undefined,
 	},
 	{
 		name: 'Lab 4',
 		weight: 4,
-		grade: undefined,
 	},
 	{
 		name: 'Lab 5',
 		weight: 4,
-		grade: undefined,
 	},
 	{
 		name: 'Midterm',
@@ -157,7 +145,6 @@ const PHYS111Items: CourseItem[] = [
 	{
 		name: 'Final',
 		weight: 40,
-		grade: undefined,
 	},
 ];
 

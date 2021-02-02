@@ -88,6 +88,14 @@ function SignUpPage() {
 
 	const history = useHistory();
 
+	const submittable = () => {
+		if (!validPass(password.value)) return false;
+		if (!validEmail(email.value)) return false;
+		if (email.value !== confirmEmail.value) return false;
+		if (password.value !== confirmPass.value) return false;
+		return true;
+	};
+
 	useEffect(() => {
 		const listener = (event: KeyboardEvent) => {
 			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
@@ -151,7 +159,10 @@ function SignUpPage() {
 					value={email.value}
 					error={email.error}
 					onChange={(e) => {
-						if (validEmail(e.target.value)) {
+						if (
+							validEmail(e.target.value) ||
+							e.target.value === ''
+						) {
 							emailDispatch({
 								error: false,
 							});
@@ -161,7 +172,7 @@ function SignUpPage() {
 						});
 					}}
 					onBlur={() => {
-						if (!validEmail(email.value)) {
+						if (!validEmail(email.value) && email.value !== '') {
 							emailDispatch({ error: true });
 						}
 					}}
@@ -196,7 +207,10 @@ function SignUpPage() {
 					value={password.value}
 					error={password.error}
 					onChange={(e) => {
-						if (validPass(e.target.value)) {
+						if (
+							validPass(e.target.value) ||
+							e.target.value === ''
+						) {
 							setPassword({
 								error: false,
 							});
@@ -204,7 +218,10 @@ function SignUpPage() {
 						setPassword({ value: e.target.value });
 					}}
 					onBlur={() => {
-						if (!validPass(password.value)) {
+						if (
+							!validPass(password.value) &&
+							password.value !== ''
+						) {
 							setPassword({ error: true });
 						}
 					}}
@@ -234,12 +251,7 @@ function SignUpPage() {
 				/>
 
 				<SignUpButton
-					disabled={
-						email.error ||
-						password.error ||
-						confirmPass.error ||
-						confirmEmail.error
-					}
+					disabled={!submittable()}
 					variant="primary"
 					onClick={handleSubmit}
 				>

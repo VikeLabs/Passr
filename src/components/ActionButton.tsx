@@ -9,7 +9,7 @@ export type Variant =
 	| 'negative'
 	| 'alternate';
 
-export interface ActionButtonInterface {
+export interface Props {
 	children: React.ReactNode;
 	onClick: () => void;
 	variant?: Variant;
@@ -36,7 +36,7 @@ function ActionButton({
 	onClick,
 	disabled = false,
 	...props
-}: ActionButtonInterface) {
+}: Props) {
 	return (
 		<ActionButtonStyle onClick={onClick} {...props} disabled={disabled}>
 			{children}

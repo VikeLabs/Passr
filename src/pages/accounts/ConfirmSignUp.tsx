@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 
 import TextInput from 'components/TextInput';
 import Logo from 'molecules/Logo';
-import MainButton from 'components/MainActionButton';
+import ActionButton from 'components/ActionButton';
 import { useLocation, useHistory } from 'react-router-dom';
 import TextButton from 'components/TextButton';
 
@@ -25,7 +25,7 @@ const ConfirmSignUpContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.main[1]};
 `;
 
-const ConfirmButton = styled(MainButton)`
+const ConfirmButton = styled(ActionButton)`
 	padding: 1em;
 	width: 100%;
 `;

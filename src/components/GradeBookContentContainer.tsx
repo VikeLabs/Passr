@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AddButton from './MainActionButton';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
+import AddItemModal, { AddItemData } from './AddItemModal';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
@@ -70,9 +71,21 @@ interface Props {
 }
 
 function GradeBookContentContainer({ course, updateCourse }: Props) {
-	const openModal = () => {
-		console.log('Item added!');
+	//function handleItemSubmit(name: string, date: string, weight: string, grade: string){
+	const [modalOpen, setModalOpen] = useState(false);
+	function handleItemSubmit(data: AddItemData) {
+		const { name, date, weight, grade } = data;
+		console.log(name);
+		console.log(date);
+		console.log(weight);
+		console.log(grade);
+	}
+	const handleModalClose = () => {
+		setModalOpen(false);
 	};
+	function openModal() {
+		setModalOpen(true);
+	}
 	function updateCourseItem(item: CourseItem, index: number) {
 		const newCourseItems = [...course.items];
 		newCourseItems[index] = item;
@@ -114,6 +127,12 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 					})}
 				</Table>
 			</CourseItemRow>
+			{modalOpen && (
+				<AddItemModal
+					handleSubmit={handleItemSubmit}
+					handleClose={handleModalClose}
+				/>
+			)}
 		</ContentContainer>
 	);
 }

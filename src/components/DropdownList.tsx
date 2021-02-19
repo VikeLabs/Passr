@@ -15,6 +15,7 @@ const DropdownMenu = styled.ul`
 	background-color: ${({ theme }) => theme.colors.main[0]};
 	text-align: start;
 	z-index: 2;
+	position: absolute;
 	border: 1px solid rgba(0, 0, 0, 0.04);
 	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
 	padding: 0;
@@ -43,7 +44,7 @@ const DropdownLink = styled(Link)`
 `;
 function DropdownList(props: Props) {
 	return (
-		<DropdownMenu>
+		<DropdownMenu style={{ top: '62.66px' }}>
 			{props.items.map((item, index) => {
 				return (
 					<DropdownMenuItem key={index}>

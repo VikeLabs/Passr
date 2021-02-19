@@ -5,6 +5,7 @@ import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
 import ActionButton from 'components/ActionButton';
+import ProfileDropdown from 'molecules/ProfileDropdown';
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -70,17 +71,7 @@ function GradeBook() {
 			<SideBar currentSemester={Fall2020} />
 			<MainContent />
 			<Account>
-				{signedIn && (
-					<SignOutButton
-						variant="primary"
-						onClick={() => {
-							Auth.signOut();
-							setSignedIn(false);
-						}}
-					>
-						Sign Out
-					</SignOutButton>
-				)}
+				<ProfileDropdown />
 			</Account>
 		</GradeBookContainer>
 	);

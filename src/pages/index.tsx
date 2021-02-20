@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GradeBook from '../GradeBook';
 import { SignIn, SignUp } from './accounts';
 import ConfirmSignUp from './accounts/ConfirmSignUp';
+import ForgotPassword from './accounts/ForgotPassword';
 
 function Pages() {
 	return (

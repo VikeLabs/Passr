@@ -24,6 +24,7 @@ const Container = styled.div`
 
 function GenericDropdown({ buttonDisplay, dropdownItems }: Props) {
 	const ref = useRef<HTMLDivElement>(null);
+	const buttonRef = useRef<HTMLButtonElement>(null);
 	const { isComponentVisible, setIsComponentVisible } = useComponentVisible(
 		ref,
 		true
@@ -34,19 +35,19 @@ function GenericDropdown({ buttonDisplay, dropdownItems }: Props) {
 
 	return (
 		<Container ref={ref}>
-			{
-				<DropdownButton onClick={handleClick}>
-					{buttonDisplay}
-					<i
-						className={
-							isComponentVisible
-								? 'fas fa-angle-up'
-								: 'fas fa-angle-down'
-						}
-					/>
-				</DropdownButton>
-			}
-			{isComponentVisible && <DropdownList items={dropdownItems} />}
+			<DropdownButton ref={buttonRef} onClick={handleClick}>
+				{buttonDisplay}
+				<i
+					className={
+						isComponentVisible
+							? 'fas fa-angle-up'
+							: 'fas fa-angle-down'
+					}
+				/>
+			</DropdownButton>
+			{isComponentVisible && (
+				<DropdownList buttonRef={buttonRef} items={dropdownItems} />
+			)}
 		</Container>
 	);
 }

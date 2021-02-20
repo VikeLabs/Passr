@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, RefObject } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,6 +9,7 @@ export interface DropdownItem {
 }
 interface Props {
 	items: DropdownItem[];
+	buttonRef: RefObject<HTMLElement>;
 }
 const DropdownMenu = styled.ul`
 	list-style: none;
@@ -42,10 +43,19 @@ const DropdownLink = styled(Link)`
 		color: ${({ theme }) => theme.colors.primary[0]};
 	}
 `;
-function DropdownList(props: Props) {
+function DropdownList({ items, buttonRef }: Props) {
+	const [top, setTop] = useState(-9999);
+
+	useEffect(() => {
+		if (buttonRef.current != null) {
+			const rect = buttonRef.current.getBoundingClientRect();
+			setTop(rect.bottom);
+		}
+	}, [buttonRef]);
+
 	return (
-		<DropdownMenu style={{ top: '62.66px' }}>
-			{props.items.map((item, index) => {
+		<DropdownMenu style={{ top: `${top}px` }}>
+			{items.map((item, index) => {
 				return (
 					<DropdownMenuItem key={index}>
 						<DropdownLink to={item.path}>

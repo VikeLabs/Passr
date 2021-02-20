@@ -17,6 +17,9 @@ function Pages() {
 				<Route path="/confirm-sign-up">
 					<ConfirmSignUp />
 				</Route>
+				<Route path="/forgot-password">
+					<ForgotPassword />
+				</Route>
 				<Route path="/">
 					<GradeBook />
 				</Route>

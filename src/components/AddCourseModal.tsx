@@ -23,11 +23,11 @@ const Desc = styled.p`
 const InputField = styled.div`
 	margin: 0 2.2em 0 2em;
 	display: block;
-	justify-content: center;
-	align-items: center;
 `;
 
-const InputName = styled(TextInput)``;
+const InputName = styled(TextInput)`
+	padding-top: 0.75em;
+`;
 const InputCourseNumber = styled(TextInput)`
 	padding-top: 0.75em;
 `;

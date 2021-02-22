@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Logo from 'molecules/Logo';
-import MainButton from 'components/MainActionButton';
+import ActionButton from 'components/ActionButton';
 import TextButton from 'components/TextButton';
 import TextInput from 'components/TextInput';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
-const SignInButton = styled(MainButton)`
+const SignInButton = styled(ActionButton)`
 	width: 100%;
 	padding: 1em;
 `;

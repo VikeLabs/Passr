@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
+<<<<<<< HEAD
+=======
+import { Auth } from 'aws-amplify';
+import ActionButton from 'components/ActionButton';
+>>>>>>> e29fd314b11058a92974f1596bf1c178bc93af4f
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -40,6 +45,13 @@ const Account = styled.div`
 	background-color: magenta;
 `;
 
+<<<<<<< HEAD
+=======
+const SignOutButton = styled(ActionButton)`
+margin 0.5em;
+`;
+
+>>>>>>> e29fd314b11058a92974f1596bf1c178bc93af4f
 const Header = styled.div`
 	grid-area: header;
 `;

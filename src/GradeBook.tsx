@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
-import { Auth } from 'aws-amplify';
-import MainButton from 'components/MainActionButton';
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -42,45 +40,17 @@ const Account = styled.div`
 	background-color: magenta;
 `;
 
-const SignOutButton = styled(MainButton)`
-margin 0.5em;
-`;
-
 const Header = styled.div`
 	grid-area: header;
 `;
 
 function GradeBook() {
-	const [signedIn, setSignedIn] = useState(false);
-
-	useEffect(() => {
-		Auth.currentAuthenticatedUser()
-			.then(() => {
-				setSignedIn(true);
-			})
-			.catch(() => {
-				setSignedIn(false);
-			});
-	});
-
 	return (
 		<GradeBookContainer>
 			<Header />
 			<SideBar currentSemester={Fall2020} />
 			<MainContent />
-			<Account>
-				{signedIn && (
-					<SignOutButton
-						variant="primary"
-						onClick={() => {
-							Auth.signOut();
-							setSignedIn(false);
-						}}
-					>
-						Sign Out
-					</SignOutButton>
-				)}
-			</Account>
+			<Account />
 		</GradeBookContainer>
 	);
 }

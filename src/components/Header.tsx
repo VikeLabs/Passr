@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export interface TopBarInterface {
+export interface HeaderInterface {
 	text: string;
 }
 
-const TopBarStyle = styled.div`
+const HeaderStyle = styled.div`
 	display: flex;
 	flex-direction: column;
 	font-weight: bold;
@@ -17,12 +17,12 @@ const TopBarStyle = styled.div`
 	color: ${({ theme }) => theme.colors.text[1]};
 `;
 
-function TopBar({ text }: TopBarInterface) {
+function Header({ text }: HeaderInterface) {
 	return (
-		<TopBarStyle>
+		<HeaderStyle>
 			<p>{text}</p>
-		</TopBarStyle>
+		</HeaderStyle>
 	);
 }
 
-export default TopBar;
+export default Header;

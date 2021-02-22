@@ -71,7 +71,6 @@ interface Props {
 }
 
 function GradeBookContentContainer({ course, updateCourse }: Props) {
-	//function handleItemSubmit(name: string, date: string, weight: string, grade: string){
 	const [modalOpen, setModalOpen] = useState(false);
 	function handleItemSubmit(data: AddItemData) {
 		const { name, date, weight, grade } = data;

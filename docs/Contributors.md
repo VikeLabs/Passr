@@ -8,5 +8,6 @@
 -   Samantha [Samantha-norrie](https://github.com/Samantha-norrie)
 -   Seiya [seiyaterada](https://github.com/seiyaterada/)
 -   Parikshit [parikshitohri](https://github.com/parikshitohri)
+-   Levi [lbare](https://github.com/lbare)
 
 ## Past contributors

@@ -9,14 +9,14 @@ export type Variant =
 	| 'negative'
 	| 'alternate';
 
-export interface MainActionButtonInterface {
+export interface Props {
 	children: React.ReactNode;
 	onClick: () => void;
 	variant?: Variant;
 	disabled?: boolean;
 }
 
-const MainActionButton = styled('button')`
+const ActionButtonStyle = styled('button')`
 	font-size: ${({ theme }) => theme.fontSizes.s};
 	border-radius: 12px;
 	padding: 0.5rem 2rem;
@@ -31,17 +31,17 @@ const MainActionButton = styled('button')`
 	}
 `;
 
-function MainButton({
+function ActionButton({
 	children,
 	onClick,
 	disabled = false,
 	...props
-}: MainActionButtonInterface) {
+}: Props) {
 	return (
-		<MainActionButton onClick={onClick} {...props} disabled={disabled}>
+		<ActionButtonStyle onClick={onClick} {...props} disabled={disabled}>
 			{children}
-		</MainActionButton>
+		</ActionButtonStyle>
 	);
 }
 
-export default MainButton;
+export default ActionButton;

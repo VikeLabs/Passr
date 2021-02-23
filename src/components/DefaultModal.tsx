@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import MainButton, { Variant } from './MainActionButton';
+import ActionButton, { Variant } from './ActionButton';
 
 export const Overlay = styled.div`
 	position: absolute;
@@ -23,11 +23,11 @@ export const ButtonField = styled.div`
 	grid-gap: 1em;
 `;
 
-export const AbortButton = styled(MainButton)`
+export const AbortButton = styled(ActionButton)`
 	grid-area: abort;
 `;
 
-export const ProceedButton = styled(MainButton)`
+export const ProceedButton = styled(ActionButton)`
 	grid-area: proceed;
 `;
 

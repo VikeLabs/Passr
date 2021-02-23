@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import AddButton from './MainActionButton';
+import ActionButton from './ActionButton';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 
@@ -35,7 +35,7 @@ const ButtonColumn = styled.div`
 	width: 15em;
 `;
 
-const AddItemButton = styled(AddButton)`
+const AddItemButton = styled(ActionButton)`
 	margin: 1.5em;
 	color: ${(props) => props.theme.colors.text[1]};
 `;

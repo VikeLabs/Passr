@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from 'molecules/Logo';
-import MainButton from 'components/MainActionButton';
+import ActionButton from 'components/ActionButton';
 import TextButton from 'components/TextButton';
 import TextInput from 'components/TextInput';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
 
 const SignInPageContainer = styled.div`
 	min-height: 100vh;
@@ -12,7 +13,7 @@ const SignInPageContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.colors.main[0]};
+	background-color: ${({ theme }) => theme.colors.main[1]};
 `;
 
 const SignInContents = styled.div`
@@ -28,7 +29,7 @@ const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
-const SignInButton = styled(MainButton)`
+const SignInButton = styled(ActionButton)`
 	width: 100%;
 	padding: 1em;
 `;
@@ -53,18 +54,55 @@ function validEmail(email: string) {
 
 function SignInPage() {
 	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
-	const [userPass, setUserPass] = useState('');
+	const [userPassError, setUserPassError] = useState(false);
 
 	const history = useHistory();
 
-	const onSubmit = () => {
-		console.log('Signing in.');
-		console.log(`Username: ${email}`);
-		console.log(`Password: ${userPass.replaceAll(/.{1}/g, '*')}`);
+	useEffect(() => {
+		Auth.currentAuthenticatedUser()
+			.then(() => {
+				history.push('/');
+			})
+			.catch(() => {
+				console.log('User not signed in.');
+			});
+	}, []);
+
+	useEffect(() => {
+		const listener = (event: KeyboardEvent) => {
+			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+				console.log('Enter pressed!');
+				handleSubmit();
+			}
+		};
+		document.addEventListener('keydown', listener);
+		return () => {
+			document.removeEventListener('keydown', listener);
+		};
+	}, [email, password]);
+
+	const handleSubmit = async () => {
 		if (!validEmail(email)) {
 			setEmailErr(true);
 			return;
+		}
+		try {
+			const user = await Auth.signIn({
+				username: email,
+				password,
+			});
+			if (user) {
+				history.push('/');
+			}
+		} catch (err) {
+			console.error(err);
+			if (err.code === 'UserNotConfirmedException') {
+				history.push(`/confirm-sign-up?email=${encodeURI(email)}`);
+			} else {
+				setUserPassError(true);
+			}
 		}
 	};
 
@@ -81,24 +119,29 @@ function SignInPage() {
 					onBlur={(e) => {
 						if (!validEmail(e.target.value)) setEmailErr(true);
 					}}
-					label="Username"
+					label="Email"
 					required
 					error={emailErr}
-					placeholder="Username"
+					placeholder="Email"
 				/>
 				<TextInput
-					value={userPass}
+					value={password}
 					onChange={(e) => {
-						setUserPass(e.target.value);
+						setPassword(e.target.value);
 					}}
 					label="Password"
 					required={true}
 					type="password"
 					placeholder="Password"
 				/>
-				<SignInButton disabled={emailErr} onClick={onSubmit}>
+				<SignInButton
+					variant="primary"
+					disabled={emailErr}
+					onClick={handleSubmit}
+				>
 					Sign In
 				</SignInButton>
+				{userPassError && <h1>Could not sign in.</h1>}
 				<TextLinkContainer>
 					<TextLink
 						text="Forgot your password?"

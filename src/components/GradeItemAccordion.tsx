@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
-import DelButton from './MainActionButton';
 import { gradeToString, parseGrade } from '../Utils';
 import { CourseItem } from 'api';
+import ActionButton from './ActionButton';
+
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
 	updateItem: (item: CourseItem) => void;
@@ -44,7 +45,7 @@ const AccordionExtendedComponent = styled.td`
 	border: none;
 `;
 
-const DeleteButton = styled(DelButton)`
+const DeleteButton = styled(ActionButton)`
 	background-color: #ffffff;
 	color: #b80f0a;
 	margin-right: 2em;

@@ -9,7 +9,7 @@ const HeaderStyle = styled.div`
 	display: flex;
 	flex-direction: column;
 	font-weight: bold;
-	height: 3em;
+	height: 100%;
 	font-size: ${({ theme }) => theme.fontSizes.s};
 	justify-content: center;
 	align-items: center;

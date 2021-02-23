@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 export interface Props {
@@ -12,23 +12,24 @@ const HeaderDisplayContainer = styled.div`
 const Label = styled.p`
 	font-size: ${({ theme }) => theme.fontSizes.xs};
 	color: ${({ theme }) => theme.colors.primary[0]};
-	width: 15em;
+	width: 17em;
 	margin: 0;
 	margin-bottom: 0.5em;
 `;
 const HeaderGradeDisplayContainer = styled.div`
-	background-color: #a9a9a9;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 	width: 15em;
 `;
 const GradeDisplayText = styled.h2`
-	color: #c4c4c4;
+	color: ${({ theme }) => theme.colors.gray[3]};
+	padding-left: 1em;
 `;
 function OpenInfo() {
 	console.log('opened!');
 }
-function HeaderGradeDisplay({ label, grade }: Props) {
+function HeaderGradeDisplay({ label, grade, ...props }: Props) {
 	return (
-		<HeaderDisplayContainer>
+		<HeaderDisplayContainer {...props}>
 			<Label>{label}</Label>
 			<HeaderGradeDisplayContainer onClick={OpenInfo}>
 				{grade == '' && <GradeDisplayText>N/A</GradeDisplayText>}

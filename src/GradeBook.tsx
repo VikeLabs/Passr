@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
-import MainButton from 'components/MainActionButton';
+import ActionButton from 'components/ActionButton';
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -42,7 +42,7 @@ const Account = styled.div`
 	background-color: magenta;
 `;
 
-const SignOutButton = styled(MainButton)`
+const SignOutButton = styled(ActionButton)`
 margin 0.5em;
 `;
 

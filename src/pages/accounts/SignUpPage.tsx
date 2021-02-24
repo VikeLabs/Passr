@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import Logo from 'molecules/Logo';
 import styled from 'styled-components';
-import MainButton from 'components/MainActionButton';
+import ActionButton from 'components/ActionButton';
 import TextButton from 'components/TextButton';
 import TextInput from 'components/TextInput';
 import { useHistory } from 'react-router-dom';
@@ -29,7 +29,7 @@ const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
-const SignUpButton = styled(MainButton)`
+const SignUpButton = styled(ActionButton)`
 	width: 100%;
 	padding: 1em;
 `;

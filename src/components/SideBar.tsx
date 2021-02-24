@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../molecules/Logo';
 import styled from 'styled-components';
-import MainActionButton from './MainActionButton';
+import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
 export interface SideBarInterface {
 	currentSemester: Semester;
@@ -57,9 +57,9 @@ function SideBar({ currentSemester, ...props }: SideBarInterface) {
 			<SideBarLogo width="8em" height="8em" />
 			<CourseList courses={currentSemester.courses} />
 			<AddCourseButtonContainer>
-				<MainActionButton onClick={AddCourse} variant="secondary">
+				<ActionButton onClick={AddCourse} variant="secondary">
 					Add course
-				</MainActionButton>
+				</ActionButton>
 			</AddCourseButtonContainer>
 		</SideBarContainer>
 	);

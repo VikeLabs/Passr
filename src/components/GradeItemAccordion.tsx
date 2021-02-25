@@ -8,23 +8,19 @@ export interface GradeItemAccordionInterface {
 	updateItem: (item: CourseItem) => void;
 }
 
-const Accordion = styled.tr`
+const Accordion = styled.div`
 	background-color: #ffffff;
 	color: #4f4f4f;
-	padding: 2em;
-	justify-content: center;
-	line-height: 8em;
-	transition: line-height 14em ease-out;
-	border: #ffffff;
-	text-decoration: none;
-	border: none;
+
+	display: grid;
+	grid-template-columns: 1fr 5fr 5fr 5fr 5fr;
+	grid-template-areas: 'arrow item weight grade duedate';
 `;
-const RowComponent = styled.td`
+const RowComponent = styled.div`
 	border: #ffffff;
 	font-weight: bold;
 	font-size: large;
 	border: none;
-	margin: 1.5em;
 `;
 const DropDownArrow = styled.button`
 	border: none;
@@ -32,13 +28,13 @@ const DropDownArrow = styled.button`
 	background-color: #ffffff;
 	font-size: 2em;
 `;
-const AccordionExtended = styled.tr`
+const AccordionExtended = styled.div`
 	font-weight: bold;
 	font-size: large;
 	color: #4961e1;
 	border: none;
 `;
-const AccordionExtendedComponent = styled.td`
+const AccordionExtendedComponent = styled.div`
 	background-color: #ffffff;
 	border: none;
 `;
@@ -92,8 +88,16 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 		return (
 			<>
 				<AccordionExtended>
-					<AccordionExtendedComponent></AccordionExtendedComponent>
-					<AccordionExtendedComponent>
+					<AccordionExtendedComponent
+						style={{
+							gridArea: 'arrow',
+						}}
+					></AccordionExtendedComponent>
+					<AccordionExtendedComponent
+						style={{
+							gridArea: 'item',
+						}}
+					>
 						<RowComponent>
 							<TextInput
 								value={tempName}
@@ -108,7 +112,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 							/>
 						</RowComponent>
 					</AccordionExtendedComponent>
-					<AccordionExtendedComponent>
+					<AccordionExtendedComponent
+						style={{
+							gridArea: 'weight',
+						}}
+					>
 						<RowComponent>
 							<TextInput
 								value={tempWeight}
@@ -127,7 +135,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 							/>
 						</RowComponent>
 					</AccordionExtendedComponent>
-					<AccordionExtendedComponent>
+					<AccordionExtendedComponent
+						style={{
+							gridArea: 'grade',
+						}}
+					>
 						<RowComponent>
 							<TextInput
 								value={tempGrade}
@@ -143,7 +155,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 							/>
 						</RowComponent>
 					</AccordionExtendedComponent>
-					<AccordionExtendedComponent>
+					<AccordionExtendedComponent
+						style={{
+							gridArea: 'duedate',
+						}}
+					>
 						<RowComponent>
 							<TextInput
 								value={tempDate}
@@ -179,7 +195,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	return (
 		<>
 			<Accordion>
-				<RowComponent>
+				<RowComponent
+					style={{
+						gridArea: 'arrow',
+					}}
+				>
 					<DropDownArrow onClick={() => setExpanded(!expanded)}>
 						<i
 							className={
@@ -190,16 +210,32 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 						/>
 					</DropDownArrow>
 				</RowComponent>
-				<RowComponent>
+				<RowComponent
+					style={{
+						gridArea: 'item',
+					}}
+				>
 					<p>{name}</p>
 				</RowComponent>
-				<RowComponent>
+				<RowComponent
+					style={{
+						gridArea: 'weight',
+					}}
+				>
 					<p>{weight}</p>
 				</RowComponent>
-				<RowComponent>
+				<RowComponent
+					style={{
+						gridArea: 'grade',
+					}}
+				>
 					<p>{gradeToString(grade) || 'N/A'}</p>
 				</RowComponent>
-				<RowComponent>
+				<RowComponent
+					style={{
+						gridArea: 'duedate',
+					}}
+				>
 					<p>{dueDate?.toDateString() || 'N/A'}</p>
 				</RowComponent>
 			</Accordion>

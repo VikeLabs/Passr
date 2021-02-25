@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import AddButton from './MainActionButton';
-import MainActionButton from './MainActionButton';
-import { buttonStyle } from 'styled-system';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 

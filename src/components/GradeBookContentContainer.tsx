@@ -1,118 +1,115 @@
 import React from 'react';
 import styled from 'styled-components';
 import AddButton from './MainActionButton';
+import MainActionButton from './MainActionButton';
+import { buttonStyle } from 'styled-system';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
 	font-weight: bold;
-`;
+	padding: 50px 0px 50px 50px;
 
-const TitleRow = styled.div`
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	width: 100%;
-	border-style: hidden hidden solid hidden;
-	color: ${(props) => props.theme.colors.gray[1]};
+	display: grid;
+	grid-template-columns: 1fr 5fr 5fr 5fr 5fr;
+	grid-template-rows: 75px 75px;
+	grid-template-areas:
+		'columnItemHeader columnItemHeader columnItemHeader columnItemHeader buttonColumn'
+		'courseTitleSpace courseItemTitle courseWeightTitle courseGradeTitle courseDuedateTitle'
+		'gradeItemAccordian gradeItemAccordian gradeItemAccordian gradeItemAccordian gradeItemAccordian';
 `;
 
 const ColumnItemHeader = styled.div`
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	flex-basis: 100%;
-	flex: 1;
+	grid-area: columnItemHeader;
+	color: ${(props) => props.theme.colors.text[1]};
+
+	border: 1px solid #828282;
+	border-style: none none solid none;
+`;
+
+const CourseItemRow = styled.div`
+	grid-area: gradeItemAccordian;
 	color: ${(props) => props.theme.colors.text[1]};
 `;
 
 const ButtonColumn = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex-basis: initial;
-	margin: 1.5em;
-	width: 15em;
+	grid-area: buttonColumn;
+
+	border: 1px solid #828282;
+	border-style: none none solid none;
 `;
 
 const AddItemButton = styled(AddButton)`
-	margin: 1.5em;
-	color: ${(props) => props.theme.colors.text[1]};
+	font-size: ${({ theme }) => theme.fontSizes.xs};
+	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
+	width: 150px;
+	height: 50px;
 `;
 
-const CourseItemRow = styled.div`
-	justify-content: center;
-	display: flex;
-	flex-direction: row;
-	max-width: 100%;
-	white-space: nowrap;
-`;
+const CourseItemTitleSpace = styled.div``;
 
-const Table = styled.table`
-	width: 100%;
-	color: ${(props) => props.theme.colors.gray[1]};
-	text-align: left;
-	font-weight: normal;
-	font-size: ${({ theme }) => theme.fontSizes.s};
-`;
+const CourseItemTitle = styled.div`
+	padding-top: 25px;
 
-const CourseItemTitleSpace = styled.th`
-	padding: 0.25em;
-`;
-
-const CourseItemTitle = styled.th`
-	padding-top: 1em;
+	font-size: ${({ theme }) => theme.fontSizes.xs};
+	color: ${({ theme }) => theme.colors.gray[3]};
 `;
 
 interface Props {
 	course: Course;
-	updateCourse: (course: Course) => void;
+	// updateCourse: (course: Course) => void;
 }
 
-function GradeBookContentContainer({ course, updateCourse }: Props) {
+function GradeBookContentContainer({ course /**, updateCourse*/ }: Props) {
 	const openModal = () => {
 		console.log('Item added!');
 	};
-	function updateCourseItem(item: CourseItem, index: number) {
-		const newCourseItems = [...course.items];
-		newCourseItems[index] = item;
-		updateCourse({ ...course, items: newCourseItems });
-	}
+	// function updateCourseItem(item: CourseItem, index: number) {
+	// 	const newCourseItems = [...course.items];
+	// 	newCourseItems[index] = item;
+	// 	updateCourse({ ...course, items: newCourseItems });
+	// }
 
 	return (
 		<ContentContainer>
-			<TitleRow>
-				<ColumnItemHeader>
-					<h2>Course Items</h2>
-				</ColumnItemHeader>
-				<ButtonColumn>
-					<AddItemButton onClick={openModal}>
-						<p>Add Item</p>
-					</AddItemButton>
-				</ButtonColumn>
-			</TitleRow>
+			<ColumnItemHeader>
+				<h2>Course Items</h2>
+			</ColumnItemHeader>
+			<ButtonColumn>
+				<AddItemButton onClick={openModal} variant="primary">
+					<p>Add Item</p>
+				</AddItemButton>
+			</ButtonColumn>
+
+			<CourseItemTitleSpace
+				style={{ gridArea: 'courseTitleSpace' }}
+			></CourseItemTitleSpace>
+			<CourseItemTitle style={{ gridArea: 'courseItemTitle' }}>
+				Item
+			</CourseItemTitle>
+			<CourseItemTitle style={{ gridArea: 'courseWeightTitle' }}>
+				Weight
+			</CourseItemTitle>
+			<CourseItemTitle style={{ gridArea: 'courseGradeTitle' }}>
+				Grade
+			</CourseItemTitle>
+			<CourseItemTitle style={{ gridArea: 'courseDuedateTitle' }}>
+				Due Date
+			</CourseItemTitle>
+
 			<CourseItemRow>
-				<Table>
-					<tr>
-						<CourseItemTitleSpace></CourseItemTitleSpace>
-						<CourseItemTitle>Item</CourseItemTitle>
-						<CourseItemTitle>Weight</CourseItemTitle>
-						<CourseItemTitle>Grade</CourseItemTitle>
-						<CourseItemTitle>Due Date</CourseItemTitle>
-					</tr>
-					{course.items.map((item, index) => {
-						console.log({ item, index });
-						return (
-							<GradeItemAccordion
-								key={index}
-								item={item}
-								updateItem={(newItem) =>
-									updateCourseItem(newItem, index)
-								}
-							/>
-						);
-					})}
-				</Table>
+				{course.items.map((item, index) => {
+					console.log({ item, index });
+					return (
+						<GradeItemAccordion
+							key={index}
+							item={item}
+							updateItem={(newItem) => newItem}
+							/**updateCourseItem(newItem, index)}*/
+						/>
+					);
+				})}
 			</CourseItemRow>
 		</ContentContainer>
 	);

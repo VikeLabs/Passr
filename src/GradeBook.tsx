@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
+import HeaderComponent from './components/Header';
 import ActionButton from 'components/ActionButton';
 
 const GradeBookContainer = styled.div`
@@ -46,7 +47,7 @@ const SignOutButton = styled(ActionButton)`
 margin 0.5em;
 `;
 
-const Header = styled.div`
+const Header = styled(HeaderComponent)`
 	grid-area: header;
 `;
 
@@ -65,7 +66,7 @@ function GradeBook() {
 
 	return (
 		<GradeBookContainer>
-			<Header />
+			<Header text="Passr" />
 			<SideBar currentSemester={Fall2020} />
 			<MainContent />
 			<Account>

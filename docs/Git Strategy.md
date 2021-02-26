@@ -24,4 +24,4 @@ Although capitalization is not required, if you use it, it can be easier to read
 
 If you haven't created a pull request before, checkout [Submitting First Pull Request](<./Submitting First Pull Request.md>)
 
-Use Github to create a pull request, make sure any checks succeed and you get feedback from one other team member before merging. Once it is merged into master, it should build an be deployed to our dev site at dev.passr.ca within 10 minutes or so.
+Use Github to create a pull request, make sure any checks succeed and you get feedback from one other team member before merging. Once it is merged into master, it should build and be deployed to our dev site at dev.passr.ca within 10 minutes or so.

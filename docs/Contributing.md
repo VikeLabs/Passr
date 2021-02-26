@@ -8,7 +8,7 @@ Checkout our [Git Strategy](<./Git Strategy.md>) for details on our branching me
 
 Checkout our documentation on [completing a ticket](<./Completed Ticket.md>).
 
-Make sure you are connected to our tools! Message us in the slack if you aren't.
+Make sure you are connected to our tools! Message us in the discord channel if you aren't.
 
 Tools:
 

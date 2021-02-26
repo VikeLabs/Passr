@@ -9,7 +9,7 @@ export function gradeToString(grade: number | Fraction | undefined) {
 	return `${grade}`;
 }
 
-export function parseGrade(s: string) {
+export function parseGrade(s: string): Grade | undefined {
 	const fractionRegex = /([\d]*\.?[\d]+)\/([\d]*\.?[\d]+)/;
 	const match = s.match(fractionRegex);
 	console.log({ parseGradeMatch: match });

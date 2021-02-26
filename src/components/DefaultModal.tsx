@@ -3,12 +3,14 @@ import styled, { ThemeContext } from 'styled-components';
 import ActionButton, { Variant } from './ActionButton';
 
 export const Overlay = styled.div`
-	position: absolute;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	backdrop-filter: blur(5px);
 	background-color: rgba(10, 10, 20, 0.5);
 	backdrop-filter: blur(0.2em);
-	height: 100%;
-	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

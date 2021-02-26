@@ -11,7 +11,6 @@ export const Overlay = styled.div`
 	backdrop-filter: blur(5px);
 	background-color: rgba(10, 10, 20, 0.5);
 	backdrop-filter: blur(0.2em);
-	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

@@ -54,6 +54,7 @@ const Header = styled(HeaderComponent)`
 
 function GradeBook() {
 	const [signedIn, setSignedIn] = useState(false);
+	signedIn;
 
 	useEffect(() => {
 		Auth.currentAuthenticatedUser()

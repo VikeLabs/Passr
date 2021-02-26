@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
@@ -52,12 +52,36 @@ const Header = styled(HeaderComponent)`
 `;
 
 function GradeBook() {
+	const [signedIn, setSignedIn] = useState(false);
+
+	useEffect(() => {
+		Auth.currentAuthenticatedUser()
+			.then(() => {
+				setSignedIn(true);
+			})
+			.catch(() => {
+				setSignedIn(false);
+			});
+	});
+
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
 			<SideBar currentSemester={Fall2020} />
 			<MainContent />
-			<Account />
+			<Account>
+				{signedIn && (
+					<SignOutButton
+						variant="primary"
+						onClick={() => {
+							Auth.signOut();
+							setSignedIn(false);
+						}}
+					>
+						Sign Out
+					</SignOutButton>
+				)}
+			</Account>
 		</GradeBookContainer>
 	);
 }

@@ -4,7 +4,6 @@ import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
-import ActionButton from 'components/ActionButton';
 import ProfileDropdown from 'molecules/ProfileDropdown';
 
 const GradeBookContainer = styled.div`
@@ -42,10 +41,6 @@ const MainContent = styled.div`
 const Account = styled.div`
 	grid-area: account;
 	background-color: magenta;
-`;
-
-const SignOutButton = styled(ActionButton)`
-margin 0.5em;
 `;
 
 const Header = styled(HeaderComponent)`

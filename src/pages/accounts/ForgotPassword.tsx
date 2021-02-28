@@ -88,22 +88,6 @@ function SignInPage() {
 			setEmailErr(true);
 			return;
 		}
-		try {
-			const user = await Auth.signIn({
-				username: email,
-				password,
-			});
-			if (user) {
-				history.push('/');
-			}
-		} catch (err) {
-			console.error(err);
-			if (err.code === 'UserNotConfirmedException') {
-				history.push(`/confirm-sign-up?email=${encodeURI(email)}`);
-			} else {
-				setUserPassError(true);
-			}
-		}
 	};
 
 	return (
@@ -143,10 +127,6 @@ function SignInPage() {
 				</SignInButton>
 				{userPassError && <h1>Could not sign in.</h1>}
 				<TextLinkContainer>
-					<TextLink
-						text="Forgot your password?"
-						onClick={() => history.push('/forgot')}
-					/>
 					<TextLink
 						text="New user? Create a Passr account"
 						onClick={() => history.push('/sign-up')}

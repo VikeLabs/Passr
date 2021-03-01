@@ -20,7 +20,7 @@ const ForgotPasswordContents = styled.div`
 	max-width: 300px;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;z	
+	justify-content: flex-start;
 	align-items: center;
 	grid-gap: 1em;
 `;
@@ -54,9 +54,7 @@ function validEmail(email: string) {
 
 function ForgotPasswordPage() {
 	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
-	const [userPassError, setUserPassError] = useState(false);
 
 	const history = useHistory();
 
@@ -81,7 +79,7 @@ function ForgotPasswordPage() {
 		return () => {
 			document.removeEventListener('keydown', listener);
 		};
-	}, [email, password]);
+	}, [email]);
 
 	const handleSubmit = async () => {
 		if (!validEmail(email)) {
@@ -116,7 +114,6 @@ function ForgotPasswordPage() {
 				>
 					Submit
 				</SubmitButton>
-				{userPassError && <h1>Could not sign in.</h1>}
 				<TextLinkContainer>
 					<TextLink
 						text="Already have an account? Sign in"

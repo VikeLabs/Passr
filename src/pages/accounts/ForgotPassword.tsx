@@ -29,7 +29,7 @@ const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
-const SignInButton = styled(ActionButton)`
+const SubmitButton = styled(ActionButton)`
 	width: 100%;
 	padding: 1em;
 `;
@@ -88,6 +88,7 @@ function SignInPage() {
 			setEmailErr(true);
 			return;
 		}
+		console.log(email);
 	};
 
 	return (
@@ -108,25 +109,19 @@ function SignInPage() {
 					error={emailErr}
 					placeholder="Email"
 				/>
-				<TextInput
-					value={password}
-					onChange={(e) => {
-						setPassword(e.target.value);
-					}}
-					label="Password"
-					required={true}
-					type="password"
-					placeholder="Password"
-				/>
-				<SignInButton
+				<SubmitButton
 					variant="primary"
 					disabled={emailErr}
 					onClick={handleSubmit}
 				>
-					Sign In
-				</SignInButton>
+					Submit
+				</SubmitButton>
 				{userPassError && <h1>Could not sign in.</h1>}
 				<TextLinkContainer>
+					<TextLink
+						text="Already have an account? Sign in"
+						onClick={() => history.push('/sign-in')}
+					/>
 					<TextLink
 						text="New user? Create a Passr account"
 						onClick={() => history.push('/sign-up')}

@@ -20,7 +20,7 @@ const ForgotPasswordContents = styled.div`
 	max-width: 300px;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: flex-start;z	
 	align-items: center;
 	grid-gap: 1em;
 `;
@@ -52,7 +52,7 @@ function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
 }
 
-function SignInPage() {
+function ForgotPasswordPage() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
@@ -132,4 +132,4 @@ function SignInPage() {
 	);
 }
 
-export default SignInPage;
+export default ForgotPasswordPage;

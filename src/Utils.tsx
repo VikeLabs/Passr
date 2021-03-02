@@ -1,6 +1,6 @@
-import { Fraction } from 'api';
+import { Grade } from 'api';
 
-export function gradeToString(grade: number | Fraction | undefined) {
+export function gradeToString(grade: Grade) {
 	if (grade == undefined) {
 		return '';
 	} else if (typeof grade === 'object') {

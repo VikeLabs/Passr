@@ -32,8 +32,9 @@ function HeaderGradeDisplay({ label, grade, ...props }: Props) {
 		<HeaderDisplayContainer {...props}>
 			<Label>{label}</Label>
 			<HeaderGradeDisplayContainer onClick={OpenInfo}>
-				{grade == '' && <GradeDisplayText>N/A</GradeDisplayText>}
-				{grade != '' && <GradeDisplayText>{grade}%</GradeDisplayText>}
+				{(grade === '' && <GradeDisplayText>N/A</GradeDisplayText>) || (
+					<GradeDisplayText>{grade}%</GradeDisplayText>
+				)}
 			</HeaderGradeDisplayContainer>
 		</HeaderDisplayContainer>
 	);

@@ -27,7 +27,7 @@ function GenericDropdown({ buttonDisplay, dropdownItems }: Props) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const { isComponentVisible, setIsComponentVisible } = useComponentVisible(
 		ref,
-		true
+		false
 	);
 	const handleClick = () => {
 		setIsComponentVisible(!isComponentVisible);

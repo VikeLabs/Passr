@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GradeBook from '../GradeBook';
-import { SignIn, SignUp } from './accounts';
-import ConfirmSignUp from './accounts/ConfirmSignUp';
-import ForgotPassword from './accounts/ForgotPassword';
+import { SignIn, SignUp, ConfirmSignUp, ForgotPassword } from './accounts';
 
 function Pages() {
 	return (

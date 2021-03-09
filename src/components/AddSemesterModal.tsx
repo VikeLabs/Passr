@@ -18,7 +18,6 @@ const Body = styled.div`
 const Desc = styled.p`
 	grid-area: desc;
 	font-size: ${({ theme }) => theme.fontSizes.xs};
-	margin: 1em 0 0 0.2em;
 `;
 
 const BodyLogo = styled(Logo)`
@@ -27,8 +26,6 @@ const BodyLogo = styled(Logo)`
 
 const InputField = styled.div`
 	grid-area: input;
-	padding: 0 0 0.5em 0;
-	margin: 0 2.2em 0 2em;
 	justify-content: center;
 	align-items: center;
 `;

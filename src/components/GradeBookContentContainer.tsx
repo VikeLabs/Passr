@@ -10,7 +10,9 @@ const ContentContainer = styled.div`
 	padding: 50px 0px 50px 50px;
 
 	display: grid;
-	grid-template-columns: 1fr 5fr 5fr 5fr 5fr;
+	grid-template-columns:
+		minmax(75px, 1fr) minmax(200px, 5fr) minmax(200px, 5fr)
+		minmax(200px, 5fr) minmax(200px, 5fr);
 	grid-template-rows: 75px 75px;
 	grid-template-areas:
 		'columnItemHeader columnItemHeader columnItemHeader columnItemHeader buttonColumn'
@@ -34,6 +36,8 @@ const CourseItemRow = styled.div`
 const ButtonColumn = styled.div`
 	grid-area: buttonColumn;
 
+	text-align: right;
+
 	border: 1px solid #828282;
 	border-style: none none solid none;
 `;
@@ -43,6 +47,8 @@ const AddItemButton = styled(AddButton)`
 	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
 	width: 150px;
 	height: 50px;
+	padding-top: 6px;
+	letter-spacing: 1px;
 `;
 
 const CourseItemTitleSpace = styled.div``;
@@ -81,7 +87,7 @@ function GradeBookContentContainer({ course /**, updateCourse*/ }: Props) {
 			</ButtonColumn>
 
 			<CourseItemTitleSpace
-				style={{ gridArea: 'courseTitleSpace' }}
+				style={{ gridArea: 'courseTitleSpace', paddingLeft: '20px' }}
 			></CourseItemTitleSpace>
 			<CourseItemTitle style={{ gridArea: 'courseItemTitle' }}>
 				Item

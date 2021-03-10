@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Logo from 'molecules/Logo';
 import TextButton from 'components/TextButton';
 import styled from 'styled-components';

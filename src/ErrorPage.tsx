@@ -2,7 +2,13 @@ import React from 'react';
 import Logo from 'molecules/Logo';
 import TextButton from 'components/TextButton';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import {
+	useHistory,
+	BrowserRouter as Router,
+	Switch,
+	Redirect,
+	Route,
+} from 'react-router-dom';
 
 const ErrorPageContainer = styled.div`
 	min-height: 100vh;
@@ -40,7 +46,10 @@ const GradeBookLink = styled(TextButton)`
 function ErrorPage() {
 	const history = useHistory();
 	const BackToHomePage = () => {
-		history.push('/');
+		history.replace('/');
+		<Route>
+			<Redirect to="/" />
+		</Route>;
 	};
 	return (
 		<ErrorPageContainer>

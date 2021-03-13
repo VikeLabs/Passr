@@ -18,12 +18,12 @@ function Pages() {
 				<Route path="/confirm-sign-up">
 					<ConfirmSignUp />
 				</Route>
-				<Route exact path="/">
+				<Route exact path={'/'}>
 					<GradeBook />
 				</Route>
-			</Switch>
-			<Switch>
-				<ErrorPage />
+				<Router>
+					<ErrorPage />
+				</Router>
 			</Switch>
 		</Router>
 	);

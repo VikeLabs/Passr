@@ -5,6 +5,7 @@ import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
 import ProfileDropdown from 'molecules/ProfileDropdown';
+import { getCurrentSemester, Semester } from 'api';
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -49,6 +50,7 @@ const Header = styled(HeaderComponent)`
 
 function GradeBook() {
 	const [signedIn, setSignedIn] = useState(false);
+	const [semester, setSemester] = useState<Semester | null>(null);
 	signedIn;
 
 	useEffect(() => {
@@ -59,12 +61,26 @@ function GradeBook() {
 			.catch(() => {
 				setSignedIn(false);
 			});
-	});
+	}, []);
+
+	useEffect(() => {
+		const semester = getCurrentSemester();
+		if (signedIn || !signedIn) {
+			getCurrentSemester()
+				.then(() => {
+					setSemester(semester);
+				})
+				.catch(() => {
+					console.log('Error');
+				});
+		}
+	}),
+		[signedIn];
 
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-			<SideBar currentSemester={Fall2020} />
+			{semester && <SideBar currentSemester={semester} />}
 			<MainContent />
 			<Account>
 				<ProfileDropdown />

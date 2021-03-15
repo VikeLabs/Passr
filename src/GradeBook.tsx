@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
-import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
 import ProfileDropdown from 'molecules/ProfileDropdown';
@@ -64,14 +63,13 @@ function GradeBook() {
 	}, []);
 
 	useEffect(() => {
-		const semester = getCurrentSemester();
 		if (signedIn || !signedIn) {
 			getCurrentSemester()
-				.then(() => {
+				.then((semester) => {
 					setSemester(semester);
 				})
 				.catch(() => {
-					console.log('Error');
+					console.error('Semester Not Found');
 				});
 		}
 	}),

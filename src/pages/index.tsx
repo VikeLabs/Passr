@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GradeBook from '../GradeBook';
-import { SignIn, SignUp } from './accounts';
-import ConfirmSignUp from './accounts/ConfirmSignUp';
+import { SignIn, SignUp, ConfirmSignUp, ForgotPassword } from './accounts';
 import ErrorPage from './ErrorPage';
 
 function Pages() {
@@ -17,6 +16,9 @@ function Pages() {
 				</Route>
 				<Route path="/confirm-sign-up">
 					<ConfirmSignUp />
+				</Route>
+				<Route path="/forgot">
+					<ForgotPassword />
 				</Route>
 				<Route exact path="/">
 					<GradeBook />

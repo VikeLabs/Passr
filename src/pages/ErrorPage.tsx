@@ -2,13 +2,7 @@ import React from 'react';
 import Logo from 'molecules/Logo';
 import TextButton from 'components/TextButton';
 import styled from 'styled-components';
-import {
-	useHistory,
-	BrowserRouter as Router,
-	Switch,
-	Redirect,
-	Route,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const ErrorPageContainer = styled.div`
 	min-height: 100vh;
@@ -47,9 +41,6 @@ function ErrorPage() {
 	const history = useHistory();
 	const BackToHomePage = () => {
 		history.replace('/');
-		<Route>
-			<Redirect to="/" />
-		</Route>;
 	};
 	return (
 		<ErrorPageContainer>

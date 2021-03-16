@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GradeBook from '../GradeBook';
 import { SignIn, SignUp } from './accounts';
 import ConfirmSignUp from './accounts/ConfirmSignUp';
-import ErrorPage from '../ErrorPage';
+import ErrorPage from './ErrorPage';
 
 function Pages() {
 	return (
 		<Router>
 			<Switch>
-				<Route path={`/sign-in`}>
+				<Route path="/sign-in">
 					<SignIn />
 				</Route>
 				<Route path="/sign-up">
@@ -18,12 +18,12 @@ function Pages() {
 				<Route path="/confirm-sign-up">
 					<ConfirmSignUp />
 				</Route>
-				<Route exact path={'/'}>
+				<Route exact path="/">
 					<GradeBook />
 				</Route>
-				<Router>
+				<Route>
 					<ErrorPage />
-				</Router>
+				</Route>
 			</Switch>
 		</Router>
 	);

@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../molecules/Logo';
 import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
-import { Semester } from '../api';
 
+import { Semester, Course } from '../api';
+import AddCourseModal, { AddCourseData } from './AddCourseModal';
 export interface SideBarInterface {
 	currentSemester?: Semester;
+	updateSemester: (semester: Semester) => void;
 	activeCourse: number;
 	onChange: (sem: Semester, newActiveCourse: number) => void;
+}
+export interface CourseListInterface {
+	courses: Course[];
+	updateItem: (courses: Course[]) => void;
 }
 
 const SideBarContainer = styled.div`
@@ -51,16 +57,31 @@ const AddCourseButtonContainer = styled.div`
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
-function AddCourse() {
-	console.log('course added');
-}
-
 function SideBar({
 	currentSemester,
+	updateSemester,
 	activeCourse,
 	onChange,
 	...props
 }: SideBarInterface) {
+	const [modalOpen, setModalOpen] = useState(false);
+	const handleModalClose = () => {
+		setModalOpen(false);
+	};
+	function openModal() {
+		setModalOpen(true);
+	}
+	function handleSubmit(data: AddCourseData) {
+		const { name, crn, grade } = data;
+		console.log(name);
+		console.log(crn);
+		console.log(grade);
+	}
+	function updateCourse(item: Course, index: number) {
+		const newCourse = [...currentSemester.courses];
+		newCourse[index] = item;
+		updateSemester({ ...currentSemester, courses: newCourse });
+	}
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />
@@ -88,10 +109,16 @@ function SideBar({
 				</ListOfCoursesContainer>
 			)}
 			<AddCourseButtonContainer>
-				<ActionButton onClick={AddCourse} variant="secondary">
+				<ActionButton onClick={openModal} variant="secondary">
 					Add course
 				</ActionButton>
 			</AddCourseButtonContainer>
+			{modalOpen && (
+				<AddCourseModal
+					handleSubmit={handleSubmit}
+					handleClose={handleModalClose}
+				/>
+			)}
 		</SideBarContainer>
 	);
 }

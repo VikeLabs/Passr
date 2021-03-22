@@ -4,8 +4,7 @@ import SideBarContent from './components/SideBar';
 import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
-import ProfileDropDown from './molecules/ProfileDropdown';
-import ActionButton from 'components/ActionButton';
+import ProfileDropdown from 'molecules/ProfileDropdown';
 
 export let signInStatus = false;
 
@@ -41,12 +40,8 @@ const MainContent = styled.div`
 	grid-area: main-content;
 `;
 
-const Account = styled(ProfileDropDown)`
+const Account = styled.div`
 	grid-area: account;
-`;
-
-const SignOutButton = styled(ActionButton)`
-margin 0.5em;
 `;
 
 const Header = styled(HeaderComponent)`
@@ -55,6 +50,7 @@ const Header = styled(HeaderComponent)`
 
 function GradeBook() {
 	const [signedIn, setSignedIn] = useState(false);
+	signedIn;
 
 	useEffect(() => {
 		Auth.currentAuthenticatedUser()
@@ -73,7 +69,9 @@ function GradeBook() {
 			<Header text="Passr" />
 			<SideBar currentSemester={Fall2020} />
 			<MainContent />
-			<Account />
+			<Account>
+				<ProfileDropdown />
+			</Account>
 		</GradeBookContainer>
 	);
 }

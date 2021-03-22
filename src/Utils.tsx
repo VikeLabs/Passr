@@ -21,5 +21,3 @@ export function parseGrade(s: string): Grade | undefined {
 		return undefined;
 	}
 }
-
-//export default Utils;

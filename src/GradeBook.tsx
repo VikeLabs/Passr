@@ -49,7 +49,7 @@ const Header = styled(HeaderComponent)`
 
 function GradeBook() {
 	const [signedIn, setSignedIn] = useState(false);
-	const [semester, setSemester] = useState<Semester | null>(null);
+	const [semester, setSemester] = useState<Semester>();
 	signedIn;
 
 	useEffect(() => {
@@ -63,6 +63,7 @@ function GradeBook() {
 	}, []);
 
 	useEffect(() => {
+		// TODO - remove !signedIn when sign in is finished
 		if (signedIn || !signedIn) {
 			getCurrentSemester()
 				.then((semester) => {
@@ -72,13 +73,12 @@ function GradeBook() {
 					console.error('Semester Not Found');
 				});
 		}
-	}),
-		[signedIn];
+	}, [signedIn]);
 
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-			{semester && <SideBar currentSemester={semester} />}
+			<SideBar currentSemester={semester} />
 			<MainContent />
 			<Account>
 				<ProfileDropdown />

@@ -12,7 +12,6 @@ export interface SideBarInterface {
 }
 export interface CourseListInterface {
 	courses: Course[];
-	updateItem: (courses: Course[]) => void;
 }
 
 const SideBarContainer = styled.div`
@@ -56,10 +55,7 @@ const AddCourseButtonContainer = styled.div`
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
-function CourseList({ courses, updateItem }: CourseListInterface) {
-	const newItem = { ...courses };
-	updateItem(newItem);
-
+function CourseList({ courses }: CourseListInterface) {
 	return (
 		<ListOfCoursesContainer>
 			{courses.map((item, name) => {
@@ -84,14 +80,11 @@ function SideBar({
 	}
 	function handleSubmit(data: AddCourseData) {
 		const { name, crn, grade } = data;
+		const newCourses = { ...currentSemester.courses };
+		updateSemester({ ...currentSemester, courses: newCourses });
 		console.log(name);
 		console.log(crn);
 		console.log(grade);
-	}
-	function updateCourse(item: Course, index: number) {
-		const newCourse = [...currentSemester.courses];
-		newCourse[index] = item;
-		updateSemester({ ...currentSemester, courses: newCourse });
 	}
 	return (
 		<SideBarContainer {...props}>

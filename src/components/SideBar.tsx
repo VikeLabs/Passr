@@ -13,7 +13,6 @@ export interface SideBarInterface {
 }
 export interface CourseListInterface {
 	courses: Course[];
-	updateItem: (courses: Course[]) => void;
 }
 
 const SideBarContainer = styled.div`

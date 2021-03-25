@@ -1,26 +1,36 @@
 export { getCurrentSemester } from './api';
-export type Grade = number | Fraction | undefined;
+export type Grade = number | FractionInterface | undefined;
 
-export interface Fraction {
+export interface FractionInterface {
 	numerator: number;
 	denominator: number;
 }
 
-export interface CourseItem {
+export interface CourseItemInterface {
+	id: string;
 	name: string;
 	weight: number;
-	grade?: Grade;
-	dueDate?: Date;
+	grade: number | FractionInterface;
+	dueDate: Date;
+	owner: string;
 }
 
-export interface Course {
+export interface CourseInterface {
+	id: string;
 	name: string;
 	crn?: number;
-	items: CourseItem[];
+	courseItems: CourseItemInterface[];
 	desiredGrade?: number;
 }
 
-export interface Semester {
+export interface SemesterInterface {
+	id: string;
 	name: string;
-	courses: Course[];
+	courses: CourseInterface[];
+	owner: string;
+}
+
+export interface UserInterface extends Document {
+	id: string;
+	semesters: SemesterInterface[];
 }

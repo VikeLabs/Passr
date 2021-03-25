@@ -7,13 +7,13 @@ import GradeItemAccordion from './GradeItemAccordion';
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
 	font-weight: bold;
-	padding: 50px 0px 50px 50px;
+	padding: 3em 0em 3em 3em;
 
 	display: grid;
 	grid-template-columns:
-		minmax(75px, 1fr) minmax(200px, 5fr) minmax(200px, 5fr)
-		minmax(200px, 5fr) minmax(200px, 5fr);
-	grid-template-rows: 75px 75px;
+		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
+		minmax(6em, 5fr) minmax(6em, 5fr);
+	grid-template-rows: 5em 4em;
 	grid-template-areas:
 		'columnItemHeader columnItemHeader columnItemHeader columnItemHeader buttonColumn'
 		'courseTitleSpace courseItemTitle courseWeightTitle courseGradeTitle courseDuedateTitle'
@@ -24,7 +24,7 @@ const ColumnItemHeader = styled.div`
 	grid-area: columnItemHeader;
 	color: ${(props) => props.theme.colors.text[1]};
 
-	border: 1px solid #828282;
+	border: 1px solid ${(props) => props.theme.colors.gray[3]};
 	border-style: none none solid none;
 `;
 
@@ -35,26 +35,29 @@ const CourseItemRow = styled.div`
 
 const ButtonColumn = styled.div`
 	grid-area: buttonColumn;
-
 	text-align: right;
 
-	border: 1px solid #828282;
+	border: 1px solid ${(props) => props.theme.colors.gray[3]};
 	border-style: none none solid none;
 `;
 
 const AddItemButton = styled(AddButton)`
 	font-size: ${({ theme }) => theme.fontSizes.xs};
 	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
-	width: 150px;
-	height: 50px;
-	padding-top: 6px;
+
+	margin-top: 1em;
+	padding-top: 0.3em;
+	width: 10em;
+	height: 3.5em;
 	letter-spacing: 1px;
 `;
 
-const CourseItemTitleSpace = styled.div``;
+const CourseItemTitleSpace = styled.div`
+	grid-area: 'courseTitleSpace';
+`;
 
 const CourseItemTitle = styled.div`
-	padding-top: 25px;
+	padding-top: 1em;
 
 	font-size: ${({ theme }) => theme.fontSizes.xs};
 	color: ${({ theme }) => theme.colors.gray[3]};
@@ -62,18 +65,18 @@ const CourseItemTitle = styled.div`
 
 interface Props {
 	course: Course;
-	// updateCourse: (course: Course) => void;
+	updateCourse: (course: Course) => void;
 }
 
-function GradeBookContentContainer({ course /**, updateCourse*/ }: Props) {
+function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const openModal = () => {
 		console.log('Item added!');
 	};
-	// function updateCourseItem(item: CourseItem, index: number) {
-	// 	const newCourseItems = [...course.items];
-	// 	newCourseItems[index] = item;
-	// 	updateCourse({ ...course, items: newCourseItems });
-	// }
+	function updateCourseItem(item: CourseItem, index: number) {
+		const newCourseItems = [...course.items];
+		newCourseItems[index] = item;
+		updateCourse({ ...course, items: newCourseItems });
+	}
 
 	return (
 		<ContentContainer>
@@ -86,9 +89,7 @@ function GradeBookContentContainer({ course /**, updateCourse*/ }: Props) {
 				</AddItemButton>
 			</ButtonColumn>
 
-			<CourseItemTitleSpace
-				style={{ gridArea: 'courseTitleSpace', paddingLeft: '20px' }}
-			></CourseItemTitleSpace>
+			<CourseItemTitleSpace></CourseItemTitleSpace>
 			<CourseItemTitle style={{ gridArea: 'courseItemTitle' }}>
 				Item
 			</CourseItemTitle>
@@ -109,8 +110,9 @@ function GradeBookContentContainer({ course /**, updateCourse*/ }: Props) {
 						<GradeItemAccordion
 							key={index}
 							item={item}
-							updateItem={(newItem) => newItem}
-							/**updateCourseItem(newItem, index)}*/
+							updateItem={(newItem) =>
+								updateCourseItem(newItem, index)
+							}
 						/>
 					);
 				})}

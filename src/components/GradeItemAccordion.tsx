@@ -13,9 +13,9 @@ const Accordion = styled.div`
 
 	display: grid;
 	grid-template-columns:
-		minmax(75px, 1fr) minmax(200px, 5fr) minmax(200px, 5fr)
-		minmax(200px, 5fr) minmax(200px, 5fr);
-	grid-template-rows: 100px;
+		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
+		minmax(6em, 5fr) minmax(6em, 5fr);
+	grid-template-rows: 6em;
 	grid-template-areas: 'arrow item weight grade duedate';
 `;
 const RowComponent = styled.div`
@@ -23,81 +23,44 @@ const RowComponent = styled.div`
 	font-size: large;
 	border: none;
 
-	background-color: #ffffff;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
 const DropDownArrow = styled.button`
 	border: none;
 	outline: none;
 	font-size: 2em;
-	background-color: #ffffff;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
 const AccordionExtended = styled.div`
 	font-weight: bold;
 	font-size: large;
 	color: #4961e1;
 	border: none;
-	background-color: #ffffff;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 
 	display: grid;
 	grid-template-columns:
-		minmax(75px, 1fr) minmax(200px, 5fr) minmax(200px, 5fr)
-		minmax(200px, 5fr) minmax(200px, 5fr);
-	grid-template-rows: 75px;
+		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
+		minmax(6em, 5fr) minmax(6em, 5fr);
+	grid-template-rows: 4em;
 	grid-template-areas: 'arrow item weight grade duedate';
 `;
 
 const AccordionExtendedComponent = styled.div`
 	border: none;
-	padding-right: 25px;
+	padding-right: 1.5em;
 `;
 
 const DeleteButton = styled(DelButton)`
 	color: #b80f0a;
 	width: auto;
 	font-weight: bold;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 0em;
+	padding-right: 0em;
 `;
 
 function submit() {
 	console.log('changed');
-}
-
-function monthToString(month: number) {
-	switch (month) {
-		case 0:
-			return 'January';
-		case 1:
-			return 'February';
-		case 2:
-			return 'March';
-		case 3:
-			return 'April';
-		case 4:
-			return 'May';
-		case 5:
-			return 'June';
-		case 6:
-			return 'July';
-		case 7:
-			return 'August';
-		case 8:
-			return 'September';
-		case 9:
-			return 'October';
-		case 10:
-			return 'November';
-		case 11:
-			return 'December';
-	}
-}
-
-function dateToString(month: string | undefined, date: number) {
-	if (month == undefined) {
-		console.log('Date to String function error');
-		return;
-	}
-	return month + ' ' + date;
 }
 
 function gradeToString(grade: number | Fraction | undefined) {
@@ -295,11 +258,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 						paddingTop: '20px',
 					}}
 				>
-					<p>
-						{dueDate
-							? dateToString(monthToString(dueDate.getMonth()),dueDate.getDate()) // prettier-ignore
-							: 'N/A'}
-					</p>
+					<p>{dueDate?.toLocaleDateString() || 'N/A'}</p>
 				</RowComponent>
 			</Accordion>
 			{expanded && extended()}

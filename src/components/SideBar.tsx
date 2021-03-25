@@ -55,10 +55,7 @@ const AddCourseButtonContainer = styled.div`
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
-function CourseList({ courses, updateItem }: CourseListInterface) {
-	const newItem = { ...courses };
-	updateItem(newItem);
-
+function CourseList({ courses }: CourseListInterface) {
 	return (
 		<ListOfCoursesContainer>
 			{courses.map((item, name) => {

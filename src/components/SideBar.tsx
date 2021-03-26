@@ -71,12 +71,9 @@ function SideBar({
 		setModalOpen(true);
 	}
 	function handleSubmit(data: AddCourseData) {
-		const { name, crn, grade } = data;
-		const newCourses = { ...currentSemester.courses };
+		const newCourse: Course = { ...data, items: [] };
+		const newCourses = [...currentSemester.courses, newCourse];
 		updateSemester({ ...currentSemester, courses: newCourses });
-		console.log(name);
-		console.log(crn);
-		console.log(grade);
 	}
 	return (
 		<SideBarContainer {...props}>

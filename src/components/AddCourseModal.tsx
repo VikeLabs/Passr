@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 import DefaultModal from './DefaultModal';
 import Logo from '../molecules/Logo';
 import TextInput from './TextInput';
+import { Course } from '../api';
 
 const Body = styled.div`
 	height: 100%;
@@ -41,21 +42,21 @@ export interface AddCourseInterface {
 	handleClose: () => void;
 }
 
-export interface AddCourseData {
-	name: string;
-	crn: string;
-	grade: string;
-}
+export type AddCourseData = Pick<Course, 'name' | 'crn' | 'desiredGrade'>;
 
 function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 	const [name, setName] = useState('');
 	const [crn, setCNumber] = useState('');
-	const [grade, setGrade] = useState('');
+	const [desiredGrade, setGrade] = useState('');
 
 	const theme = useContext(ThemeContext);
 
-	function onSubmit({ name, crn, grade }: AddCourseData) {
-		handleSubmit({ name, crn, grade });
+	function onSubmit() {
+		const crnNo = isNaN(Number(crn)) ? undefined : Number(crn);
+		const gradeNo = isNaN(Number(desiredGrade))
+			? undefined
+			: Number(desiredGrade);
+		handleSubmit({ name, crn: crnNo, desiredGrade: gradeNo });
 		handleClose();
 	}
 
@@ -68,7 +69,7 @@ function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 			primaryVariant="primary"
 			secondaryButton="Cancel"
 			secondaryVariant="alternate"
-			handlePrimary={() => onSubmit({ name, crn, grade })}
+			handlePrimary={onSubmit}
 		>
 			<Body>
 				<Desc>Add a New Course.</Desc>
@@ -93,7 +94,7 @@ function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 					></InputCourseNumber>
 					<InputDesiredGrade
 						label="Desired Grade"
-						value={grade}
+						value={desiredGrade}
 						placeholder="Desired Grade"
 						onChange={(e) => {
 							setGrade(e.currentTarget.value);

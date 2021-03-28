@@ -1,6 +1,10 @@
-import { Semester, Course, CourseItem } from './index';
+import {
+	SemesterInterface,
+	CourseInterface,
+	CourseItemInterface,
+} from './index';
 
-const Math100Items: CourseItem[] = [
+const Math100Items: CourseItemInterface[] = [
 	{
 		name: 'Assignment 1',
 		weight: 10,
@@ -32,12 +36,12 @@ const Math100Items: CourseItem[] = [
 	},
 ];
 
-const MATH100: Course = {
+const MATH100: CourseInterface = {
 	name: 'Math 100',
 	items: Math100Items,
 };
 
-const CSC110Items: CourseItem[] = [
+const CSC110Items: CourseItemInterface[] = [
 	{
 		name: 'Assignment 1',
 		weight: 5,
@@ -91,12 +95,12 @@ const CSC110Items: CourseItem[] = [
 	},
 ];
 
-const CSC110: Course = {
+const CSC110: CourseInterface = {
 	name: 'CSC 110',
 	items: CSC110Items,
 };
 
-const PHYS111Items: CourseItem[] = [
+const PHYS111Items: CourseItemInterface[] = [
 	{
 		name: 'Assignment 1',
 		weight: 5,
@@ -148,13 +152,13 @@ const PHYS111Items: CourseItem[] = [
 	},
 ];
 
-const PHYS111: Course = {
+const PHYS111: CourseInterface = {
 	name: 'PHYS 111',
 	items: PHYS111Items,
 	desiredGrade: 60,
 };
 
-export const Fall2020: Semester = {
+export const Fall2020: SemesterInterface = {
 	name: 'Fall 2020',
 	courses: [MATH100, CSC110, PHYS111],
 };

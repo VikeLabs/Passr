@@ -3,9 +3,19 @@ import Logo from '../molecules/Logo';
 import styled from 'styled-components';
 import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
+
 export interface SideBarInterface {
 	currentSemester?: Semester;
+	activeCourse: Course;
+	onChange: (newActiveCourse: Course) => void;
 }
+
+interface CourseListInterface {
+	courses: Course[];
+	activeCourse: Course;
+	onChange: (newActiveCourse: Course) => void;
+}
+
 const SideBarContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.primary[0]};
 	height: 100%;
@@ -30,6 +40,7 @@ const CourseItem = styled.li`
 		list-style: none;
 	}
 `;
+
 const SideBarLogo = styled(Logo)`
 	background-color: ${({ theme }) => theme.colors.primary[0]};
 `;
@@ -42,21 +53,35 @@ function AddCourse() {
 	console.log('course added');
 }
 
-function CourseList({ courses }: { courses: Course[] }) {
+function CourseList({ courses, activeCourse, onChange }: CourseListInterface) {
+	console.log('active course is: ' + activeCourse.name);
 	return (
 		<ListOfCoursesContainer>
 			{courses.map((item, name) => {
-				return <CourseItem key={name}>{item.name}</CourseItem>;
+				return (
+					// need to check if the item is the active course item or not
+					<CourseItem key={name} onClick={() => onChange(item)}>
+						{item.name}
+					</CourseItem>
+				);
 			})}
 		</ListOfCoursesContainer>
 	);
 }
-function SideBar({ currentSemester, ...props }: SideBarInterface) {
+function SideBar({
+	currentSemester,
+	activeCourse,
+	onChange,
+}: SideBarInterface) {
 	return (
-		<SideBarContainer {...props}>
+		<SideBarContainer>
 			<SideBarLogo width="8em" height="8em" />
 			{currentSemester && (
-				<CourseList courses={currentSemester.courses} />
+				<CourseList
+					courses={currentSemester.courses}
+					activeCourse={activeCourse}
+					onChange={onChange}
+				/>
 			)}
 			<AddCourseButtonContainer>
 				<ActionButton onClick={AddCourse} variant="secondary">

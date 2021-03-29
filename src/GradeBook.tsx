@@ -75,10 +75,20 @@ function GradeBook() {
 		}
 	}, [signedIn]);
 
+	const [activeCourse, setCourse] = useState(Fall2020['courses'][0]);
+	console.log(setCourse);
+
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-			<SideBar currentSemester={semester} />
+
+			<SideBar
+				currentSemester={semester}
+				activeCourse={activeCourse}
+				onChange={(newActiveCourse) =>
+					console.log(newActiveCourse.name + ' was clicked')
+				}
+			/>
 			<MainContent />
 			<Account>
 				<ProfileDropdown />

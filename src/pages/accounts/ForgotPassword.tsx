@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
-const SignInPageContainer = styled.div`
+const ForgotPasswordPageContainer = styled.div`
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -16,7 +16,7 @@ const SignInPageContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.main[1]};
 `;
 
-const SignInContents = styled.div`
+const ForgotPasswordContents = styled.div`
 	max-width: 300px;
 	display: flex;
 	flex-direction: column;
@@ -29,7 +29,7 @@ const PassrLogo = styled(Logo)`
 	width: 100%;
 `;
 
-const SignInButton = styled(ActionButton)`
+const SubmitButton = styled(ActionButton)`
 	width: 100%;
 	padding: 1em;
 `;
@@ -52,11 +52,9 @@ function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
 }
 
-function SignInPage() {
+function ForgotPasswordPage() {
 	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
-	const [userPassError, setUserPassError] = useState(false);
 
 	const history = useHistory();
 
@@ -81,34 +79,19 @@ function SignInPage() {
 		return () => {
 			document.removeEventListener('keydown', listener);
 		};
-	}, [email, password]);
+	}, [email]);
 
 	const handleSubmit = async () => {
 		if (!validEmail(email)) {
 			setEmailErr(true);
 			return;
 		}
-		try {
-			const user = await Auth.signIn({
-				username: email,
-				password,
-			});
-			if (user) {
-				history.push('/');
-			}
-		} catch (err) {
-			console.error(err);
-			if (err.code === 'UserNotConfirmedException') {
-				history.push(`/confirm-sign-up?email=${encodeURI(email)}`);
-			} else {
-				setUserPassError(true);
-			}
-		}
+		console.log(email);
 	};
 
 	return (
-		<SignInPageContainer>
-			<SignInContents>
+		<ForgotPasswordPageContainer>
+			<ForgotPasswordContents>
 				<PassrLogo width="300px" height="300px" />
 				<TextInput
 					value={email}
@@ -124,37 +107,26 @@ function SignInPage() {
 					error={emailErr}
 					placeholder="Email"
 				/>
-				<TextInput
-					value={password}
-					onChange={(e) => {
-						setPassword(e.target.value);
-					}}
-					label="Password"
-					required={true}
-					type="password"
-					placeholder="Password"
-				/>
-				<SignInButton
+				<SubmitButton
 					variant="primary"
 					disabled={emailErr}
 					onClick={handleSubmit}
 				>
-					Sign In
-				</SignInButton>
-				{userPassError && <h1>Could not sign in.</h1>}
+					Submit
+				</SubmitButton>
 				<TextLinkContainer>
 					<TextLink
-						text="Forgot your password?"
-						onClick={() => history.push('/forgot')}
+						text="Already have an account? Sign in"
+						onClick={() => history.push('/sign-in')}
 					/>
 					<TextLink
 						text="New user? Create a Passr account"
 						onClick={() => history.push('/sign-up')}
 					/>
 				</TextLinkContainer>
-			</SignInContents>
-		</SignInPageContainer>
+			</ForgotPasswordContents>
+		</ForgotPasswordPageContainer>
 	);
 }
 
-export default SignInPage;
+export default ForgotPasswordPage;

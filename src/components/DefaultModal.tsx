@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import MainButton, { Variant } from './MainActionButton';
+import ActionButton, { Variant } from './ActionButton';
 
 export const Overlay = styled.div`
-	position: absolute;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	backdrop-filter: blur(5px);
 	background-color: rgba(10, 10, 20, 0.5);
 	backdrop-filter: blur(0.2em);
-	height: 100%;
-	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -23,11 +25,11 @@ export const ButtonField = styled.div`
 	grid-gap: 1em;
 `;
 
-export const AbortButton = styled(MainButton)`
+export const AbortButton = styled(ActionButton)`
 	grid-area: abort;
 `;
 
-export const ProceedButton = styled(MainButton)`
+export const ProceedButton = styled(ActionButton)`
 	grid-area: proceed;
 `;
 

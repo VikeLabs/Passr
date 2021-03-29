@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
-import DelButton from './MainActionButton';
-import { CourseItem, Fraction } from 'api';
+import { gradeToString, parseGrade } from '../Utils';
+import { CourseItem } from 'api';
+import ActionButton from './ActionButton';
+
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
 	updateItem: (item: CourseItem) => void;
@@ -61,28 +63,6 @@ const DeleteButton = styled(DelButton)`
 
 function submit() {
 	console.log('changed');
-}
-
-function gradeToString(grade: number | Fraction | undefined) {
-	if (grade == undefined) {
-		return '';
-	} else if (typeof grade === 'object') {
-		return `${grade.numerator}/${grade.denominator}`;
-	}
-	return `${grade}`;
-}
-
-function parseGrade(s: string) {
-	const fractionRegex = /([\d]*\.?[\d]+)\/([\d]*\.?[\d]+)/;
-	const match = s.match(fractionRegex);
-	console.log({ parseGradeMatch: match });
-	if (!isNaN(Number(s))) {
-		return Number(s);
-	} else if (match) {
-		return { numerator: Number(match[1]), denominator: Number(match[2]) };
-	} else {
-		return undefined;
-	}
 }
 
 function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {

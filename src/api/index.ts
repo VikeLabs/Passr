@@ -7,12 +7,12 @@ export interface FractionInterface {
 }
 
 export interface CourseItemInterface {
-	id: string;
+	id?: string;
 	name: string;
 	weight: number;
-	grade: number | FractionInterface;
-	dueDate: Date;
-	owner: string;
+	grade?: number | FractionInterface;
+	dueDate?: Date;
+	owner?: string;
 }
 
 export interface CourseInterface {

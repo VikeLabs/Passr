@@ -7,30 +7,30 @@ export interface FractionInterface {
 }
 
 export interface CourseItemInterface {
-	id?: string;
+	id: string;
 	name: string;
 	weight: number;
 	grade?: number | FractionInterface;
 	dueDate?: Date;
-	owner?: string;
+	owner: string;
 }
 
 export interface CourseInterface {
 	id: string;
 	name: string;
 	crn?: number;
-	courseItems: CourseItemInterface[];
-	desiredGrade?: number;
+	courseItems?: CourseItemInterface[];
+	desiredGrade: number;
 }
 
 export interface SemesterInterface {
 	id: string;
 	name: string;
-	courses: CourseInterface[];
+	courses?: CourseInterface[];
 	owner: string;
 }
 
 export interface UserInterface extends Document {
 	id: string;
-	semesters: SemesterInterface[];
+	semesters?: SemesterInterface[];
 }

@@ -38,7 +38,8 @@ const Math100Items: CourseItemInterface[] = [
 
 const MATH100: CourseInterface = {
 	name: 'Math 100',
-	items: Math100Items,
+	courseItems: Math100Items,
+	desiredGrade: 80,
 };
 
 const CSC110Items: CourseItemInterface[] = [
@@ -154,7 +155,7 @@ const PHYS111Items: CourseItemInterface[] = [
 
 const PHYS111: CourseInterface = {
 	name: 'PHYS 111',
-	items: PHYS111Items,
+	courseItems: PHYS111Items,
 	desiredGrade: 60,
 };
 

@@ -72,9 +72,10 @@ function SideBar({
 	currentSemester,
 	activeCourse,
 	onChange,
+	...props
 }: SideBarInterface) {
 	return (
-		<SideBarContainer>
+		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />
 			{currentSemester && (
 				<CourseList

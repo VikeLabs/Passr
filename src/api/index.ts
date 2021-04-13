@@ -11,7 +11,6 @@ export interface CourseItem {
 	weight: number;
 	grade?: Grade;
 	dueDate?: Date;
-	onClick?: (course: Course) => void;
 }
 
 export interface Course {

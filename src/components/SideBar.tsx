@@ -1,19 +1,13 @@
 import React from 'react';
 import Logo from '../molecules/Logo';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
-import { Semester, Course } from '../api';
+import { Semester } from '../api';
 
 export interface SideBarInterface {
 	currentSemester?: Semester;
-	activeCourse: Course;
-	onChange: (newActiveCourse: Course) => void;
-}
-
-interface CourseListInterface {
-	courses: Course[];
-	activeCourse: Course;
-	onChange: (newActiveCourse: Course) => void;
+	activeCourse: number;
+	onChange: (sem: Semester, newActiveCourse: number) => void;
 }
 
 const SideBarContainer = styled.div`
@@ -28,7 +22,7 @@ const ListOfCoursesContainer = styled.ol`
 	font-size: ${({ theme }) => theme.fontSizes.m};
 	padding: 0;
 `;
-const CourseItem = styled.li`
+const CourseItem = styled.li<{ selected: boolean }>`
 	color: ${({ theme }) => theme.colors.secondary[0]};
 	cursor: pointer;
 	padding-top: 1em;
@@ -39,6 +33,12 @@ const CourseItem = styled.li`
 		color: ${({ theme }) => theme.colors.text[1]};
 		list-style: none;
 	}
+	${(props) =>
+		props.selected &&
+		css`
+			background-color: ${({ theme }) => theme.colors.secondary[1]};
+			color: ${({ theme }) => theme.colors.text[1]};
+		`}
 `;
 
 const SideBarLogo = styled(Logo)`
@@ -53,36 +53,49 @@ function AddCourse() {
 	console.log('course added');
 }
 
-function CourseList({ courses, activeCourse, onChange }: CourseListInterface) {
-	console.log('active course is: ' + activeCourse.name);
-	return (
-		<ListOfCoursesContainer>
-			{courses.map((item, name) => {
-				return (
-					// need to check if the item is the active course item or not
-					<CourseItem key={name} onClick={() => onChange(item)}>
-						{item.name}
-					</CourseItem>
-				);
-			})}
-		</ListOfCoursesContainer>
-	);
-}
 function SideBar({
 	currentSemester,
 	activeCourse,
 	onChange,
 	...props
 }: SideBarInterface) {
+	currentSemester &&
+		console.log(
+			'active course is: ' + currentSemester.courses[activeCourse].name
+		);
+
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />
 			{currentSemester && (
-				<CourseList
-					courses={currentSemester.courses}
-					activeCourse={activeCourse}
-					onChange={onChange}
-				/>
+				<ListOfCoursesContainer>
+					{currentSemester.courses.map((item, name) => {
+						console.log(currentSemester.courses.indexOf(item));
+						console.log(activeCourse);
+						console.log(
+							activeCourse ===
+								currentSemester.courses.indexOf(item)
+						);
+						return (
+							// need to check if the item is the active course item or not
+							<CourseItem
+								key={name}
+								onClick={() =>
+									onChange(
+										currentSemester,
+										currentSemester.courses.indexOf(item)
+									)
+								}
+								selected={
+									activeCourse ===
+									currentSemester.courses.indexOf(item)
+								}
+							>
+								{item.name}
+							</CourseItem>
+						);
+					})}
+				</ListOfCoursesContainer>
 			)}
 			<AddCourseButtonContainer>
 				<ActionButton onClick={AddCourse} variant="secondary">

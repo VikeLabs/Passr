@@ -75,7 +75,7 @@ function GradeBook() {
 		}
 	}, [signedIn]);
 
-	const [activeCourse, setCourse] = useState(Fall2020['courses'][0]);
+	const [activeCourse, setCourse] = useState(0);
 	console.log(setCourse);
 
 	return (
@@ -85,8 +85,10 @@ function GradeBook() {
 			<SideBar
 				currentSemester={semester}
 				activeCourse={activeCourse}
-				onChange={(newActiveCourse) =>
-					console.log(newActiveCourse.name + ' was clicked')
+				onChange={(sem, newActiveCourse) =>
+					console.log(
+						sem.courses[newActiveCourse].name + ' was clicked'
+					)
 				}
 			/>
 			<MainContent />

@@ -79,6 +79,7 @@ function SideBar({
 		setModalOpen(true);
 	}
 	function handleSubmit(data: AddCourseData) {
+		if (!currentSemester) return;
 		const newCourse: Course = { ...data, items: [] };
 		const newCourses = [...currentSemester.courses, newCourse];
 		updateSemester({ ...currentSemester, courses: newCourses });
@@ -110,7 +111,11 @@ function SideBar({
 				</ListOfCoursesContainer>
 			)}
 			<AddCourseButtonContainer>
-				<ActionButton onClick={openModal} variant="secondary">
+				<ActionButton
+					onClick={openModal}
+					variant="secondary"
+					disabled={!currentSemester}
+				>
 					Add course
 				</ActionButton>
 			</AddCourseButtonContainer>

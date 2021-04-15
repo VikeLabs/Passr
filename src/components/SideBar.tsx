@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
 export interface SideBarInterface {
-	currentSemester: Semester;
+	currentSemester?: Semester;
 }
 const SideBarContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.primary[0]};
@@ -55,7 +55,9 @@ function SideBar({ currentSemester, ...props }: SideBarInterface) {
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />
-			<CourseList courses={currentSemester.courses} />
+			{currentSemester && (
+				<CourseList courses={currentSemester.courses} />
+			)}
 			<AddCourseButtonContainer>
 				<ActionButton onClick={AddCourse} variant="secondary">
 					Add course

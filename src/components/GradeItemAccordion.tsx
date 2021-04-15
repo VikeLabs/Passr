@@ -1,78 +1,68 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
+import { gradeToString, parseGrade } from '../Utils';
+import { CourseItem } from 'api';
 import ActionButton from './ActionButton';
-import { CourseItem, Fraction } from 'api';
+
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
 	updateItem: (item: CourseItem) => void;
 }
 
-const Accordion = styled.tr`
-	background-color: #ffffff;
+const Accordion = styled.div`
 	color: #4f4f4f;
-	padding: 2em;
-	justify-content: center;
-	line-height: 8em;
-	transition: line-height 14em ease-out;
-	border: #ffffff;
-	text-decoration: none;
-	border: none;
+
+	display: grid;
+	grid-template-columns:
+		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
+		minmax(6em, 5fr) minmax(6em, 5fr);
+	grid-template-rows: 6em;
+	grid-template-areas: 'arrow item weight grade duedate';
 `;
-const RowComponent = styled.td`
-	border: #ffffff;
+const RowComponent = styled.div`
 	font-weight: bold;
 	font-size: large;
 	border: none;
-	margin: 1.5em;
+
+	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
 const DropDownArrow = styled.button`
 	border: none;
 	outline: none;
-	background-color: #ffffff;
 	font-size: 2em;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
-const AccordionExtended = styled.tr`
+const AccordionExtended = styled.div`
 	font-weight: bold;
 	font-size: large;
 	color: #4961e1;
 	border: none;
-`;
-const AccordionExtendedComponent = styled.td`
-	background-color: #ffffff;
-	border: none;
+	background-color: ${({ theme }) => theme.colors.main[0]};
+
+	display: grid;
+	grid-template-columns:
+		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
+		minmax(6em, 5fr) minmax(6em, 5fr);
+	grid-template-rows: 4em;
+	grid-template-areas: 'arrow item weight grade duedate';
 `;
 
-const DeleteButton = styled(ActionButton)`
-	background-color: #ffffff;
+const AccordionExtendedComponent = styled.div`
+	border: none;
+	padding-right: 1.5em;
+`;
+
+const DeleteButton = styled(DelButton)`
 	color: #b80f0a;
-	margin-right: 2em;
+	width: auto;
+	font-weight: bold;
+	padding-left: 0em;
+	padding-right: 0em;
 `;
 
 function submit() {
 	console.log('changed');
-}
-
-function gradeToString(grade: number | Fraction | undefined) {
-	if (grade == undefined) {
-		return '';
-	} else if (typeof grade === 'object') {
-		return `${grade.numerator}/${grade.denominator}`;
-	}
-	return `${grade}`;
-}
-
-function parseGrade(s: string) {
-	const fractionRegex = /([\d]*\.?[\d]+)\/([\d]*\.?[\d]+)/;
-	const match = s.match(fractionRegex);
-	console.log({ parseGradeMatch: match });
-	if (!isNaN(Number(s))) {
-		return Number(s);
-	} else if (match) {
-		return { numerator: Number(match[1]), denominator: Number(match[2]) };
-	} else {
-		return undefined;
-	}
 }
 
 function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
@@ -94,7 +84,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 				<AccordionExtended>
 					<AccordionExtendedComponent></AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<RowComponent>
+						<RowComponent
+							style={{
+								gridArea: 'item',
+							}}
+						>
 							<TextInput
 								value={tempName}
 								onChange={(e) => {
@@ -109,7 +103,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 						</RowComponent>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<RowComponent>
+						<RowComponent
+							style={{
+								gridArea: 'weight',
+							}}
+						>
 							<TextInput
 								value={tempWeight}
 								onChange={(e) => {
@@ -128,7 +126,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 						</RowComponent>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<RowComponent>
+						<RowComponent
+							style={{
+								gridArea: 'grade',
+							}}
+						>
 							<TextInput
 								value={tempGrade}
 								onChange={(e) => {
@@ -144,7 +146,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 						</RowComponent>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent>
-						<RowComponent>
+						<RowComponent
+							style={{
+								gridArea: 'duedate',
+							}}
+						>
 							<TextInput
 								value={tempDate}
 								onChange={(e) => {
@@ -163,9 +169,14 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 				</AccordionExtended>
 				<AccordionExtended>
 					<AccordionExtendedComponent></AccordionExtendedComponent>
-					<AccordionExtendedComponent>
-						<DeleteButton onClick={submit} variant="negative">
-							Delete Item
+					<AccordionExtendedComponent
+						style={{
+							gridArea: 'item',
+						}}
+					>
+						<DeleteButton onClick={submit} variant="secondary">
+							<i className="fas fa-trash"></i>
+							&nbsp; &nbsp;Delete Item
 						</DeleteButton>
 					</AccordionExtendedComponent>
 					<AccordionExtendedComponent></AccordionExtendedComponent>
@@ -179,7 +190,13 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	return (
 		<>
 			<Accordion>
-				<RowComponent>
+				<RowComponent
+					style={{
+						gridArea: 'arrow',
+						textAlign: 'center',
+						paddingTop: '28px',
+					}}
+				>
 					<DropDownArrow onClick={() => setExpanded(!expanded)}>
 						<i
 							className={
@@ -190,20 +207,42 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 						/>
 					</DropDownArrow>
 				</RowComponent>
-				<RowComponent>
+
+				<RowComponent
+					style={{
+						gridArea: 'item',
+						paddingTop: '20px',
+					}}
+				>
 					<p>{name}</p>
 				</RowComponent>
-				<RowComponent>
-					<p>{weight}</p>
+				<RowComponent
+					style={{
+						gridArea: 'weight',
+						paddingTop: '20px',
+					}}
+				>
+					<p>{`${weight} %`}</p>
 				</RowComponent>
-				<RowComponent>
+				<RowComponent
+					style={{
+						gridArea: 'grade',
+						paddingTop: '20px',
+					}}
+				>
 					<p>{gradeToString(grade) || 'N/A'}</p>
 				</RowComponent>
-				<RowComponent>
-					<p>{dueDate?.toDateString() || 'N/A'}</p>
+				<RowComponent
+					style={{
+						gridArea: 'duedate',
+						paddingTop: '20px',
+					}}
+				>
+					<p>{dueDate?.toLocaleDateString() || 'N/A'}</p>
 				</RowComponent>
 			</Accordion>
 			{expanded && extended()}
+			<br></br>
 		</>
 	);
 }

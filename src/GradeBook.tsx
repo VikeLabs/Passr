@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
-import { Fall2020 } from './api/mock';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
-import ProfileDropDown from './molecules/ProfileDropdown';
-import ActionButton from 'components/ActionButton';
+import ProfileDropdown from 'molecules/ProfileDropdown';
+import { getCurrentSemester, Semester } from 'api';
 
-export let signInStatus = false;
+//fexport let signInStatus = false;
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -41,12 +40,8 @@ const MainContent = styled.div`
 	grid-area: main-content;
 `;
 
-const Account = styled(ProfileDropDown)`
+const Account = styled(ProfileDropdown)`
 	grid-area: account;
-`;
-
-const SignOutButton = styled(ActionButton)`
-margin 0.5em;
 `;
 
 const Header = styled(HeaderComponent)`
@@ -55,25 +50,42 @@ const Header = styled(HeaderComponent)`
 
 function GradeBook() {
 	const [signedIn, setSignedIn] = useState(false);
+	const [semester, setSemester] = useState<Semester>();
+	signedIn;
 
 	useEffect(() => {
 		Auth.currentAuthenticatedUser()
 			.then(() => {
 				setSignedIn(true);
-				signInStatus = signedIn;
+				//signInStatus = signedIn;
 			})
 			.catch(() => {
 				setSignedIn(false);
-				signInStatus = signedIn;
+				//signInStatus = signedIn;
 			});
-	});
+	}, []);
+
+	useEffect(() => {
+		// TODO - remove !signedIn when sign in is finished
+		if (signedIn || !signedIn) {
+			getCurrentSemester()
+				.then((semester) => {
+					setSemester(semester);
+				})
+				.catch(() => {
+					console.error('Semester Not Found');
+				});
+		}
+	}, [signedIn]);
 
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-			<SideBar currentSemester={Fall2020} />
+			<SideBar currentSemester={semester} />
 			<MainContent />
-			<Account />
+			<Account>
+				<ProfileDropdown status={signedIn} />
+			</Account>
 		</GradeBookContainer>
 	);
 }

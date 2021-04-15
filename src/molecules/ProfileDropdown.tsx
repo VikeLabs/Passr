@@ -1,7 +1,6 @@
 import React from 'react';
 import GenericDropdown from '../components/GenericDropdown';
 import styled from 'styled-components';
-import { signInStatus } from '../GradeBook';
 
 const DropdownItems = [
 	{
@@ -25,8 +24,8 @@ const Button = styled.div`
 	padding: 1em;
 `;
 
-function ProfileDropdown() {
-	if (signInStatus) {
+function ProfileDropdown({ ...props }) {
+	if (props) {
 		DropdownItems[2].title = 'Sign Out';
 		DropdownItems[2].path = '/signout';
 	} else {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, RefObject } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { alignItems } from 'styled-system';
 
 export interface DropdownItem {
 	path: string;

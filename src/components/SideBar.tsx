@@ -59,25 +59,13 @@ function SideBar({
 	onChange,
 	...props
 }: SideBarInterface) {
-	currentSemester &&
-		console.log(
-			'active course is: ' + currentSemester.courses[activeCourse].name
-		);
-
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />
 			{currentSemester && (
 				<ListOfCoursesContainer>
 					{currentSemester.courses.map((item, name) => {
-						console.log(currentSemester.courses.indexOf(item));
-						console.log(activeCourse);
-						console.log(
-							activeCourse ===
-								currentSemester.courses.indexOf(item)
-						);
 						return (
-							// need to check if the item is the active course item or not
 							<CourseItem
 								key={name}
 								onClick={() =>

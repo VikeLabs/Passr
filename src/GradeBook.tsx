@@ -76,20 +76,18 @@ function GradeBook() {
 	}, [signedIn]);
 
 	const [activeCourse, setCourse] = useState(0);
-	console.log(setCourse);
+
+	function handleClick(sem: Semester, newActiveCourse: number) {
+		setCourse(newActiveCourse);
+	}
 
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-
 			<SideBar
 				currentSemester={semester}
 				activeCourse={activeCourse}
-				onChange={(sem, newActiveCourse) =>
-					console.log(
-						sem.courses[newActiveCourse].name + ' was clicked'
-					)
-				}
+				onChange={handleClick}
 			/>
 			<MainContent />
 			<Account>

@@ -53,7 +53,7 @@ const AccordionExtendedComponent = styled.div`
 	padding-right: 1.5em;
 `;
 
-const DeleteButton = styled(DelButton)`
+const DeleteButton = styled(ActionButton)`
 	color: #b80f0a;
 	width: auto;
 	font-weight: bold;

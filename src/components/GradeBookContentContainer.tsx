@@ -29,7 +29,6 @@ const ColumnItemHeader = styled.div`
 	border-style: none none solid none;
 `;
 
-
 const CourseItemRow = styled.div`
 	grid-area: gradeItemAccordian;
 	color: ${(props) => props.theme.colors.text[1]};
@@ -43,7 +42,7 @@ const ButtonColumn = styled.div`
 	border-style: none none solid none;
 `;
 
-const AddItemButton = styled(AddButton)`
+const AddItemButton = styled(ActionButton)`
 	font-size: ${({ theme }) => theme.fontSizes.xs};
 	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
 

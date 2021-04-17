@@ -1,24 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Auth } from 'aws-amplify';
-
-interface SignInContext {
-	signedIn: boolean;
-	signOut: () => void;
-	signIn: () => void;
-}
-
-const signInContext = React.createContext<SignInContext>({
-	signedIn: false,
-	signOut: () => 0,
-	signIn: () => 0,
-});
+import { useHistory } from 'react-router-dom';
 
 export const useSignedIn = () => {
 	const [signedIn, setSignedIn] = useState(false);
-
+	const history = useHistory();
 	const signOut = () => {
 		Auth.signOut();
 		setSignedIn(false);
+		history.go(0);
 	};
 
 	const checkAuthenticated = () => {

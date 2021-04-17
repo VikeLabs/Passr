@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GenericDropdown from '../components/GenericDropdown';
 import styled from 'styled-components';
-import { Auth } from 'aws-amplify';
 import { DropdownItem } from 'components/DropdownList';
 import { useSignedIn } from 'hooks/useSignedIn';
 import { useHistory } from 'react-router-dom';

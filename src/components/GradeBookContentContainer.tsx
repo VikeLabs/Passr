@@ -8,61 +8,60 @@ import AddItemModal, { AddItemData } from './AddItemModal';
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
 	font-weight: bold;
-`;
+	padding: 3em 0em 3em 3em;
 
-const TitleRow = styled.div`
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	width: 100%;
-	border-style: hidden hidden solid hidden;
-	color: ${(props) => props.theme.colors.gray[1]};
+	display: grid;
+	grid-template-columns:
+		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
+		minmax(6em, 5fr) minmax(6em, 5fr);
+	grid-template-rows: 5em 4em;
+	grid-template-areas:
+		'columnItemHeader columnItemHeader columnItemHeader columnItemHeader buttonColumn'
+		'courseTitleSpace courseItemTitle courseWeightTitle courseGradeTitle courseDuedateTitle'
+		'gradeItemAccordian gradeItemAccordian gradeItemAccordian gradeItemAccordian gradeItemAccordian';
 `;
 
 const ColumnItemHeader = styled.div`
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	flex-basis: 100%;
-	flex: 1;
+	grid-area: columnItemHeader;
+	color: ${(props) => props.theme.colors.text[1]};
+
+	border: 1px solid ${(props) => props.theme.colors.gray[3]};
+	border-style: none none solid none;
+`;
+
+const CourseItemRow = styled.div`
+	grid-area: gradeItemAccordian;
 	color: ${(props) => props.theme.colors.text[1]};
 `;
 
 const ButtonColumn = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex-basis: initial;
-	margin: 1.5em;
-	width: 15em;
+	grid-area: buttonColumn;
+	text-align: right;
+
+	border: 1px solid ${(props) => props.theme.colors.gray[3]};
+	border-style: none none solid none;
 `;
 
 const AddItemButton = styled(ActionButton)`
-	margin: 1.5em;
-	color: ${(props) => props.theme.colors.text[1]};
+	font-size: ${({ theme }) => theme.fontSizes.xs};
+	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
+
+	margin-top: 1em;
+	padding-top: 0.3em;
+	width: 10em;
+	height: 3.5em;
+	letter-spacing: 1px;
 `;
 
-const CourseItemRow = styled.div`
-	justify-content: center;
-	display: flex;
-	flex-direction: row;
-	max-width: 100%;
-	white-space: nowrap;
+const CourseItemTitleSpace = styled.div`
+	grid-area: 'courseTitleSpace';
 `;
 
-const Table = styled.table`
-	width: 100%;
-	color: ${(props) => props.theme.colors.gray[1]};
-	text-align: left;
-	font-weight: normal;
-	font-size: ${({ theme }) => theme.fontSizes.s};
-`;
-
-const CourseItemTitleSpace = styled.th`
-	padding: 0.25em;
-`;
-
-const CourseItemTitle = styled.th`
+const CourseItemTitle = styled.div`
 	padding-top: 1em;
+
+	font-size: ${({ theme }) => theme.fontSizes.xs};
+	color: ${({ theme }) => theme.colors.gray[3]};
 `;
 
 interface Props {
@@ -93,16 +92,29 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 
 	return (
 		<ContentContainer>
-			<TitleRow>
-				<ColumnItemHeader>
-					<h2>Course Items</h2>
-				</ColumnItemHeader>
-				<ButtonColumn>
-					<AddItemButton onClick={openModal}>
-						<p>Add Item</p>
-					</AddItemButton>
-				</ButtonColumn>
-			</TitleRow>
+			<ColumnItemHeader>
+				<h2>Course Items</h2>
+			</ColumnItemHeader>
+			<ButtonColumn>
+				<AddItemButton onClick={openModal} variant="primary">
+					<p>Add Item</p>
+				</AddItemButton>
+			</ButtonColumn>
+
+			<CourseItemTitleSpace></CourseItemTitleSpace>
+			<CourseItemTitle style={{ gridArea: 'courseItemTitle' }}>
+				Item
+			</CourseItemTitle>
+			<CourseItemTitle style={{ gridArea: 'courseWeightTitle' }}>
+				Weight
+			</CourseItemTitle>
+			<CourseItemTitle style={{ gridArea: 'courseGradeTitle' }}>
+				Grade
+			</CourseItemTitle>
+			<CourseItemTitle style={{ gridArea: 'courseDuedateTitle' }}>
+				Due Date
+			</CourseItemTitle>
+
 			<CourseItemRow>
 				<Table>
 					<tr>

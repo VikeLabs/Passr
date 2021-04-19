@@ -25,7 +25,7 @@ export interface CourseInterface {
 export interface SemesterInterface {
 	id: string;
 	name: string;
-	courses?: CourseInterface[];
+	courses: CourseInterface[];
 }
 
 export interface UserInterface extends Document {

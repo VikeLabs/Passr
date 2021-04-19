@@ -1,4 +1,4 @@
-import { Course, Grade } from 'api';
+import { CourseInterface, Grade } from 'api';
 
 function normalize(grade?: Grade) {
 	if (typeof grade === 'number') {
@@ -13,32 +13,32 @@ function normalize(grade?: Grade) {
 	return grade.numerator / grade.denominator;
 }
 
-function currentGradeCalculator(course: Course) {
+function currentGradeCalculator(course: CourseInterface) {
 	// earnedGrade / sum of weights with grades
 	return (
 		earnedGradeCalculator(course) /
-		course.items
+		course.courseItems
 			.filter((item) => item.grade != undefined)
 			.reduce((acc, item) => acc + normalize(item.weight), 0)
 	);
 }
 
-function earnedGradeCalculator(course: Course) {
+function earnedGradeCalculator(course: CourseInterface) {
 	// Grades * Weights
-	const normalizedGrade = course.items.reduce((acc, item) => {
+	const normalizedGrade = course.courseItems.reduce((acc, item) => {
 		return acc + normalize(item.weight) * normalize(item.grade);
 	}, 0);
 
-	const totalWeight = course.items.reduce((acc, item) => {
+	const totalWeight = course.courseItems.reduce((acc, item) => {
 		return acc + normalize(item.weight);
 	}, 0);
 	return (normalizedGrade / totalWeight) * 100;
 }
 
-function lostGradeCalculator(course: Course) {
+function lostGradeCalculator(course: CourseInterface) {
 	// Sum of (weight - (grade * weight))
 	return (
-		course.items
+		course.courseItems
 			.filter((item) => item.grade != undefined)
 			.reduce((acc, item) => {
 				return (
@@ -50,12 +50,12 @@ function lostGradeCalculator(course: Course) {
 	);
 }
 
-function averageGradeNeededCalculator(course: Course) {
+function averageGradeNeededCalculator(course: CourseInterface) {
 	// Gets sum of weights of course items with grades not defined yet
 	if (course.desiredGrade === undefined) {
 		return 0;
 	}
-	const weightRemaining = course.items
+	const weightRemaining = course.courseItems
 		.filter((item) => item.grade === undefined)
 		.reduce((acc, item) => {
 			return acc + item.weight;

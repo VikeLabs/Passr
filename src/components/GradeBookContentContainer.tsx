@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ActionButton from './ActionButton';
-import { Course, CourseItem } from '../api';
+import { CourseInterface, CourseItemInterface } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
 
@@ -65,8 +65,8 @@ const CourseItemTitle = styled.div`
 `;
 
 interface Props {
-	course: Course;
-	updateCourse: (course: Course) => void;
+	course: CourseInterface;
+	updateCourse: (course: CourseInterface) => void;
 }
 
 function GradeBookContentContainer({ course, updateCourse }: Props) {
@@ -84,10 +84,10 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 	function openModal() {
 		setModalOpen(true);
 	}
-	function updateCourseItem(item: CourseItem, index: number) {
-		const newCourseItems = [...course.items];
+	function updateCourseItem(item: CourseItemInterface, index: number) {
+		const newCourseItems = [...course.courseItems];
 		newCourseItems[index] = item;
-		updateCourse({ ...course, items: newCourseItems });
+		updateCourse({ ...course, courseItems: newCourseItems });
 	}
 
 	return (
@@ -116,7 +116,7 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 			</CourseItemTitle>
 
 			<CourseItemRow>
-				{course.items.map((item, index) => {
+				{course.courseItems.map((item, index) => {
 					console.log({ item, index });
 					return (
 						<GradeItemAccordion

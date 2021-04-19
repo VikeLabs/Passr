@@ -18,14 +18,14 @@ export interface CourseInterface {
 	id: string;
 	name: string;
 	crn?: number;
-	courseItems: CourseItemInterface[];
+	courseItems?: CourseItemInterface[];
 	desiredGrade: number;
 }
 
 export interface SemesterInterface {
 	id: string;
 	name: string;
-	courses: CourseInterface[];
+	courses?: CourseInterface[];
 }
 
 export interface UserInterface extends Document {

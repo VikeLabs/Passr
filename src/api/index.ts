@@ -18,7 +18,7 @@ export interface CourseInterface {
 	id: string;
 	name: string;
 	crn?: number;
-	courseItems?: CourseItemInterface[];
+	courseItems: CourseItemInterface[];
 	desiredGrade: number;
 }
 

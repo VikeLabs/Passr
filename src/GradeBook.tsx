@@ -4,7 +4,7 @@ import SideBarContent from './components/SideBar';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
 import ProfileDropdown from 'molecules/ProfileDropdown';
-import { getCurrentSemester, Semester } from 'api';
+import { getCurrentSemester, SemesterInterface } from 'api';
 
 const GradeBookContainer = styled.div`
 	height: 100vh;
@@ -49,7 +49,7 @@ const Header = styled(HeaderComponent)`
 
 function GradeBook() {
 	const [signedIn, setSignedIn] = useState(false);
-	const [semester, setSemester] = useState<Semester>();
+	const [semester, setSemester] = useState<SemesterInterface>();
 	signedIn;
 
 	useEffect(() => {

@@ -105,20 +105,18 @@ function GradeBook() {
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-			<SideBar
-				currentSemester={semester}
-			/>
+			<SideBar currentSemester={semester} />
 			<MainContent>
 				<GradebookHeaderContainer>
 					<GradeBookHeader
-						// todo change mock data
+						// todo replace mock data
 						currentCourse={Fall2020.courses[0]}
 						updateCurrentCourse={(course) => course}
 					/>
 				</GradebookHeaderContainer>
 				<AccordianContainer>
 					<GradeBookContentContainer
-						// todo change mock data
+						// todo replace mock data
 						course={Fall2020.courses[0]}
 						updateCourse={(course) => course}
 					/>

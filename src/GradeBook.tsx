@@ -68,7 +68,6 @@ const Header = styled(HeaderComponent)`
 	grid-area: header;
 `;
 
-
 function GradeBook() {
 	const [signedIn, setSignedIn] = useState(false);
 	const [semester, setSemester] = useState<Semester>();
@@ -106,6 +105,7 @@ function GradeBook() {
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
+
 			<SideBar currentSemester={semester} />
 			<MainContent>
 				<GradebookHeaderContainer>

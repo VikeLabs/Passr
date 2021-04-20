@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { CourseInterface } from 'api';
+import { Course } from 'api';
 import TextInput from './TextInput';
 import HeaderGradeDisplay from './HeaderGradeDisplay';
 export interface GradeBookHeaderInterface {
-	currentCourse: CourseInterface;
-	updateCurrentCourse: (course: CourseInterface) => void;
+	currentCourse: Course;
+	updateCurrentCourse: (course: Course) => void;
 }
 const Body = styled.div`
 	display: grid;
@@ -43,7 +43,7 @@ function GradeBookHeader({
 	const [tempDesiredGrade, setTempDesiredGrade] = useState(
 		desiredGrade?.toString() || ''
 	);
-	function handleChange(change: Partial<CourseInterface>) {
+	function handleChange(change: Partial<Course>) {
 		const newCourse = { ...currentCourse, ...change };
 		updateCurrentCourse(newCourse);
 	}

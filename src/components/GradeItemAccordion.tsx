@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
 import { gradeToString, parseGrade } from '../Utils';
-import { CourseItemInterface } from 'api';
+import { CourseItem } from 'api';
 import ActionButton from './ActionButton';
 
 export interface GradeItemAccordionInterface {
-	item: CourseItemInterface;
-	updateItem: (item: CourseItemInterface) => void;
+	item: CourseItem;
+	updateItem: (item: CourseItem) => void;
 }
 
 const Accordion = styled.div`
@@ -73,7 +73,7 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	const [tempGrade, setTempGrade] = useState(gradeToString(grade));
 	const [tempDate, setTempDate] = useState('');
 
-	function handleChange(change: Partial<CourseItemInterface>) {
+	function handleChange(change: Partial<CourseItem>) {
 		const newItem = { ...item, ...change };
 		updateItem(newItem);
 	}

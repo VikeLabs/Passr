@@ -3,7 +3,7 @@ import Logo from '../molecules/Logo';
 import styled from 'styled-components';
 import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
-export interface SideBar {
+export interface SideBarInterface {
 	currentSemester?: Semester;
 }
 const SideBarContainer = styled.div`
@@ -51,7 +51,7 @@ function CourseList({ courses }: { courses: Course[] }) {
 		</ListOfCoursesContainer>
 	);
 }
-function SideBar({ currentSemester, ...props }: SideBar) {
+function SideBar({ currentSemester, ...props }: SideBarInterface) {
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />

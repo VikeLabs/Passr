@@ -2,9 +2,9 @@ import React from 'react';
 import Logo from '../molecules/Logo';
 import styled from 'styled-components';
 import ActionButton from './ActionButton';
-import { SemesterInterface, CourseInterface } from '../api';
-export interface SideBarInterface {
-	currentSemester?: SemesterInterface;
+import { Semester, Course } from '../api';
+export interface SideBar {
+	currentSemester?: Semester;
 }
 const SideBarContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.primary[0]};
@@ -42,7 +42,7 @@ function AddCourse() {
 	console.log('course added');
 }
 
-function CourseList({ courses }: { courses: CourseInterface[] }) {
+function CourseList({ courses }: { courses: Course[] }) {
 	return (
 		<ListOfCoursesContainer>
 			{courses.map((item, name) => {
@@ -51,7 +51,7 @@ function CourseList({ courses }: { courses: CourseInterface[] }) {
 		</ListOfCoursesContainer>
 	);
 }
-function SideBar({ currentSemester, ...props }: SideBarInterface) {
+function SideBar({ currentSemester, ...props }: SideBar) {
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />

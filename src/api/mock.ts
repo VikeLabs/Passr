@@ -1,10 +1,6 @@
-import {
-	SemesterInterface,
-	CourseInterface,
-	CourseItemInterface,
-} from './index';
+import { Semester, Course, CourseItem } from './index';
 
-const Math100Items: CourseItemInterface[] = [
+const Math100Items: CourseItem[] = [
 	{
 		id: 'c234t2m7',
 		name: 'Assignment 1',
@@ -41,14 +37,14 @@ const Math100Items: CourseItemInterface[] = [
 	},
 ];
 
-const MATH100: CourseInterface = {
+const MATH100: Course = {
 	id: '84jvkq11',
 	name: 'Math 100',
 	courseItems: Math100Items,
 	desiredGrade: 80,
 };
 
-const CSC110Items: CourseItemInterface[] = [
+const CSC110Items: CourseItem[] = [
 	{
 		id: 'vy8amquo',
 		name: 'Assignment 1',
@@ -113,14 +109,14 @@ const CSC110Items: CourseItemInterface[] = [
 	},
 ];
 
-const CSC110: CourseInterface = {
+const CSC110: Course = {
 	id: 'ynlq4qre',
 	name: 'CSC 110',
 	courseItems: CSC110Items,
 	desiredGrade: 75,
 };
 
-const PHYS111Items: CourseItemInterface[] = [
+const PHYS111Items: CourseItem[] = [
 	{
 		id: '33yeqkq1',
 		name: 'Assignment 1',
@@ -183,14 +179,14 @@ const PHYS111Items: CourseItemInterface[] = [
 	},
 ];
 
-const PHYS111: CourseInterface = {
+const PHYS111: Course = {
 	id: 'otdl0koo',
 	name: 'PHYS 111',
 	courseItems: PHYS111Items,
 	desiredGrade: 60,
 };
 
-export const Fall2020: SemesterInterface = {
+export const Fall2020: Semester = {
 	id: '3oeg11pf',
 	name: 'Fall 2020',
 	courses: [MATH100, CSC110, PHYS111],

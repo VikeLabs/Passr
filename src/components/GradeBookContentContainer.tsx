@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ActionButton from './ActionButton';
-import { CourseInterface, CourseItemInterface } from '../api';
+import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
 
@@ -65,8 +65,8 @@ const CourseItemTitle = styled.div`
 `;
 
 interface Props {
-	course: CourseInterface;
-	updateCourse: (course: CourseInterface) => void;
+	course: Course;
+	updateCourse: (course: Course) => void;
 }
 
 function GradeBookContentContainer({ course, updateCourse }: Props) {
@@ -84,7 +84,7 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 	function openModal() {
 		setModalOpen(true);
 	}
-	function updateCourseItem(item: CourseItemInterface, index: number) {
+	function updateCourseItem(item: CourseItem, index: number) {
 		const newCourseItems = [...course.courseItems];
 		newCourseItems[index] = item;
 		updateCourse({ ...course, courseItems: newCourseItems });

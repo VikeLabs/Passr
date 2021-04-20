@@ -7,6 +7,7 @@ import { Semester } from '../api';
 export interface SideBarInterface {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	currentSemester?: Semester;
 	activeCourse: number;
 	onChange: (sem: Semester, newActiveCourse: number) => void;
@@ -16,6 +17,9 @@ export interface SideBarInterface {
 =======
 	currentSemester?: Semester;
 >>>>>>> 5241f5c (merged with master to fix build issue 2.0)
+=======
+	currentSemester?: Semester | undefined;
+>>>>>>> 75f6a2c (merged with master to fix build issue)
 }
 
 const SideBarContainer = styled.div`

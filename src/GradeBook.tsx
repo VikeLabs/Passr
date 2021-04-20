@@ -5,23 +5,27 @@ import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
 import ProfileDropdown from 'molecules/ProfileDropdown';
 import { getCurrentSemester, Semester } from 'api';
+import GradeBookContentContainer from './components/GradeBookContentContainer';
+import GradeBookHeader from 'components/GradeBookHeader';
+// todo change mock data
+import { Fall2020 } from 'api/mock';
 
 const GradeBookContainer = styled.div`
-	height: 100vh;
+	height: 100%;
 	width: 100%;
-	background-color: orange;
+	background-color: ${(props) => props.theme.colors.gray[0]};
 	display: grid;
 	grid-template-columns: 1fr 6fr 1fr;
-	grid-template-rows: 4fr 59fr;
+	grid-template-rows: 4em auto;
 	grid-template-areas:
 		'sidebar header account'
 		'sidebar main-content main-content';
 
 	@media (max-width: 600px) {
-		grid-template-rows: 1fr 15fr;
+		grid-template-rows: 1fr 15fr 15fr;
 		grid-template-columns: 1fr 6fr 1fr;
 		grid-template-areas:
-			'logo header account'
+			'header header account'
 			'main-content main-content main-content';
 	}
 `;
@@ -32,15 +36,32 @@ const SideBar = styled(SideBarContent)`
 		display: none;
 	}
 `;
-
 const MainContent = styled.div`
-	background-color: blue;
 	grid-area: main-content;
+	padding: 3em 3em 3em 3em;
+
+	display: grid;
+	grid-template-rows: auto auto;
+	grid-template-columns: 6fr 3fr;
+	grid-template-areas:
+		'gradebook-header .'
+		'gradebook-accordian gradebook-accordian';
+`;
+
+const Empty = styled.div`
+	grid-area: empty;
+`;
+
+const AccordianContainer = styled.div`
+	grid-area: gradebook-accordian;
+`;
+
+const GradebookHeaderContainer = styled.div`
+	grid-area: gradebook-header;
 `;
 
 const Account = styled.div`
 	grid-area: account;
-	background-color: magenta;
 `;
 
 const Header = styled(HeaderComponent)`
@@ -86,10 +107,25 @@ function GradeBook() {
 			<Header text="Passr" />
 			<SideBar
 				currentSemester={semester}
-				activeCourse={activeCourse}
-				onChange={handleClick}
 			/>
-			<MainContent />
+			<MainContent>
+				<GradebookHeaderContainer>
+					<GradeBookHeader
+						// todo change mock data
+						currentCourse={Fall2020.courses[0]}
+						updateCurrentCourse={(course) => course}
+					/>
+				</GradebookHeaderContainer>
+				<AccordianContainer>
+					<GradeBookContentContainer
+						// todo change mock data
+						course={Fall2020.courses[0]}
+						updateCourse={(course) => course}
+					/>
+				</AccordianContainer>
+				<Empty />
+			</MainContent>
+
 			<Account>
 				<ProfileDropdown />
 			</Account>

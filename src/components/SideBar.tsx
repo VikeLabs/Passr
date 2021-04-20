@@ -10,6 +10,7 @@ export interface SideBarInterface {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	currentSemester?: Semester;
 	activeCourse: number;
 	onChange: (sem: Semester, newActiveCourse: number) => void;
@@ -28,6 +29,9 @@ export interface SideBarInterface {
 =======
 	currentSemester?: Semester | undefined;
 >>>>>>> ee49d87 (merged with master to fix build issue)
+=======
+	currentSemester?: Semester;
+>>>>>>> 5e6a2fd (merged with master to fix build issue 2.0)
 }
 
 const SideBarContainer = styled.div`

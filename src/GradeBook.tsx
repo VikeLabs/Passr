@@ -105,6 +105,7 @@ function GradeBook() {
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
+
 			<SideBar currentSemester={semester} />
 			<MainContent>
 				<GradebookHeaderContainer>

@@ -25,8 +25,10 @@ const ListOfCoursesContainer = styled.ol`
 const CourseItem = styled.li<{ selected: boolean }>`
 	color: ${({ theme }) => theme.colors.secondary[0]};
 	cursor: pointer;
-	padding-top: 1em;
-	padding-bottom: 1em;
+	padding-top: 0.75em;
+	padding-bottom: 0.75em;
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
 	list-style: none;
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.secondary[1]};

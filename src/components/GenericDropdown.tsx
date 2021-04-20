@@ -45,9 +45,11 @@ function GenericDropdown({ buttonDisplay, dropdownItems }: Props) {
 					}
 				/>
 			</DropdownButton>
-			{isComponentVisible && (
-				<DropdownList buttonRef={buttonRef} items={dropdownItems} />
-			)}
+			<DropdownList
+				buttonRef={buttonRef}
+				items={dropdownItems}
+				isComponentVisible={isComponentVisible}
+			/>
 		</Container>
 	);
 }

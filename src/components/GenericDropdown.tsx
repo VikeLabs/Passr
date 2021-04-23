@@ -63,6 +63,8 @@ export const ListButton = styled.div`
 	}
 `;
 
+const HIDE_LIST = -9999;
+
 function GenericDropdown({
 	buttonDisplay,
 	children,
@@ -77,14 +79,15 @@ function GenericDropdown({
 		setComponentVisible(!componentVisible);
 	};
 
-	const [listTopPosition, setListTopPosition] = useState(-9999);
+	const [listTopPosition, setListTopPosition] = useState(HIDE_LIST);
 
 	useEffect(() => {
 		const getMenuButtonBottom = () => {
-			if (buttonRef.current != null) {
-				return buttonRef.current.getBoundingClientRect().bottom;
+			const dropdownButton = buttonRef.current;
+			if (dropdownButton != null) {
+				return dropdownButton.getBoundingClientRect().bottom;
 			}
-			return -9999; // Default hide the list
+			return HIDE_LIST;
 		};
 		setListTopPosition(getMenuButtonBottom());
 	}, [buttonRef]);

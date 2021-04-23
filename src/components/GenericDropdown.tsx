@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import useComponentVisible from '../hooks/useComponentVisible';
 import { Link } from 'react-router-dom';
@@ -77,13 +77,16 @@ function GenericDropdown({
 		setComponentVisible(!componentVisible);
 	};
 
-	const [top, setTop] = useState(-9999);
+	const [listTopPosition, setListTopPosition] = useState(-9999);
 
 	useEffect(() => {
-		if (buttonRef.current != null) {
-			const rect = buttonRef.current.getBoundingClientRect();
-			setTop(rect.bottom);
-		}
+		const getMenuButtonBottom = () => {
+			if (buttonRef.current != null) {
+				return buttonRef.current.getBoundingClientRect().bottom;
+			}
+			return -9999; // Default hide the list
+		};
+		setListTopPosition(getMenuButtonBottom());
 	}, [buttonRef]);
 
 	return (
@@ -99,7 +102,7 @@ function GenericDropdown({
 				/>
 			</DropdownButton>
 			<DropdownMenu
-				style={{ top: `${top}px` }}
+				style={{ top: `${listTopPosition}px` }}
 				componentVisible={componentVisible}
 			>
 				{children}

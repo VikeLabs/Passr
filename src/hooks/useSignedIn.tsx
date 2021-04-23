@@ -13,8 +13,7 @@ export const useSignedIn = () => {
 
 	const checkAuthenticated = () => {
 		Auth.currentAuthenticatedUser()
-			.then((user) => {
-				console.log(user);
+			.then(() => {
 				setSignedIn(true);
 			})
 			.catch(() => setSignedIn(false));

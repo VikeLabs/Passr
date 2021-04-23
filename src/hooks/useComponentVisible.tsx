@@ -10,7 +10,10 @@ export default function useComponentVisible(
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
-			if (ref.current && !ref.current.contains(event.target as Node)) {
+			const outsideClick =
+				ref.current && !ref.current.contains(event.target as Node);
+
+			if (outsideClick) {
 				setComponentVisible(false);
 			}
 		};

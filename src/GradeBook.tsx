@@ -11,6 +11,7 @@ import GradeBookHeader from 'components/GradeBookHeader';
 import { Fall2020 } from 'api/mock';
 
 const GradeBookContainer = styled.div`
+	min-height: 100vh;
 	height: 100%;
 	width: 100%;
 	background-color: ${(props) => props.theme.colors.gray[0]};
@@ -105,7 +106,6 @@ function GradeBook() {
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-
 			<SideBar currentSemester={semester} />
 			<MainContent>
 				<GradebookHeaderContainer>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import ActionButton from './ActionButton';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
-import GradeBookHeader from './GradeBookHeader';
 import AddItemModal, { AddItemData } from './AddItemModal';
 
 const ContentContainer = styled.div`

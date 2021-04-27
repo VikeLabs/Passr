@@ -5,33 +5,9 @@ import ActionButton from './ActionButton';
 import { Semester } from '../api';
 
 export interface SideBarInterface {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	currentSemester?: Semester;
 	activeCourse: number;
 	onChange: (sem: Semester, newActiveCourse: number) => void;
-=======
-	currentSemester?: Semester | undefined;
->>>>>>> 44e1a1c (merged with master to fix build issue)
-=======
-	currentSemester?: Semester;
->>>>>>> 5241f5c (merged with master to fix build issue 2.0)
-=======
-	currentSemester?: Semester | undefined;
->>>>>>> 75f6a2c (merged with master to fix build issue)
-=======
-	currentSemester?: Semester;
->>>>>>> 05b0cbc (merged with master to fix build issue 2.0)
-=======
-	currentSemester?: Semester | undefined;
->>>>>>> ee49d87 (merged with master to fix build issue)
-=======
-	currentSemester?: Semester;
->>>>>>> 5e6a2fd (merged with master to fix build issue 2.0)
 }
 
 const SideBarContainer = styled.div`

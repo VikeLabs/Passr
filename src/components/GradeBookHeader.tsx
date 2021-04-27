@@ -35,6 +35,7 @@ const NeededGrade = styled(HeaderGradeDisplay)`
 const DesiredGrade = styled(TextInput)`
 	grid-area: desired;
 	padding-bottom: 1em;
+	min-width: 15em;
 `;
 function GradeBookHeader({
 	currentCourse,

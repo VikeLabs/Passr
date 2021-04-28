@@ -75,10 +75,20 @@ function GradeBook() {
 		}
 	}, [signedIn]);
 
+	const [activeCourse, setCourse] = useState(0);
+
+	function handleClick(sem: Semester, newActiveCourse: number) {
+		setCourse(newActiveCourse);
+	}
+
 	return (
 		<GradeBookContainer>
 			<Header text="Passr" />
-			<SideBar currentSemester={semester} />
+			<SideBar
+				currentSemester={semester}
+				activeCourse={activeCourse}
+				onChange={handleClick}
+			/>
 			<MainContent />
 			<Account>
 				<ProfileDropdown />

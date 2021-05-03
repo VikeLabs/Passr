@@ -83,9 +83,9 @@ function GenericDropdown({
 
 	useEffect(() => {
 		const getMenuButtonBottom = () => {
-			const dropdownButton = buttonRef.current;
-			if (dropdownButton != null) {
-				return dropdownButton.getBoundingClientRect().bottom;
+			const menuButton = buttonRef.current;
+			if (menuButton != null) {
+				return menuButton.getBoundingClientRect().bottom;
 			}
 			return HIDE_LIST;
 		};

@@ -8,10 +8,10 @@ export interface Fraction {
 }
 
 export interface CourseItem {
-	id: string;
-	owner: string;
-	createdAt: Date;
-	updatedAt: Date;
+	id?: string;
+	owner?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
 	name: string;
 	weight: number;
 	grade?: number | Fraction;
@@ -19,27 +19,27 @@ export interface CourseItem {
 }
 
 export interface Course {
-	id: string;
-	owner: string;
-	createdAt: Date;
-	updatedAt: Date;
+	id?: string;
+	owner?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
 	name: string;
 	courseItems: CourseItem[];
 	desiredGrade: number;
 }
 
 export interface Semester {
-	id: string;
-	owner: string;
-	createdAt: Date;
-	updatedAt: Date;
+	id?: string;
+	owner?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
 	name: string;
 	courses: Course[];
 }
 
 export interface User extends Document {
-	id: string;
-	createdAt: Date;
-	updatedAt: Date;
+	id?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
 	semesters: Semester[];
 }

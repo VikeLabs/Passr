@@ -72,7 +72,7 @@ function SideBar({
 	}
 	function handleSubmit(data: AddCourseData) {
 		if (!currentSemester) return;
-		const newCourse: Course = { ...data, items: [] };
+		const newCourse: Course = { ...data, courseItems: [] };
 		const newCourses = [...currentSemester.courses, newCourse];
 		updateSemester({ ...currentSemester, courses: newCourses });
 	}

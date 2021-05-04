@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useComponentVisible from '../hooks/useComponentVisible';
 import { Link } from 'react-router-dom';

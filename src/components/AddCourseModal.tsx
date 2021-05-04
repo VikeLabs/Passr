@@ -29,9 +29,7 @@ const InputField = styled.div`
 const InputName = styled(TextInput)`
 	padding-top: 0.75em;
 `;
-const InputCourseNumber = styled(TextInput)`
-	padding-top: 0.75em;
-`;
+
 const InputDesiredGrade = styled(TextInput)`
 	padding-top: 0.75em;
 	padding-bottom: 1em;
@@ -42,21 +40,17 @@ export interface AddCourseInterface {
 	handleClose: () => void;
 }
 
-export type AddCourseData = Pick<Course, 'name' | 'crn' | 'desiredGrade'>;
+export type AddCourseData = Pick<Course, 'name' | 'desiredGrade'>;
 
 function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 	const [name, setName] = useState('');
-	const [crn, setCNumber] = useState('');
 	const [desiredGrade, setGrade] = useState('');
 
 	const theme = useContext(ThemeContext);
 
 	function onSubmit() {
-		const crnNo = isNaN(Number(crn)) ? undefined : Number(crn);
-		const gradeNo = isNaN(Number(desiredGrade))
-			? undefined
-			: Number(desiredGrade);
-		handleSubmit({ name, crn: crnNo, desiredGrade: gradeNo });
+		const gradeNo = isNaN(Number(desiredGrade)) ? 0 : Number(desiredGrade);
+		handleSubmit({ name, desiredGrade: gradeNo });
 		handleClose();
 	}
 
@@ -84,14 +78,6 @@ function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 						}}
 						required={true}
 					></InputName>
-					<InputCourseNumber
-						label="Course Number"
-						value={crn}
-						placeholder="Course Number"
-						onChange={(e) => {
-							setCNumber(e.currentTarget.value);
-						}}
-					></InputCourseNumber>
 					<InputDesiredGrade
 						label="Desired Grade"
 						value={desiredGrade}

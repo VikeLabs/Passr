@@ -10,9 +10,6 @@ export interface SideBarInterface {
 	activeCourse: number;
 	onChange: (sem: Semester, newActiveCourse: number) => void;
 }
-export interface CourseListInterface {
-	courses: Course[];
-}
 
 const SideBarContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.primary[0]};
@@ -55,15 +52,6 @@ const AddCourseButtonContainer = styled.div`
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
-function CourseList({ courses }: CourseListInterface) {
-	return (
-		<ListOfCoursesContainer>
-			{courses.map((item, name) => {
-				return <CourseItem key={name}>{item.name}</CourseItem>;
-			})}
-		</ListOfCoursesContainer>
-	);
-}
 function SideBar({
 	currentSemester,
 	updateSemester,
@@ -80,7 +68,7 @@ function SideBar({
 	}
 	function handleSubmit(data: AddCourseData) {
 		if (!currentSemester) return;
-		const newCourse: Course = { ...data, items: [] };
+		const newCourse: Course = { ...data, courseItems: [] };
 		const newCourses = [...currentSemester.courses, newCourse];
 		updateSemester({ ...currentSemester, courses: newCourses });
 	}

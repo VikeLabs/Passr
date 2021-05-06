@@ -86,6 +86,7 @@ function GradeBook() {
 			<Header text="Passr" />
 			<SideBar
 				currentSemester={semester}
+				updateSemester={setSemester}
 				activeCourse={activeCourse}
 				onChange={handleClick}
 			/>

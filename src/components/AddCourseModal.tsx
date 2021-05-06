@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 import DefaultModal from './DefaultModal';
 import Logo from '../molecules/Logo';
 import TextInput from './TextInput';
+import { Course } from '../api';
 
 const Body = styled.div`
 	height: 100%;
@@ -28,9 +29,7 @@ const InputField = styled.div`
 const InputName = styled(TextInput)`
 	padding-top: 0.75em;
 `;
-const InputCourseNumber = styled(TextInput)`
-	padding-top: 0.75em;
-`;
+
 const InputDesiredGrade = styled(TextInput)`
 	padding-top: 0.75em;
 	padding-bottom: 1em;
@@ -41,21 +40,17 @@ export interface AddCourseInterface {
 	handleClose: () => void;
 }
 
-export interface AddCourseData {
-	name: string;
-	crn: string;
-	grade: string;
-}
+export type AddCourseData = Pick<Course, 'name' | 'desiredGrade'>;
 
 function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 	const [name, setName] = useState('');
-	const [crn, setCNumber] = useState('');
-	const [grade, setGrade] = useState('');
+	const [desiredGrade, setGrade] = useState('');
 
 	const theme = useContext(ThemeContext);
 
-	function onSubmit({ name, crn, grade }: AddCourseData) {
-		handleSubmit({ name, crn, grade });
+	function onSubmit() {
+		const gradeNo = isNaN(Number(desiredGrade)) ? 0 : Number(desiredGrade);
+		handleSubmit({ name, desiredGrade: gradeNo });
 		handleClose();
 	}
 
@@ -68,7 +63,7 @@ function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 			primaryVariant="primary"
 			secondaryButton="Cancel"
 			secondaryVariant="alternate"
-			handlePrimary={() => onSubmit({ name, crn, grade })}
+			handlePrimary={onSubmit}
 		>
 			<Body>
 				<Desc>Add a New Course.</Desc>
@@ -83,17 +78,9 @@ function AddCourseModal({ handleSubmit, handleClose }: AddCourseInterface) {
 						}}
 						required={true}
 					></InputName>
-					<InputCourseNumber
-						label="Course Number"
-						value={crn}
-						placeholder="Course Number"
-						onChange={(e) => {
-							setCNumber(e.currentTarget.value);
-						}}
-					></InputCourseNumber>
 					<InputDesiredGrade
 						label="Desired Grade"
-						value={grade}
+						value={desiredGrade}
 						placeholder="Desired Grade"
 						onChange={(e) => {
 							setGrade(e.currentTarget.value);

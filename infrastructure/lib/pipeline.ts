@@ -5,7 +5,7 @@ import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 import {
 	RepoOwner,
-	PassrFrontendBranch,
+	PassrFrontendMainBranch,
 	PassrFrontendRepo,
 	GithubSecretName,
 } from './variables';
@@ -40,7 +40,7 @@ export class PipelineStack extends cdk.Stack {
 							),
 							owner: RepoOwner,
 							repo: PassrFrontendRepo,
-							branch: PassrFrontendBranch,
+							branch: PassrFrontendMainBranch,
 							trigger: codepipeline_actions.GitHubTrigger.WEBHOOK,
 							output: sourceArtifact,
 						}),
@@ -92,7 +92,7 @@ export class PipelineStack extends cdk.Stack {
 							input: buildArtifact,
 							cacheControl: [
 								codepipeline_actions.CacheControl.maxAge(
-									cdk.Duration.seconds(0)
+									cdk.Duration.hours(1)
 								),
 							],
 						}),

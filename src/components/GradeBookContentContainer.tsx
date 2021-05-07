@@ -85,9 +85,9 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 		setModalOpen(true);
 	}
 	function updateCourseItem(item: CourseItem, index: number) {
-		const newCourseItems = [...course.items];
+		const newCourseItems = [...course.courseItems];
 		newCourseItems[index] = item;
-		updateCourse({ ...course, items: newCourseItems });
+		updateCourse({ ...course, courseItems: newCourseItems });
 	}
 
 	return (
@@ -116,7 +116,7 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 			</CourseItemTitle>
 
 			<CourseItemRow>
-				{course.items.map((item, index) => {
+				{course.courseItems.map((item, index) => {
 					console.log({ item, index });
 					return (
 						<GradeItemAccordion

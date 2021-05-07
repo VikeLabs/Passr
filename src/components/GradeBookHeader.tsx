@@ -9,15 +9,13 @@ export interface GradeBookHeaderInterface {
 }
 const Body = styled.div`
 	display: grid;
-	grid-template-columns: 5fr 1fr 5fr 5fr;
+	grid-template-columns: 5fr 5fr 5fr;
 	grid-template-areas: 'current
-		.
 		needed
 		desired';
 `;
 const Header = styled.div`
 	color: ${({ theme }) => theme.colors.text[1]};
-	padding: 4em 3em 3em 3em;
 `;
 const CourseTitle = styled.h1`
 	font-size: ${({ theme }) => theme.fontSizes.xl};
@@ -26,14 +24,18 @@ const CourseTitle = styled.h1`
 const CurrentGrade = styled(HeaderGradeDisplay)`
 	grid-area: current;
 	padding-bottom: 1em;
-	border-right: 1px solid ${({ theme }) => theme.colors.gray[1]};
+	padding-right: 2em;
+	border-right: 1px solid ${({ theme }) => theme.colors.gray[2]};
 `;
 const NeededGrade = styled(HeaderGradeDisplay)`
 	grid-area: needed;
+	padding-left: 2em;
+	padding-right: 2em;
 `;
 const DesiredGrade = styled(TextInput)`
 	grid-area: desired;
 	padding-bottom: 1em;
+	min-width: 15em;
 `;
 function GradeBookHeader({
 	currentCourse,

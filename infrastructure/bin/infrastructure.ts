@@ -16,7 +16,7 @@ const websiteBuckets = new WebsiteBuckets(app, `${ProjectPrefix}-BucketStack`, {
 	},
 });
 
-new PipelineStack(app, `${ProjectPrefix}-PipleineStack`, {
+new PipelineStack(app, `${ProjectPrefix}-PipelineStack`, {
 	env: {
 		account: process.env.CDK_DEFAULT_ACCOUNT,
 		region: process.env.CDK_DEFAULT_REGION,

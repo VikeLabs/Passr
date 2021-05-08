@@ -8,6 +8,7 @@ import {
 	FrontendMainBranch,
 	FrontendRepo,
 	GithubSecretName,
+	ProjectPrefix,
 } from './variables';
 
 interface PipelineStackProps extends cdk.StackProps {
@@ -18,17 +19,30 @@ interface PipelineStackProps extends cdk.StackProps {
 export class PipelineStack extends cdk.Stack {
 	constructor(scope: cdk.Construct, id: string, props: PipelineStackProps) {
 		super(scope, id, props);
-		const passrPipelineArtifacts = new s3.Bucket(
+		const pipelineArtifacts = new s3.Bucket(
 			this,
-			'PassrSitePipelineArtifacts'
+			'FrontendPipelineArtifacts',
+			{ blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL }
 		);
-		const passrBuild = new codebuild.PipelineProject(this, 'PassrBuild');
+		const buildProject = new codebuild.PipelineProject(
+			this,
+			'BuildProject',
+			{
+				cache: codebuild.Cache.bucket(pipelineArtifacts, {
+					prefix: 'codebuild-cache',
+				}),
+				environment: {
+					buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_3,
+				},
+			}
+		);
+		pipelineArtifacts.grantReadWrite(buildProject);
 		const sourceArtifact = new codepipeline.Artifact('GithubSource');
 		const buildArtifact = new codepipeline.Artifact('BuildArtifact');
 
-		const pipeline = new codepipeline.Pipeline(this, 'PassrPipeline', {
-			artifactBucket: passrPipelineArtifacts,
-			pipelineName: 'PassrFrontendPipeline',
+		const pipeline = new codepipeline.Pipeline(this, 'FrontendPipeline', {
+			artifactBucket: pipelineArtifacts,
+			pipelineName: `${ProjectPrefix}FrontendPipeline`,
 			stages: [
 				{
 					stageName: 'Source',
@@ -53,9 +67,9 @@ export class PipelineStack extends cdk.Stack {
 					stageName: 'Build',
 					actions: [
 						new codepipeline_actions.CodeBuildAction({
-							actionName: 'BuildPassrFrontend',
+							actionName: 'BuildFrontend',
 							input: sourceArtifact,
-							project: passrBuild,
+							project: buildProject,
 							checkSecretsInPlainTextEnvVariables: true,
 							outputs: [buildArtifact],
 							type:
@@ -103,25 +117,6 @@ export class PipelineStack extends cdk.Stack {
 				},
 			],
 		});
-
-		// new codepipeline.CfnWebhook(this, 'RepoWebhook', {
-		// 	authentication: 'GITHUB_HMAC',
-		// 	authenticationConfiguration: {
-		// 		secretToken: `{{resolve:secretsmanager:${GithubSecretName}:SecretString:token}}`,
-		// 	},
-		// 	filters: [
-		// 		{
-		// 			jsonPath: '$.ref',
-		// 			matchEquals: `refs/heads/${FrontendMainBranch}`,
-		// 		},
-		// 	],
-		// 	targetPipeline: pipeline.pipelineName,
-		// 	targetPipelineVersion: 1,
-		// 	targetAction:
-		// 		pipeline.stages[0].actions[0].actionProperties.actionName,
-		// 	name: 'PipelineWebhook',
-		// 	registerWithThirdParty: true,
-		// });
 
 		props.devWebsiteBucket.grantReadWrite(pipeline.role);
 		props.prodWebsiteBucket.grantReadWrite(pipeline.role);

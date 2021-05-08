@@ -6,16 +6,17 @@ import { PipelineStack } from '../lib/pipeline';
 import { DomainStack } from '../lib/domain';
 import { FrontendStack } from '../lib/frontend';
 import { MailStack } from '../lib/mail';
+import { ProjectPrefix } from '../lib/variables';
 const app = new cdk.App();
 
-const websiteBuckets = new WebsiteBuckets(app, 'WebisteBucketsStack', {
+const websiteBuckets = new WebsiteBuckets(app, `${ProjectPrefix}-BucketStack`, {
 	env: {
 		account: process.env.CDK_DEFAULT_ACCOUNT,
 		region: process.env.CDK_DEFAULT_REGION,
 	},
 });
 
-new PipelineStack(app, 'InfrastructureStack', {
+new PipelineStack(app, `${ProjectPrefix}-PipleineStack`, {
 	env: {
 		account: process.env.CDK_DEFAULT_ACCOUNT,
 		region: process.env.CDK_DEFAULT_REGION,
@@ -24,28 +25,20 @@ new PipelineStack(app, 'InfrastructureStack', {
 	devWebsiteBucket: websiteBuckets.devSite,
 });
 
-const domainStack = new DomainStack(app, 'DomainStack', {
-	env: {
-		account: process.env.CDK_DEFAULT_ACCOUNT,
-		region: 'us-east-1',
-	},
-});
-
-new MailStack(app, 'MailStack', {
+new MailStack(app, `${ProjectPrefix}-MailStack`, {
 	env: {
 		account: process.env.CDK_DEFAULT_ACCOUNT,
 		region: process.env.CDK_DEFAULT_REGION,
 	},
-	hostedZone: domainStack.hostedZone,
 });
 
-new FrontendStack(app, 'WebsiteStack', {
+new FrontendStack(app, `${ProjectPrefix}-FrontendStack`, {
 	env: {
 		account: process.env.CDK_DEFAULT_ACCOUNT,
 		region: process.env.CDK_DEFAULT_REGION,
 	},
 	devSiteBucket: websiteBuckets.devSite,
+	devOAI: websiteBuckets.devOAI,
 	prodSiteBucket: websiteBuckets.prodSite,
-	siteCertificate: domainStack.domainCertificate,
-	hostedZone: domainStack.hostedZone,
+	prodOAI: websiteBuckets.prodOAI,
 });

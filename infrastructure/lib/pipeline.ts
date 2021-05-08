@@ -5,8 +5,8 @@ import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 import {
 	RepoOwner,
-	PassrFrontendMainBranch,
-	PassrFrontendRepo,
+	FrontendMainBranch,
+	FrontendRepo,
 	GithubSecretName,
 } from './variables';
 
@@ -36,11 +36,14 @@ export class PipelineStack extends cdk.Stack {
 						new codepipeline_actions.GitHubSourceAction({
 							actionName: 'Source',
 							oauthToken: cdk.SecretValue.secretsManager(
-								GithubSecretName
+								GithubSecretName,
+								{
+									jsonField: 'token',
+								}
 							),
 							owner: RepoOwner,
-							repo: PassrFrontendRepo,
-							branch: PassrFrontendMainBranch,
+							repo: FrontendRepo,
+							branch: FrontendMainBranch,
 							trigger: codepipeline_actions.GitHubTrigger.WEBHOOK,
 							output: sourceArtifact,
 						}),
@@ -101,25 +104,24 @@ export class PipelineStack extends cdk.Stack {
 			],
 		});
 
-		new codepipeline.CfnWebhook(this, 'PassrSiteWebhook', {
-			authentication: 'GITHUB_HMAC',
-			authenticationConfiguration: {
-				secretToken:
-					'{{resolve:secretsmanager:github:SecretString:token}}',
-			},
-			filters: [
-				{
-					jsonPath: '$.ref',
-					matchEquals: 'refs/heads/{Branch}',
-				},
-			],
-			targetPipeline: pipeline.pipelineName,
-			targetPipelineVersion: 1,
-			targetAction:
-				pipeline.stages[0].actions[0].actionProperties.actionName,
-			name: 'PipelineWebhook',
-			registerWithThirdParty: true,
-		});
+		// new codepipeline.CfnWebhook(this, 'RepoWebhook', {
+		// 	authentication: 'GITHUB_HMAC',
+		// 	authenticationConfiguration: {
+		// 		secretToken: `{{resolve:secretsmanager:${GithubSecretName}:SecretString:token}}`,
+		// 	},
+		// 	filters: [
+		// 		{
+		// 			jsonPath: '$.ref',
+		// 			matchEquals: `refs/heads/${FrontendMainBranch}`,
+		// 		},
+		// 	],
+		// 	targetPipeline: pipeline.pipelineName,
+		// 	targetPipelineVersion: 1,
+		// 	targetAction:
+		// 		pipeline.stages[0].actions[0].actionProperties.actionName,
+		// 	name: 'PipelineWebhook',
+		// 	registerWithThirdParty: true,
+		// });
 
 		props.devWebsiteBucket.grantReadWrite(pipeline.role);
 		props.prodWebsiteBucket.grantReadWrite(pipeline.role);

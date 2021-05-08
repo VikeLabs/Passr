@@ -5,21 +5,70 @@ import * as route53 from '@aws-cdk/aws-route53';
 import * as route53Targets from '@aws-cdk/aws-route53-targets';
 import { IBucket } from '@aws-cdk/aws-s3';
 import { DomainName } from './variables';
+import { SSMParameterReader } from './ssm-parameter-reader';
+import {
+	HostedZoneIdParam,
+	CertificateArnParam,
+	HostedZoneNameParam,
+} from './domain';
 
 interface WebsiteProps extends cdk.StackProps {
 	devSiteBucket: IBucket;
 	prodSiteBucket: IBucket;
-	siteCertificate: certificateManager.Certificate;
-	hostedZone: route53.IHostedZone;
+	devOAI: cloudfront.IOriginAccessIdentity;
+	prodOAI: cloudfront.IOriginAccessIdentity;
 }
 
 export class FrontendStack extends cdk.Stack {
 	constructor(scope: cdk.Construct, id: string, props: WebsiteProps) {
 		super(scope, id, props);
 
-		const devOAI = new cloudfront.OriginAccessIdentity(this, 'DevOAI');
+		const hostedZoneIdReader = new SSMParameterReader(
+			this,
+			'Route53HostedZoneIdReader',
+			{
+				parameterName: HostedZoneIdParam,
+				region: 'us-east-1',
+			}
+		);
 
-		props.devSiteBucket.grantRead(devOAI);
+		const hostedZoneNameReader = new SSMParameterReader(
+			this,
+			'Route53HostedZoneNameReader',
+			{
+				parameterName: HostedZoneNameParam,
+				region: 'us-east-1',
+			}
+		);
+
+		const hostedZoneId = hostedZoneIdReader.getParameterValue();
+		const hostedZoneName = hostedZoneNameReader.getParameterValue();
+
+		const hostedZone = route53.HostedZone.fromHostedZoneAttributes(
+			this,
+			'HostedZone',
+			{
+				zoneName: hostedZoneName,
+				hostedZoneId,
+			}
+		);
+
+		const certificateArnReader = new SSMParameterReader(
+			this,
+			'CertificateArnReader',
+			{
+				parameterName: CertificateArnParam,
+				region: 'us-east-1',
+			}
+		);
+
+		const certificateArn = certificateArnReader.getParameterValue();
+
+		const certificate = certificateManager.Certificate.fromCertificateArn(
+			this,
+			'DomainCertificate',
+			certificateArn
+		);
 
 		const cloudfrontDev = new cloudfront.CloudFrontWebDistribution(
 			this,
@@ -29,7 +78,7 @@ export class FrontendStack extends cdk.Stack {
 					{
 						s3OriginSource: {
 							s3BucketSource: props.devSiteBucket,
-							originAccessIdentity: devOAI,
+							originAccessIdentity: props.devOAI,
 						},
 						behaviors: [{ isDefaultBehavior: true }],
 					},
@@ -39,12 +88,12 @@ export class FrontendStack extends cdk.Stack {
 					{
 						errorCode: 404,
 						responseCode: 200,
-						responsePagePath: 'index.html',
+						responsePagePath: '/index.html',
 					},
 				],
 				priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
 				viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(
-					props.siteCertificate,
+					certificate,
 					{
 						aliases: [`dev.${DomainName}`],
 					}
@@ -59,14 +108,10 @@ export class FrontendStack extends cdk.Stack {
 		new route53.RecordSet(this, 'FrontendDevRecord', {
 			recordType: route53.RecordType.A,
 			target: route53.RecordTarget.fromAlias(cloudfrontDevTarget),
-			zone: props.hostedZone,
-			recordName: `dev.${DomainName}`,
+			zone: hostedZone,
+			recordName: 'dev',
 			ttl: cdk.Duration.seconds(300),
 		});
-
-		const prodOAI = new cloudfront.OriginAccessIdentity(this, 'ProdOAI');
-
-		props.prodSiteBucket.grantRead(prodOAI);
 
 		const cloudfrontProd = new cloudfront.CloudFrontWebDistribution(
 			this,
@@ -76,7 +121,7 @@ export class FrontendStack extends cdk.Stack {
 					{
 						s3OriginSource: {
 							s3BucketSource: props.prodSiteBucket,
-							originAccessIdentity: prodOAI,
+							originAccessIdentity: props.prodOAI,
 						},
 						behaviors: [{ isDefaultBehavior: true }],
 					},
@@ -86,12 +131,12 @@ export class FrontendStack extends cdk.Stack {
 					{
 						errorCode: 404,
 						responseCode: 200,
-						responsePagePath: 'index.html',
+						responsePagePath: '/index.html',
 					},
 				],
 				priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
 				viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(
-					props.siteCertificate,
+					certificate,
 					{
 						aliases: [DomainName],
 					}
@@ -106,8 +151,7 @@ export class FrontendStack extends cdk.Stack {
 		new route53.RecordSet(this, 'FrontendProdRecord', {
 			recordType: route53.RecordType.A,
 			target: route53.RecordTarget.fromAlias(cloudfrontProdTarget),
-			zone: props.hostedZone,
-			recordName: DomainName,
+			zone: hostedZone,
 			ttl: cdk.Duration.seconds(300),
 		});
 	}

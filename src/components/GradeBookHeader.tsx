@@ -5,8 +5,6 @@ import TextInput from './TextInput';
 import HeaderGradeDisplay from './HeaderGradeDisplay';
 import {
 	currentGradeCalculator,
-	earnedGradeCalculator,
-	lostGradeCalculator,
 	averageGradeNeededCalculator,
 } from './GradeCalculator';
 export interface GradeBookHeaderInterface {

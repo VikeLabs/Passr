@@ -3,6 +3,12 @@ import styled from 'styled-components';
 import { Course } from 'api';
 import TextInput from './TextInput';
 import HeaderGradeDisplay from './HeaderGradeDisplay';
+import {
+	currentGradeCalculator,
+	earnedGradeCalculator,
+	lostGradeCalculator,
+	averageGradeNeededCalculator,
+} from './GradeCalculator';
 export interface GradeBookHeaderInterface {
 	currentCourse: Course;
 	updateCurrentCourse: (course: Course) => void;
@@ -53,8 +59,16 @@ function GradeBookHeader({
 		<Header>
 			<CourseTitle>{name}</CourseTitle>
 			<Body>
-				<CurrentGrade label="Current Grade" grade="" />
-				<NeededGrade label="Needed Grade" grade="" />
+				<CurrentGrade
+					label="Current Grade"
+					grade={currentGradeCalculator(currentCourse).toFixed(2)}
+				/>
+				<NeededGrade
+					label="Needed Grade"
+					grade={averageGradeNeededCalculator(currentCourse).toFixed(
+						2
+					)}
+				/>
 				<DesiredGrade
 					value={tempDesiredGrade}
 					onChange={(e) => {

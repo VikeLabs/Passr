@@ -18,6 +18,10 @@ phases:
         commands:
             - echo Build complete on `date`
 
+cache:
+    paths:
+        - 'node_modules/**/*'
+
 artifacts:
     files:
         - '**/*'

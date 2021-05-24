@@ -1,0 +1,27 @@
+const CERTIFICATE_ARN_PARAM = 'CERTIFICATE_ARN_PARAM';
+const DOMAIN_NAME = 'passr.ca';
+const HOSTED_ZONE_ID_PARAM = 'ROUTE_53_HOSTED_ZONE_ID_SSM_PARAM';
+const HOSTED_ZONE_NAME_PARAM = 'ROUTE_53_HOSTED_ZONE_NAME_PARAM';
+const MX_SPF_RECORDS = ['"v=spf1 include:spf.improvmx.com ~all"'];
+const MX_RECORDS = ['10 mx1.improvmx.com', '20 mx2.improvmx.com'];
+
+const FRONTEND_MAIN_BRANCH = 'master';
+const FRONTEND_REPO = 'Passr';
+const GITHUB_SECRET_NAME = 'github';
+const REPO_OWNER = 'VikeLabs';
+
+const PROJECT_PREFIX = 'passr';
+
+export default {
+	CERTIFICATE_ARN_PARAM,
+	DOMAIN_NAME,
+	HOSTED_ZONE_ID_PARAM,
+	HOSTED_ZONE_NAME_PARAM,
+	MX_SPF_RECORDS,
+	MX_RECORDS,
+	FRONTEND_MAIN_BRANCH,
+	FRONTEND_REPO,
+	GITHUB_SECRET_NAME,
+	REPO_OWNER,
+	PROJECT_PREFIX,
+};

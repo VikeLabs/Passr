@@ -3,13 +3,7 @@ import * as s3 from '@aws-cdk/aws-s3';
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
-import {
-	RepoOwner,
-	FrontendMainBranch,
-	FrontendRepo,
-	GithubSecretName,
-	ProjectPrefix,
-} from './variables';
+import constants from './constants';
 
 interface PipelineStackProps extends cdk.StackProps {
 	devWebsiteBucket: s3.IBucket;
@@ -42,7 +36,7 @@ export class PipelineStack extends cdk.Stack {
 
 		const pipeline = new codepipeline.Pipeline(this, 'FrontendPipeline', {
 			artifactBucket: pipelineArtifacts,
-			pipelineName: `${ProjectPrefix}FrontendPipeline`,
+			pipelineName: `${constants.PROJECT_PREFIX}FrontendPipeline`,
 			stages: [
 				{
 					stageName: 'Source',
@@ -50,14 +44,14 @@ export class PipelineStack extends cdk.Stack {
 						new codepipeline_actions.GitHubSourceAction({
 							actionName: 'Source',
 							oauthToken: cdk.SecretValue.secretsManager(
-								GithubSecretName,
+								constants.GITHUB_SECRET_NAME,
 								{
 									jsonField: 'token',
 								}
 							),
-							owner: RepoOwner,
-							repo: FrontendRepo,
-							branch: FrontendMainBranch,
+							owner: constants.REPO_OWNER,
+							repo: constants.FRONTEND_REPO,
+							branch: constants.FRONTEND_MAIN_BRANCH,
 							trigger: codepipeline_actions.GitHubTrigger.WEBHOOK,
 							output: sourceArtifact,
 						}),

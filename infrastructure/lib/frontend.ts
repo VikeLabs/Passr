@@ -4,13 +4,8 @@ import * as certificateManager from '@aws-cdk/aws-certificatemanager';
 import * as route53 from '@aws-cdk/aws-route53';
 import * as route53Targets from '@aws-cdk/aws-route53-targets';
 import { IBucket } from '@aws-cdk/aws-s3';
-import { DomainName } from './variables';
-import { SSMParameterReader } from './ssm-parameter-reader';
-import {
-	HostedZoneIdParam,
-	CertificateArnParam,
-	HostedZoneNameParam,
-} from './domain';
+import constants from './constants';
+import ParamFactories from './param-factories';
 
 interface WebsiteProps extends cdk.StackProps {
 	devSiteBucket: IBucket;
@@ -23,26 +18,17 @@ export class FrontendStack extends cdk.Stack {
 	constructor(scope: cdk.Construct, id: string, props: WebsiteProps) {
 		super(scope, id, props);
 
-		const hostedZoneIdReader = new SSMParameterReader(
+		const certificateArn = ParamFactories.CertificateArn(
 			this,
-			'Route53HostedZoneIdReader',
-			{
-				parameterName: HostedZoneIdParam,
-				region: 'us-east-1',
-			}
+			'CertificateArn'
 		);
 
-		const hostedZoneNameReader = new SSMParameterReader(
+		const hostedZoneName = ParamFactories.HostedZoneName(
 			this,
-			'Route53HostedZoneNameReader',
-			{
-				parameterName: HostedZoneNameParam,
-				region: 'us-east-1',
-			}
+			'HostedZoneName'
 		);
 
-		const hostedZoneId = hostedZoneIdReader.getParameterValue();
-		const hostedZoneName = hostedZoneNameReader.getParameterValue();
+		const hostedZoneId = ParamFactories.HostedZoneId(this, 'HostedZoneId');
 
 		const hostedZone = route53.HostedZone.fromHostedZoneAttributes(
 			this,
@@ -52,17 +38,6 @@ export class FrontendStack extends cdk.Stack {
 				hostedZoneId,
 			}
 		);
-
-		const certificateArnReader = new SSMParameterReader(
-			this,
-			'CertificateArnReader',
-			{
-				parameterName: CertificateArnParam,
-				region: 'us-east-1',
-			}
-		);
-
-		const certificateArn = certificateArnReader.getParameterValue();
 
 		const certificate = certificateManager.Certificate.fromCertificateArn(
 			this,
@@ -95,7 +70,7 @@ export class FrontendStack extends cdk.Stack {
 				viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(
 					certificate,
 					{
-						aliases: [`dev.${DomainName}`],
+						aliases: [`dev.${constants.DOMAIN_NAME}`],
 					}
 				),
 			}
@@ -138,7 +113,7 @@ export class FrontendStack extends cdk.Stack {
 				viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(
 					certificate,
 					{
-						aliases: [DomainName],
+						aliases: [constants.DOMAIN_NAME],
 					}
 				),
 			}

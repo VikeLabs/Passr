@@ -1,12 +1,15 @@
 import * as cdk from '@aws-cdk/core';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
+
+import constants from './constants';
+
 export class WebsiteBuckets extends cdk.Stack {
-	devSite = new s3.Bucket(this, 'PassrDevSite', {
+	devSite = new s3.Bucket(this, `${constants.PROJECT_PREFIX}-DevSite`, {
 		blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
 		versioned: true,
 	});
-	prodSite = new s3.Bucket(this, 'PassrProdSite', {
+	prodSite = new s3.Bucket(this, `${constants.PROJECT_PREFIX}-ProdSite`, {
 		blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
 		versioned: true,
 	});

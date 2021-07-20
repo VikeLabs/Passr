@@ -13,15 +13,6 @@ code {
 }
 
 /*Font Awesome Styling*/
-/*User Profile Icon*/
-.fa-user-circle {
-	color: #4961e1;
-}
-/*Settings Icon*/
-.fa-cog {
-	color: #4961e1;
-}
-/*Sign out Icon*/
-.fa-sign-out-alt {
+[class*='fa-'] {
 	color: #4961e1;
 }

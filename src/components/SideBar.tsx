@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../molecules/Logo';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
+import AddCourseModal, { AddCourseData } from './AddCourseModal';
 export interface SideBarInterface {
 	currentSemester?: Semester;
+	updateSemester: (semester: Semester) => void;
+	activeCourse: number;
+	onChange: (sem: Semester, newActiveCourse: number) => void;
 }
+
 const SideBarContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.primary[0]};
 	height: 100%;
@@ -18,18 +23,27 @@ const ListOfCoursesContainer = styled.ol`
 	font-size: ${({ theme }) => theme.fontSizes.m};
 	padding: 0;
 `;
-const CourseItem = styled.li`
+const CourseItem = styled.li<{ selected: boolean }>`
 	color: ${({ theme }) => theme.colors.secondary[0]};
 	cursor: pointer;
-	padding-top: 1em;
-	padding-bottom: 1em;
+	padding-top: 0.75em;
+	padding-bottom: 0.75em;
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
 	list-style: none;
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.secondary[1]};
 		color: ${({ theme }) => theme.colors.text[1]};
 		list-style: none;
 	}
+	${(props) =>
+		props.selected &&
+		css`
+			background-color: ${({ theme }) => theme.colors.secondary[1]};
+			color: ${({ theme }) => theme.colors.text[1]};
+		`}
 `;
+
 const SideBarLogo = styled(Logo)`
 	background-color: ${({ theme }) => theme.colors.primary[0]};
 `;
@@ -38,31 +52,67 @@ const AddCourseButtonContainer = styled.div`
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
-function AddCourse() {
-	console.log('course added');
-}
-
-function CourseList({ courses }: { courses: Course[] }) {
-	return (
-		<ListOfCoursesContainer>
-			{courses.map((item, name) => {
-				return <CourseItem key={name}>{item.name}</CourseItem>;
-			})}
-		</ListOfCoursesContainer>
-	);
-}
-function SideBar({ currentSemester, ...props }: SideBarInterface) {
+function SideBar({
+	currentSemester,
+	updateSemester,
+	activeCourse,
+	onChange,
+	...props
+}: SideBarInterface) {
+	const [modalOpen, setModalOpen] = useState(false);
+	const handleModalClose = () => {
+		setModalOpen(false);
+	};
+	function openModal() {
+		setModalOpen(true);
+	}
+	function handleSubmit(data: AddCourseData) {
+		if (!currentSemester) return;
+		const newCourse: Course = { ...data, courseItems: [] };
+		const newCourses = [...currentSemester.courses, newCourse];
+		updateSemester({ ...currentSemester, courses: newCourses });
+	}
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />
 			{currentSemester && (
-				<CourseList courses={currentSemester.courses} />
+				<ListOfCoursesContainer>
+					{currentSemester.courses.map((item, name) => {
+						return (
+							<CourseItem
+								key={name}
+								onClick={() =>
+									onChange(
+										currentSemester,
+										currentSemester.courses.indexOf(item)
+									)
+								}
+								selected={
+									activeCourse ===
+									currentSemester.courses.indexOf(item)
+								}
+							>
+								{item.name}
+							</CourseItem>
+						);
+					})}
+				</ListOfCoursesContainer>
 			)}
 			<AddCourseButtonContainer>
-				<ActionButton onClick={AddCourse} variant="secondary">
+				<ActionButton
+					onClick={openModal}
+					variant="secondary"
+					disabled={!currentSemester}
+				>
 					Add course
 				</ActionButton>
 			</AddCourseButtonContainer>
+			{modalOpen && (
+				<AddCourseModal
+					handleSubmit={handleSubmit}
+					handleClose={handleModalClose}
+				/>
+			)}
 		</SideBarContainer>
 	);
 }

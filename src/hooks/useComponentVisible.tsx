@@ -4,22 +4,28 @@ export default function useComponentVisible(
 	ref: React.RefObject<HTMLElement>,
 	initialIsVisible = false
 ) {
-	const [isComponentVisible, setIsComponentVisible] = useState(
+	const [componentVisible, setComponentVisible] = useState<boolean>(
 		initialIsVisible
 	);
 
-	const handleClickOutside = (event: MouseEvent) => {
-		if (ref.current && !ref.current.contains(event.target as Node)) {
-			setIsComponentVisible(false);
-		}
-	};
-
 	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			const outsideClick =
+				ref.current && !ref.current.contains(event.target as Node);
+
+			if (outsideClick) {
+				setComponentVisible(false);
+			}
+		};
+
 		document.addEventListener('click', handleClickOutside, true);
 		return () => {
 			document.removeEventListener('click', handleClickOutside, true);
 		};
-	});
+	}, [ref]);
 
-	return { isComponentVisible, setIsComponentVisible };
+	return [componentVisible, setComponentVisible] as [
+		boolean,
+		React.Dispatch<React.SetStateAction<boolean>>
+	];
 }

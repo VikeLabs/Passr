@@ -11,12 +11,13 @@ export interface GradeItemAccordionInterface {
 }
 
 const Accordion = styled.div`
-	color: #4f4f4f;
+	background-color: ${({ theme }) => theme.colors.main[0]};
+	color: ${({ theme }) => theme.colors.gray[3]};
 
 	display: grid;
 	grid-template-columns:
-		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
-		minmax(6em, 5fr) minmax(6em, 5fr);
+		minmax(5em, 1fr) minmax(10em, 5fr) minmax(10em, 5fr)
+		minmax(10em, 5fr) minmax(10em, 5fr);
 	grid-template-rows: 6em;
 	grid-template-areas: 'arrow item weight grade duedate';
 `;
@@ -24,7 +25,7 @@ const RowComponent = styled.div`
 	font-weight: bold;
 	font-size: large;
 	border: none;
-
+	padding-right: 1.5em;
 	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
 const DropDownArrow = styled.button`
@@ -33,32 +34,14 @@ const DropDownArrow = styled.button`
 	font-size: 2em;
 	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
-const AccordionExtended = styled.div`
-	font-weight: bold;
-	font-size: large;
-	color: #4961e1;
-	border: none;
-	background-color: ${({ theme }) => theme.colors.main[0]};
 
-	display: grid;
-	grid-template-columns:
-		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
-		minmax(6em, 5fr) minmax(6em, 5fr);
-	grid-template-rows: 4em;
-	grid-template-areas: 'arrow item weight grade duedate';
-`;
-
-const AccordionExtendedComponent = styled.div`
-	border: none;
-	padding-right: 1.5em;
-`;
-
-const DeleteButton = styled(DelButton)`
+const DeleteButton = styled(ActionButton)`
 	color: #b80f0a;
 	width: auto;
 	font-weight: bold;
-	padding-left: 0em;
-	padding-right: 0em;
+	margin-top: 0.5em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 `;
 
 function submit() {
@@ -81,108 +64,97 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	const extended = () => {
 		return (
 			<>
-				<AccordionExtended>
-					<AccordionExtendedComponent></AccordionExtendedComponent>
-					<AccordionExtendedComponent>
-						<RowComponent
-							style={{
-								gridArea: 'item',
-							}}
-						>
-							<TextInput
-								value={tempName}
-								onChange={(e) => {
-									setTempName(e.target.value);
-								}}
-								onBlur={() => {
-									handleChange({ name: tempName });
-								}}
-								label="Name"
-								placeholder="Name"
-							/>
-						</RowComponent>
-					</AccordionExtendedComponent>
-					<AccordionExtendedComponent>
-						<RowComponent
-							style={{
-								gridArea: 'weight',
-							}}
-						>
-							<TextInput
-								value={tempWeight}
-								onChange={(e) => {
-									setTempWeight(e.target.value);
-								}}
-								onBlur={() => {
-									handleChange({
-										weight: isNaN(Number(tempWeight))
-											? undefined
-											: Number(tempWeight),
-									});
-								}}
-								label="Weight"
-								placeholder="Weight"
-							/>
-						</RowComponent>
-					</AccordionExtendedComponent>
-					<AccordionExtendedComponent>
-						<RowComponent
-							style={{
-								gridArea: 'grade',
-							}}
-						>
-							<TextInput
-								value={tempGrade}
-								onChange={(e) => {
-									setTempGrade(e.target.value);
-								}}
-								onBlur={() => {
-									const parsedGrade = parseGrade(tempGrade);
-									handleChange({ grade: parsedGrade });
-								}}
-								label="Grade"
-								placeholder="Grade"
-							/>
-						</RowComponent>
-					</AccordionExtendedComponent>
-					<AccordionExtendedComponent>
-						<RowComponent
-							style={{
-								gridArea: 'duedate',
-							}}
-						>
-							<TextInput
-								value={tempDate}
-								onChange={(e) => {
-									setTempDate(e.target.value);
-								}}
-								onBlur={() => {
-									handleChange({
-										dueDate: new Date(tempDate),
-									});
-								}}
-								label="Due Date"
-								placeholder="Due Date"
-							/>
-						</RowComponent>
-					</AccordionExtendedComponent>
-				</AccordionExtended>
-				<AccordionExtended>
-					<AccordionExtendedComponent></AccordionExtendedComponent>
-					<AccordionExtendedComponent
+				<Accordion
+					style={{
+						height: '8em',
+					}}
+				>
+					<RowComponent
+						style={{
+							gridArea: 'arrow',
+						}}
+					></RowComponent>
+
+					<RowComponent
 						style={{
 							gridArea: 'item',
 						}}
 					>
+						<TextInput
+							value={tempName}
+							onChange={(e) => {
+								setTempName(e.target.value);
+							}}
+							onBlur={() => {
+								handleChange({ name: tempName });
+							}}
+							label="Name"
+							placeholder="Name"
+						/>
 						<DeleteButton onClick={submit} variant="secondary">
 							<i className="fas fa-trash"></i>
 							&nbsp; &nbsp;Delete Item
 						</DeleteButton>
-					</AccordionExtendedComponent>
-					<AccordionExtendedComponent></AccordionExtendedComponent>
-					<AccordionExtendedComponent></AccordionExtendedComponent>
-					<AccordionExtendedComponent></AccordionExtendedComponent>
-				</AccordionExtended>
+					</RowComponent>
+					<RowComponent
+						style={{
+							gridArea: 'weight',
+						}}
+					>
+						<TextInput
+							value={tempWeight}
+							onChange={(e) => {
+								setTempWeight(e.target.value);
+							}}
+							onBlur={() => {
+								handleChange({
+									weight: isNaN(Number(tempWeight))
+										? undefined
+										: Number(tempWeight),
+								});
+							}}
+							label="Weight"
+							placeholder="Weight"
+						/>
+					</RowComponent>
+					<RowComponent
+						style={{
+							gridArea: 'grade',
+						}}
+					>
+						<TextInput
+							value={tempGrade}
+							onChange={(e) => {
+								setTempGrade(e.target.value);
+							}}
+							onBlur={() => {
+								const parsedGrade = parseGrade(tempGrade);
+								handleChange({ grade: parsedGrade });
+							}}
+							label="Grade"
+							placeholder="Grade"
+						/>
+					</RowComponent>
+					<RowComponent
+						style={{
+							gridArea: 'duedate',
+						}}
+					>
+						<TextInput
+							value={tempDate}
+							onChange={(e) => {
+								setTempDate(e.target.value);
+							}}
+							onBlur={() => {
+								handleChange({
+									dueDate: new Date(tempDate),
+								});
+							}}
+							label="Due Date"
+							placeholder="Due Date"
+						/>
+					</RowComponent>
+				</Accordion>
 			</>
 		);
 	};

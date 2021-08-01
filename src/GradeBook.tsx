@@ -10,6 +10,10 @@ import GradeBookHeader from 'components/GradeBookHeader';
 // todo change mock data
 import { Fall2020 } from 'api/mock';
 
+// import { readCourseItem } from './api/courseItemOperations';
+import Button from './components/ActionButton';
+import { useQuery } from 'react-query';
+
 const GradeBookContainer = styled.div`
 	min-height: 100vh;
 	height: 100%;
@@ -99,6 +103,14 @@ function GradeBook() {
 
 	const [activeCourse, setCourse] = useState(0);
 
+	const getCourseItem = async () =>
+		await fetch('/courseItem/e82a6ed5-423f-465a-bfe1-74a5733a007b', {
+			method: 'GET',
+			headers: { userID: 'user1' }, // REMINDER: REMOVE HADRCODED USER ID
+		}).then((res) => res.json());
+
+	const query = useQuery('courseItem', getCourseItem);
+
 	function handleClick(sem: Semester, newActiveCourse: number) {
 		setCourse(newActiveCourse);
 	}
@@ -128,6 +140,12 @@ function GradeBook() {
 					/>
 				</AccordianContainer>
 				<Empty />
+				<Button
+					variant="primary"
+					onClick={() => console.log(query.data)}
+				>
+					Read Course Item
+				</Button>
 			</MainContent>
 
 			<Account>

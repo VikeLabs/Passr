@@ -106,7 +106,7 @@ function GradeBook() {
 	const [activeCourse, setCourse] = useState(0);
 
 	const getCourseItem = async () =>
-		await fetch('/courseItem/e82a6ed5-423f-465a-bfe1-74a5733a007b', {
+		await fetch('/courseItem/e60e5002-9fe8-42eb-adc5-4fe9a67a9e45', {
 			method: 'GET',
 			headers: { userID: 'user1' }, // REMINDER: REMOVE HADRCODED USER ID
 		}).then((res) => res.json());

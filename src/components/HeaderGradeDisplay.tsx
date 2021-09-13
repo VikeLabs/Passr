@@ -18,7 +18,8 @@ const Label = styled.p`
 `;
 const HeaderGradeDisplayContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.main[0]};
-	width: 15em;
+	min-width: 15em;
+	width: auto;
 `;
 const GradeDisplayText = styled.h2`
 	color: ${({ theme }) => theme.colors.gray[3]};

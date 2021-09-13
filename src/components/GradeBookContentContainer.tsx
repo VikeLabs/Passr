@@ -8,12 +8,11 @@ import AddItemModal, { AddItemData } from './AddItemModal';
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
 	font-weight: bold;
-	padding: 3em 0em 3em 3em;
 
 	display: grid;
 	grid-template-columns:
-		minmax(3em, 1fr) minmax(6em, 5fr) minmax(6em, 5fr)
-		minmax(6em, 5fr) minmax(6em, 5fr);
+		minmax(5em, 1fr) minmax(10em, 5fr) minmax(10em, 5fr)
+		minmax(10em, 5fr) minmax(10em, 5fr);
 	grid-template-rows: 5em 4em;
 	grid-template-areas:
 		'columnItemHeader columnItemHeader columnItemHeader columnItemHeader buttonColumn'
@@ -25,7 +24,7 @@ const ColumnItemHeader = styled.div`
 	grid-area: columnItemHeader;
 	color: ${(props) => props.theme.colors.text[1]};
 
-	border: 1px solid ${(props) => props.theme.colors.gray[3]};
+	border: 1px solid ${(props) => props.theme.colors.gray[2]};
 	border-style: none none solid none;
 `;
 
@@ -38,7 +37,7 @@ const ButtonColumn = styled.div`
 	grid-area: buttonColumn;
 	text-align: right;
 
-	border: 1px solid ${(props) => props.theme.colors.gray[3]};
+	border: 1px solid ${(props) => props.theme.colors.gray[2]};
 	border-style: none none solid none;
 `;
 
@@ -47,6 +46,7 @@ const AddItemButton = styled(ActionButton)`
 	box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
 
 	margin-top: 1em;
+	margin-right: 2em;
 	padding-top: 0.3em;
 	width: 10em;
 	height: 3.5em;
@@ -61,7 +61,7 @@ const CourseItemTitle = styled.div`
 	padding-top: 1em;
 
 	font-size: ${({ theme }) => theme.fontSizes.xs};
-	color: ${({ theme }) => theme.colors.gray[3]};
+	color: ${({ theme }) => theme.colors.gray[2]};
 `;
 
 interface Props {

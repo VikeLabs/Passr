@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import useComponentVisible from '../hooks/useComponentVisible';
 import { Link } from 'react-router-dom';
@@ -11,19 +11,15 @@ const DropdownButton = styled.button`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border: 1px, solid, black;
 `;
 
-const DropdownMenu = styled.ul<{ componentVisible: boolean }>`
+const DropdownMenu = styled.div<{ componentVisible: boolean }>`
 	list-style: none;
 	background-color: ${({ theme }) => theme.colors.main[0]};
 	text-align: start;
 	z-index: 2;
-	position: absolute;
 	border: 1px solid rgba(0, 0, 0, 0.04);
 	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
-	padding: 0;
-	margin: 0;
 	border-radius: 10px;
 	border-radius: 0 0 10px 10px;
 	visibility: ${({ componentVisible }) =>
@@ -43,10 +39,9 @@ const Container = styled.div`
 
 export const ListLink = styled(Link)`
 	display: block;
-	height: 100%;
 	text-decoration: none;
-	color: ${({ theme }) => theme.colors.text[2]};
 	padding: 1em;
+	color: ${({ theme }) => theme.colors.text[2]};
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary[0]};
 	}
@@ -54,16 +49,13 @@ export const ListLink = styled(Link)`
 
 export const ListButton = styled.div`
 	display: block;
-	height: 100%;
 	text-decoration: none;
-	color: ${({ theme }) => theme.colors.text[2]};
 	padding: 1em;
+	color: ${({ theme }) => theme.colors.text[2]};
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary[0]};
 	}
 `;
-
-const HIDE_LIST = -9999;
 
 function GenericDropdown({
 	buttonDisplay,
@@ -79,19 +71,6 @@ function GenericDropdown({
 		setComponentVisible(!componentVisible);
 	};
 
-	const [listTopPosition, setListTopPosition] = useState(HIDE_LIST);
-
-	useEffect(() => {
-		const getMenuButtonBottom = () => {
-			const menuButton = buttonRef.current;
-			if (menuButton != null) {
-				return menuButton.getBoundingClientRect().bottom;
-			}
-			return HIDE_LIST;
-		};
-		setListTopPosition(getMenuButtonBottom());
-	}, [buttonRef]);
-
 	return (
 		<Container ref={ref}>
 			<DropdownButton ref={buttonRef} onClick={handleClick}>
@@ -104,10 +83,7 @@ function GenericDropdown({
 					}
 				/>
 			</DropdownButton>
-			<DropdownMenu
-				style={{ top: `${listTopPosition}px` }}
-				componentVisible={componentVisible}
-			>
+			<DropdownMenu componentVisible={componentVisible}>
 				{children}
 			</DropdownMenu>
 		</Container>

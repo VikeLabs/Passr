@@ -2,11 +2,19 @@ import React, { useState, useEffect, RefObject } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export interface DropdownItem {
-	path: string;
+interface BaseItem {
 	title: string;
 	icon?: string;
 }
+export interface DropdownLink extends BaseItem {
+	path: string;
+}
+
+export interface DropdownButton extends BaseItem {
+	action: () => void;
+}
+export type DropdownItem = DropdownButton | DropdownLink;
+
 interface Props {
 	items: DropdownItem[];
 	buttonRef: RefObject<HTMLElement>;
@@ -53,6 +61,17 @@ const DropdownLink = styled(Link)`
 		color: ${({ theme }) => theme.colors.primary[0]};
 	}
 `;
+
+const DropdownButton = styled.div`
+	display: block;
+	height: 100%;
+	text-decoration: none;
+	color: ${({ theme }) => theme.colors.text[2]};
+	padding: 1em;
+	&:hover {
+		color: ${({ theme }) => theme.colors.primary[0]};
+	}
+`;
 function DropdownList({ items, buttonRef, isComponentVisible }: Props) {
 	const [top, setTop] = useState(-9999);
 
@@ -74,10 +93,18 @@ function DropdownList({ items, buttonRef, isComponentVisible }: Props) {
 						key={index}
 						isComponentVisible={isComponentVisible}
 					>
-						<DropdownLink to={item.path}>
-							<i className={item.icon} />
-							{item.title}
-						</DropdownLink>
+						{'path' in item && (
+							<DropdownLink to={item.path}>
+								<i className={item.icon} />
+								{item.title}
+							</DropdownLink>
+						)}
+						{'action' in item && item.action && (
+							<DropdownButton onClick={item.action}>
+								<i className={item.icon} />
+								{item.title}
+							</DropdownButton>
+						)}
 					</DropdownMenuItem>
 				);
 			})}

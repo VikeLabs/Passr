@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 interface Props {
 	buttonDisplay: React.ReactNode;
+	className?: string;
 }
 
 const DropdownButton = styled.button`
@@ -21,7 +22,7 @@ const DropdownMenu = styled.div<{ componentVisible: boolean }>`
 	border: 1px solid rgba(0, 0, 0, 0.04);
 	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
 	border-radius: 10px;
-	border-radius: 0 0 10px 10px;
+	border-radius: 10px 10px 10px 10px;
 	visibility: ${({ componentVisible }) =>
 		!componentVisible ? 'hidden' : 'visible'};
 	transform: ${({ componentVisible }) =>
@@ -60,6 +61,7 @@ export const ListButton = styled.div`
 function GenericDropdown({
 	buttonDisplay,
 	children,
+	className,
 }: React.PropsWithChildren<Props>) {
 	const ref = useRef<HTMLDivElement>(null);
 	const buttonRef = useRef<HTMLButtonElement>(null);
@@ -72,7 +74,7 @@ function GenericDropdown({
 	};
 
 	return (
-		<Container ref={ref}>
+		<Container ref={ref} className={className}>
 			<DropdownButton ref={buttonRef} onClick={handleClick}>
 				{buttonDisplay}
 				<i

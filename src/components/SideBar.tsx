@@ -58,6 +58,11 @@ const AddSemesterButtonContainer = styled.div`
 	margin: 2em 1em;
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
+const PickSemesterButtonContainer = styled.div`
+	margin: 2em 1em;
+	font-szie: ${({ theme }) => theme.fontSizes.s};
+	border-radius: 12px;
+`;
 
 function SideBar({
 	currentSemester,
@@ -126,11 +131,13 @@ function SideBar({
 					Add Semester
 				</ActionButton>
 			</AddSemesterButtonContainer>
-			<SemesterPicker
-				semesters={[Fall2020, Fall2021]}
-				onSelect={console.log}
-				current={0}
-			/>
+			<PickSemesterButtonContainer>
+				<SemesterPicker
+					semesters={[Fall2020, Fall2021]} //Replace mock data
+					onSelect={console.log}
+					current={0}
+				/>
+			</PickSemesterButtonContainer>
 		</SideBarContainer>
 	);
 }

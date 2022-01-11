@@ -8,7 +8,7 @@ import { getCurrentSemester, Semester } from 'api';
 import GradeBookContentContainer from './components/GradeBookContentContainer';
 import GradeBookHeader from 'components/GradeBookHeader';
 // todo change mock data
-import { Fall2020, Fall2021 } from 'api/mock';
+import { Fall2020 } from 'api/mock';
 
 const GradeBookContainer = styled.div`
 	min-height: 100vh;

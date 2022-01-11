@@ -26,12 +26,7 @@ const Dropdown = styled(GenericDropdown)`
 		color: ${({ theme }) => theme.colors.text[1]};
 	}
 `;
-function SemesterPicker({
-	semesters,
-	current,
-	onSelect,
-	...props
-}: SemesterPickerProps) {
+function SemesterPicker({ semesters, current, onSelect }: SemesterPickerProps) {
 	return (
 		<Dropdown buttonDisplay={semesters[current].name}>
 			{semesters.map((item, name) => {

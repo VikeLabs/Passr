@@ -22,7 +22,7 @@ const DropdownMenu = styled.div<{ componentVisible: boolean }>`
 	border: 1px solid rgba(0, 0, 0, 0.04);
 	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
 	border-radius: 10px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 10px;
 	visibility: ${({ componentVisible }) =>
 		!componentVisible ? 'hidden' : 'visible'};
 	transform: ${({ componentVisible }) =>

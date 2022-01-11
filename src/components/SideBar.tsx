@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
 import AddCourseModal, { AddCourseData } from './AddCourseModal';
-import AddSemesterModal, { AddSemesterData } from './AddSemesterModal';
 import SemesterPicker from './SemesterPicker';
 import { Fall2020, Fall2021 } from 'api/mock';
 export interface SideBarInterface {

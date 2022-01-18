@@ -59,7 +59,7 @@ const AddSemesterButtonContainer = styled.div`
 `;
 const PickSemesterButtonContainer = styled.div`
 	margin: 2em 1em;
-	font-szie: ${({ theme }) => theme.fontSizes.s};
+	font-size: ${({ theme }) => theme.fontSizes.s};
 	border-radius: 12px;
 `;
 

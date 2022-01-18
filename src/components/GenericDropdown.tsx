@@ -51,6 +51,7 @@ export const ListLink = styled(Link)`
 export const ListButton = styled.div`
 	display: block;
 	text-decoration: none;
+	text-align: center;
 	padding: 1em;
 	color: ${({ theme }) => theme.colors.text[2]};
 	&:hover {

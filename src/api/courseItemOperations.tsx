@@ -2,55 +2,48 @@ import { useQuery, useMutation } from 'react-query';
 import { CourseItem } from 'api';
 import { AddItemData } from 'components/AddItemModal';
 
-// Access client
-// const queryClient = useQueryClient();
-
 // create
-const putCourseItem = async (data: AddItemData) => {
+const fetchPostCourseItem = async (data: AddItemData) => {
 	await fetch('/courseItem/', {
-		method: 'PUT',
+		method: 'POST',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(data),
 	});
 };
 
 export const createCourseItem = () =>
-	useMutation((data: AddItemData) => putCourseItem(data));
+	useMutation((data: AddItemData) => fetchPostCourseItem(data));
 
 // read
-const fetchGetCourseItem = async () =>
-	await fetch('/courseItem/e60e5002-9fe8-42eb-adc5-4fe9a67a9e45', {
-		method: 'GET',
+const fetchGetCourseItem = async (id: string) =>
+	await fetch('/courseItem/' + id, {
 		headers: { userID: 'user1' }, // REMINDER: REMOVE HADRCODED USER ID
 	}).then((res) => res.json());
 
-export const readCourseItem = () => useQuery('courseItem', fetchGetCourseItem);
+export const readCourseItem = (id: string) =>
+	useQuery('courseItem', () => fetchGetCourseItem(id));
 
 // update
-const fetchPostCourseItem = async (change: Partial<CourseItem>) => {
+const fetchPutCourseItem = async (change: Partial<CourseItem>) => {
 	await fetch('/courseItem/', {
-		method: 'POST',
+		method: 'PUT',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(change),
 	});
 };
 
 export const updateCourseItem = () =>
-	useMutation((data: Partial<CourseItem>) => fetchPostCourseItem(data));
-
-// const createCourseItem = useMutation('mutationkey');
-
-// const updateCourseItem = useMutation('hashkey');
-
-// const deleteCourseItem = useMutation('hashkey');
+	useMutation((data: Partial<CourseItem>) => fetchPutCourseItem(data));
 
 // delete
-export const fetchDeleteCourseItem = async () => {
+export const fetchDeleteCourseItem = async (id: string) => {
 	await fetch('/courseItem/', {
+		// append id to end of string
 		method: 'DELETE',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
+		body: JSON.stringify({ id }),
 	});
 };
 
-export const deleteCourseItem = () =>
-	useMutation(() => fetchDeleteCourseItem());
+export const deleteCourseItem = (id: string) =>
+	useMutation(() => fetchDeleteCourseItem(id));

@@ -4,7 +4,6 @@ import ActionButton from './ActionButton';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
-import { useMutation } from 'react-query';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
@@ -70,46 +69,21 @@ interface Props {
 	updateCourse: (course: Course) => void;
 }
 
-// interface CreateItemData extends AddItemData {
-// 	userID: string;
-// }
-
 function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
-
-	const putCourseItem = async (data: AddItemData) => {
-		await fetch('/courseItem/', {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json', userID: 'user1' },
-			body: JSON.stringify(data),
-		});
-	};
-
-	const mutation = useMutation((data: AddItemData) => putCourseItem(data));
-
-	const handleItemSubmit = async (data: AddItemData) => {
-		// const { name, date, weight, grade } = data;
-		// // convert weight, grade to numbers
-		// Number.parseFloat(weight);
-		// Number.parseFloat(grade);
-		// const dataWithID = {
-		// 	name,
-		// 	date,
-		// 	weight,
-		// 	grade,
-		// 	userID: 'user1', // change userID
-		// };
-		mutation.mutate(data);
-	};
-
+	function handleItemSubmit(data: AddItemData) {
+		const { name, date, weight, grade } = data;
+		console.log(name);
+		console.log(date);
+		console.log(weight);
+		console.log(grade);
+	}
 	const handleModalClose = () => {
 		setModalOpen(false);
 	};
-
 	function openModal() {
 		setModalOpen(true);
 	}
-
 	function updateCourseItem(item: CourseItem, index: number) {
 		const newCourseItems = [...course.courseItems];
 		newCourseItems[index] = item;

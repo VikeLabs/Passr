@@ -1,4 +1,3 @@
-import { useQuery, useMutation } from 'react-query';
 import { CourseItem } from 'api';
 import { AddItemData } from 'components/AddItemModal';
 

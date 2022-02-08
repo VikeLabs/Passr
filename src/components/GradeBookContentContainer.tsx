@@ -4,7 +4,6 @@ import ActionButton from './ActionButton';
 import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
-import { useMutation } from 'react-query';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
@@ -70,10 +69,6 @@ interface Props {
 	updateCourse: (course: Course) => void;
 }
 
-// interface CreateItemData extends AddItemData {
-// 	userID: string;
-// }
-
 function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
 	function handleItemSubmit(data: AddItemData) {
@@ -82,11 +77,9 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const handleModalClose = () => {
 		setModalOpen(false);
 	};
-
 	function openModal() {
 		setModalOpen(true);
 	}
-
 	function updateCourseItem(item: CourseItem, index: number) {
 		const newCourseItems = [...course.courseItems];
 		newCourseItems[index] = item;

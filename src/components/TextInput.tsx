@@ -53,8 +53,17 @@ const Input = styled.input<{ error: boolean }>`
 		`}
 `;
 
+const ErrorMessage = styled.p`
+	font-size: ${({ theme }) => theme.fontSizes.xs};
+	color: ${({ theme }) => theme.colors.error};
+	text-align: center;
+	margin: 0;
+	margin-bottom: 0.5em;
+`;
+
 interface Props {
 	error?: boolean;
+	errorMessage?: string;
 	value: string;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -77,6 +86,7 @@ interface Props {
  */
 function TextInput({
 	error = false,
+	errorMessage = '',
 	value,
 	onChange,
 	onBlur,
@@ -102,6 +112,9 @@ function TextInput({
 				onBlur={onBlur}
 				placeholder={placeholder}
 			/>
+			{errorMessage != '' && error === true ? (
+				<ErrorMessage>{errorMessage}</ErrorMessage>
+			) : null}
 		</InputContainer>
 	);
 }

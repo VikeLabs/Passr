@@ -7,6 +7,11 @@ import TextInput from 'components/TextInput';
 import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
+const EMAIL_ERROR_MESSAGE = 'Invalid Email';
+const CONFIRM_EMAIL_ERROR_MESSAGE = 'Email does not match';
+const PASS_ERROR_MESSAGE = 'Password does not meet requirements';
+const CONFIRM_PASS_ERROR_MESSAGE = 'Password does not match';
+
 const SignUpPageContainer = styled.div`
 	min-height: 100vh;
 	display: flex;
@@ -51,6 +56,7 @@ const TextLink = styled(TextButton)`
 interface InputData {
 	value: string;
 	error: boolean;
+	errorMessage: string;
 }
 
 function inputReducer(state: InputData, action: Partial<InputData>) {
@@ -72,6 +78,7 @@ function validPass(password: string) {
 const initialInputValue: InputData = {
 	value: '',
 	error: false,
+	errorMessage: '',
 };
 
 function SignUpPage() {
@@ -110,22 +117,27 @@ function SignUpPage() {
 
 	const handleSubmit = async () => {
 		if (!validEmail(email.value)) {
+			email.errorMessage = EMAIL_ERROR_MESSAGE;
 			emailDispatch({ error: true });
 			return;
 		}
 
 		if (email.value !== confirmEmail.value) {
+			confirmEmail.errorMessage = CONFIRM_EMAIL_ERROR_MESSAGE;
 			setConfirmEmail({ error: true });
 			return;
 		}
 
 		if (!validPass(password.value)) {
+			password.errorMessage = PASS_ERROR_MESSAGE;
 			setPassword({ error: true });
 			return;
 		}
 
 		if (password.value !== confirmPass.value) {
+			confirmPass.errorMessage = CONFIRM_PASS_ERROR_MESSAGE;
 			setConfirmPass({ error: true });
+			return;
 		}
 
 		try {
@@ -158,6 +170,7 @@ function SignUpPage() {
 					type="text"
 					value={email.value}
 					error={email.error}
+					errorMessage={email.errorMessage}
 					onChange={(e) => {
 						if (
 							validEmail(e.target.value) ||
@@ -173,6 +186,7 @@ function SignUpPage() {
 					}}
 					onBlur={() => {
 						if (!validEmail(email.value) && email.value !== '') {
+							email.errorMessage = EMAIL_ERROR_MESSAGE;
 							emailDispatch({ error: true });
 						}
 					}}
@@ -184,6 +198,7 @@ function SignUpPage() {
 					type="text"
 					value={confirmEmail.value}
 					error={confirmEmail.error}
+					errorMessage={confirmEmail.errorMessage}
 					onChange={(e) => {
 						if (email.value === e.target.value) {
 							setConfirmEmail({
@@ -196,7 +211,13 @@ function SignUpPage() {
 					}}
 					onBlur={() => {
 						if (email.value !== confirmEmail.value) {
-							setConfirmEmail({ error: true });
+							if (confirmEmail.value !== '') {
+								confirmEmail.errorMessage = CONFIRM_EMAIL_ERROR_MESSAGE;
+								setConfirmEmail({ error: true });
+							} else {
+								confirmEmail.errorMessage = '';
+								setConfirmEmail({ error: false });
+							}
 						}
 					}}
 				/>
@@ -206,6 +227,7 @@ function SignUpPage() {
 					type="password"
 					value={password.value}
 					error={password.error}
+					errorMessage={password.errorMessage}
 					onChange={(e) => {
 						if (
 							validPass(e.target.value) ||
@@ -222,6 +244,7 @@ function SignUpPage() {
 							!validPass(password.value) &&
 							password.value !== ''
 						) {
+							password.errorMessage = PASS_ERROR_MESSAGE;
 							setPassword({ error: true });
 						}
 					}}
@@ -233,6 +256,7 @@ function SignUpPage() {
 					type="password"
 					value={confirmPass.value}
 					error={confirmPass.error}
+					errorMessage={confirmPass.errorMessage}
 					onChange={(e) => {
 						if (password.value === e.target.value) {
 							setConfirmPass({
@@ -245,7 +269,13 @@ function SignUpPage() {
 					}}
 					onBlur={() => {
 						if (password.value !== confirmPass.value) {
-							setConfirmPass({ error: true });
+							if (confirmPass.value !== '') {
+								confirmPass.errorMessage = CONFIRM_PASS_ERROR_MESSAGE;
+								setConfirmPass({ error: true });
+							} else {
+								confirmPass.errorMessage = '';
+								setConfirmPass({ error: false });
+							}
 						}
 					}}
 				/>

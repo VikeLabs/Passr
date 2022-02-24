@@ -10,7 +10,7 @@ import {
 } from 'api/courseItemOperations';
 
 export const useReadCourseItem = (id: string) =>
-	useQuery('courseItem', () => fetchGetCourseItem(id));
+	useQuery(['courseItem', id], () => fetchGetCourseItem(id));
 
 export const useCreateCourseItem = () =>
 	useMutation((data: AddItemData) => fetchPostCourseItem(data));

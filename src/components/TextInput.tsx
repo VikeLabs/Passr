@@ -112,9 +112,9 @@ function TextInput({
 				onBlur={onBlur}
 				placeholder={placeholder}
 			/>
-			{errorMessage != '' && error === true ? (
+			{error && errorMessage && (
 				<ErrorMessage>{errorMessage}</ErrorMessage>
-			) : null}
+			)}
 		</InputContainer>
 	);
 }

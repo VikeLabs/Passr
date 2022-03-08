@@ -32,7 +32,7 @@ const DeleteAccountButton = styled(ActionButton)`
 `;
 
 // to be implemented
-function validPassword(email: string) {
+function validPassword() {
 	return true;
 }
 

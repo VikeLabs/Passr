@@ -8,14 +8,14 @@ import EmailNotificationsCard from 'components/EmailNotificationsCard';
 import HelpCard from 'components/HelpCard';
 
 const SettingsPageContainer = styled.div`
-	background-color: blue;
+	background-color: ${({ theme }) => theme.colors.main[1]};
 	padding-bottom: 3em;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.colors.main[1]};
+
 	display: grid;
 	row-gap: 3em;
 	grid-template-columns: 1fr 6fr 1fr;

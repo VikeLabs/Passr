@@ -27,14 +27,7 @@ const ProfilePicture = styled.div`
 	padding-left: 0.2em;
 	margin-right: 0.2em;
 `;
-const Col1 = styled.div`
-	grid-area: Col1;
-	padding-right: 2em;
-`;
-const Col2 = styled.div`
-	grid-area: Col2;
-	padding-right: 2em;
-`;
+
 const TextField = styled(TextInput)`
 	padding-bottom: 2em;
 `;
@@ -53,6 +46,11 @@ function validName(name: string) {
 function validUsername(username: string) {
 	return !!username.match(/./);
 }
+
+const Col = styled.div<{ gridArea: string }>`
+	grid-area: ${(props) => props.gridArea};
+	padding-right: 2em;
+`;
 
 function PersonalInfoCard() {
 	// In the future not all of these (name, username, email will be mutable)
@@ -87,7 +85,7 @@ function PersonalInfoCard() {
 					<i className="fas fa-user-circle" />
 				</ProfilePicture>
 
-				<Col1>
+				<Col gridArea="Col1">
 					<TextField
 						value={name}
 						onChange={(e) => {
@@ -123,8 +121,8 @@ function PersonalInfoCard() {
 					>
 						Update
 					</UpdateButton>
-				</Col1>
-				<Col2>
+				</Col>
+				<Col gridArea="Col2">
 					<TextField
 						value={username}
 						onChange={(e) => {
@@ -141,7 +139,7 @@ function PersonalInfoCard() {
 						error={usernameErr}
 						placeholder="Username"
 					/>
-				</Col2>
+				</Col>
 			</Content>
 		</PersonalInfoContainer>
 	);

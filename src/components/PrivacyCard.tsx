@@ -16,46 +16,41 @@ const Subtitle = styled.h3``;
 
 const TextField = styled(TextInput)``;
 
-const CurrentPassword = styled.div`
+const PasswordContainer = styled.div`
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 `;
-
-const NewPassword = styled.div`
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
-`;
-
-const ReEnterPassword = styled.div`
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
-`;
-
 const ChangePasswordButton = styled(ActionButton)`
 	padding: 1em;
-	width: 200px;
+	width: 12em;
 	margin-top: 0.5em;
 `;
 
 const DeleteAccountButton = styled(ActionButton)`
 	padding: 1em;
-	width: 200px;
+	width: 12em;
 `;
 
-function validEmail(email: string) {
-	return !!email.match(/.+@.+\..{2,}/);
+// to be implemented
+function validPassword(email: string) {
+	return true;
 }
 
 function PrivacyCard() {
-	const [email, setEmail] = useState('');
-	const [emailErr, setEmailErr] = useState(false);
+	const [currPassword, setCurrPassword] = useState('');
+	const [newPassword, setNewPassword] = useState('');
+	const [rePassword, setRePassword] = useState('');
+	const [passwordErr, setPasswordErr] = useState(false);
 
 	const handleSubmit = async () => {
-		if (!validEmail(email)) {
-			setEmailErr(true);
+		// to be implemented
+		// check currPassword is the actual current password
+		// check newPassword is valid password
+		// check rePassword = newPassword
+		if (!validPassword(newPassword)) {
+			setPasswordErr(true);
 			return;
 		}
-		console.log(email);
 	};
 
 	return (
@@ -63,57 +58,66 @@ function PrivacyCard() {
 			<Content>
 				<Title>Privacy</Title>
 				<Subtitle>Change Password</Subtitle>
-				<CurrentPassword>
+				<PasswordContainer>
 					<TextField
-						value={email}
+						type="password"
+						value={currPassword}
 						onChange={(e) => {
-							if (validEmail(e.target.value)) setEmailErr(false);
-							setEmail(e.target.value);
+							if (validPassword(e.target.value))
+								setPasswordErr(false);
+							setCurrPassword(e.target.value);
 						}}
 						onBlur={(e) => {
-							if (!validEmail(e.target.value)) setEmailErr(true);
+							if (!validPassword(e.target.value))
+								setPasswordErr(true);
 						}}
 						label="Current Password"
 						required
-						error={emailErr}
+						error={passwordErr}
 						placeholder="Current Password"
 					/>
-				</CurrentPassword>
-				<NewPassword>
+				</PasswordContainer>
+				<PasswordContainer>
 					<TextField
-						value={email}
+						type="password"
+						value={newPassword}
 						onChange={(e) => {
-							if (validEmail(e.target.value)) setEmailErr(false);
-							setEmail(e.target.value);
+							if (validPassword(e.target.value))
+								setPasswordErr(false);
+							setNewPassword(e.target.value);
 						}}
 						onBlur={(e) => {
-							if (!validEmail(e.target.value)) setEmailErr(true);
+							if (!validPassword(e.target.value))
+								setPasswordErr(true);
 						}}
 						label="New Password"
 						required
-						error={emailErr}
+						error={passwordErr}
 						placeholder="New Password"
 					/>
-				</NewPassword>
-				<ReEnterPassword>
+				</PasswordContainer>
+				<PasswordContainer>
 					<TextField
-						value={email}
+						type="password"
+						value={rePassword}
 						onChange={(e) => {
-							if (validEmail(e.target.value)) setEmailErr(false);
-							setEmail(e.target.value);
+							if (validPassword(e.target.value))
+								setPasswordErr(false);
+							setRePassword(e.target.value);
 						}}
 						onBlur={(e) => {
-							if (!validEmail(e.target.value)) setEmailErr(true);
+							if (!validPassword(e.target.value))
+								setPasswordErr(true);
 						}}
 						label="Re-enter New Password"
 						required
-						error={emailErr}
+						error={passwordErr}
 						placeholder="New Password"
 					/>
-				</ReEnterPassword>
+				</PasswordContainer>
 				<ChangePasswordButton
 					variant="primary"
-					disabled={emailErr}
+					disabled={passwordErr}
 					onClick={handleSubmit}
 				>
 					Change Password
@@ -123,11 +127,7 @@ function PrivacyCard() {
 					{' '}
 					Delete Account
 				</Subtitle>
-				<DeleteAccountButton
-					variant="negative"
-					disabled={emailErr}
-					onClick={handleSubmit}
-				>
+				<DeleteAccountButton variant="negative" onClick={handleSubmit}>
 					Delete Account
 				</DeleteAccountButton>
 			</Content>

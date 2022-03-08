@@ -65,6 +65,71 @@ const MATH100: Course = {
 	desiredGrade: 80,
 };
 
+const Math101Items: CourseItem[] = [
+	{
+		id: '419f20ac',
+		name: 'Assignment 1',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 10,
+		grade: { numerator: 9, denominator: 10 },
+	},
+	{
+		id: '54e27303',
+		name: 'Assignment 2',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 5,
+		grade: { numerator: 8, denominator: 10 },
+		dueDate: new Date('October 20, 2021'),
+	},
+	{
+		id: 'ne95786e7',
+		name: 'Assignment 3',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 5,
+		dueDate: new Date('November 16, 2021'),
+	},
+	{
+		id: 'ff86fcaa',
+		name: 'Midterm 1',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 20,
+	},
+	{
+		id: 'bcfd4253',
+		name: 'Midterm 2',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 20,
+	},
+	{
+		id: 'a066e02b',
+		name: 'Final',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 40,
+	},
+];
+
+const MATH101: Course = {
+	id: '725ad466',
+	name: 'Math 101',
+	owner: 'Person A',
+	createdAt: new Date(),
+	updatedAt: new Date(),
+	courseItems: Math101Items,
+	desiredGrade: 70,
+};
+
 const CSC110Items: CourseItem[] = [
 	{
 		id: 'vy8amquo',
@@ -171,6 +236,120 @@ const CSC110: Course = {
 	updatedAt: new Date(),
 	courseItems: CSC110Items,
 	desiredGrade: 75,
+};
+
+const CSC225Items: CourseItem[] = [
+	{
+		id: '87891b7d',
+		name: 'Assignment 1',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 5,
+		grade: { numerator: 7, denominator: 10 },
+	},
+	{
+		id: 'fa7d475e',
+		name: 'Assignment 2',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 5,
+		grade: 75,
+	},
+	{
+		id: '42ad627b',
+		name: 'Assignment 3',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 5,
+		grade: 80,
+	},
+	{
+		id: '285e280f',
+		name: 'Assignment 4',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 5,
+		grade: 85,
+	},
+	{
+		id: '685b49d5',
+		name: 'Midterm 1',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 20,
+		grade: 60,
+	},
+	{
+		id: '1dbb0e46',
+		name: 'Midterm 2',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 20,
+		grade: 85,
+	},
+	{
+		id: '846e63a3',
+		name: 'Final',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 40,
+	},
+];
+
+const CSC225: Course = {
+	id: 'b6381f69',
+	name: 'CSC 225',
+	owner: 'Person A',
+	createdAt: new Date(),
+	updatedAt: new Date(),
+	courseItems: CSC225Items,
+	desiredGrade: 75,
+};
+
+const CSC230Items: CourseItem[] = [
+	{
+		id: '8763691e',
+		name: 'Midterm 1',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 25,
+		grade: 40,
+	},
+	{
+		id: '6fb44a5c',
+		name: 'Midterm 2',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 25,
+		grade: 85,
+	},
+	{
+		id: '18b80bf1',
+		name: 'Final',
+		owner: 'Person A',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		weight: 50,
+	},
+];
+
+const CSC230: Course = {
+	id: '3910de46',
+	name: 'CSC 230',
+	owner: 'Person A',
+	createdAt: new Date(),
+	updatedAt: new Date(),
+	courseItems: CSC230Items,
+	desiredGrade: 60,
 };
 
 const PHYS111Items: CourseItem[] = [
@@ -286,4 +465,13 @@ export const Fall2020: Semester = {
 	createdAt: new Date(),
 	updatedAt: new Date(),
 	courses: [MATH100, CSC110, PHYS111],
+};
+
+export const Fall2021: Semester = {
+	id: 'b84df502',
+	name: 'Fall 2021',
+	owner: 'Person A',
+	createdAt: new Date(),
+	updatedAt: new Date(),
+	courses: [MATH101, CSC225, CSC230],
 };

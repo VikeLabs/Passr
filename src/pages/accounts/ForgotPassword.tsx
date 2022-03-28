@@ -88,7 +88,6 @@ function validPass(password: string) {
 
 function ForgotPasswordPage() {
 	const [email, setEmail] = useReducer(inputReducer, initialInputValue);
-	const [emailErr, setEmailErr] = useState(false);
 	const [validationCode, setValidationCode] = useReducer(
 		inputReducer,
 		initialInputValue
@@ -135,13 +134,15 @@ function ForgotPasswordPage() {
 		} else {
 			setEmail({ error: false });
 			setCodeStep(true); // Send validation code
-			console.log(email);
 		}
 
 		if (codeStep && !validCode(validationCode.value)) {
 			validationCode.errorMessage = VALIDATION_CODE_ERROR_MESSAGE;
 			setValidationCode({ error: true });
 			return;
+		} else {
+			setValidationCode({ error: false });
+			// setPassStep(true);
 		}
 
 		if (passStep && !validPass(password.value)) {
@@ -260,11 +261,7 @@ function ForgotPasswordPage() {
 						/>
 					</>
 				)}
-				<SubmitButton
-					variant="primary"
-					disabled={emailErr}
-					onClick={handleSubmit}
-				>
+				<SubmitButton variant="primary" onClick={handleSubmit}>
 					Submit
 				</SubmitButton>
 				<TextLinkContainer>

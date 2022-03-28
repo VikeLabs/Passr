@@ -55,6 +55,9 @@ function validEmail(email: string) {
 function ForgotPasswordPage() {
 	const [email, setEmail] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
+	const [validationCode, setValidationCode] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPass, setConfirmPass] = useState('');
 
 	const history = useHistory();
 
@@ -82,19 +85,62 @@ function ForgotPasswordPage() {
 	}, [email]);
 
 	const handleSubmit = async () => {
+		// EMAIL
 		if (!validEmail(email)) {
 			setEmailErr(true);
 			return;
+		} else {
+			setEmailErr(false);
+			console.log(email);
 		}
-		console.log(email);
 	};
 
-	return (
-		<ForgotPasswordPageContainer>
-			<ForgotPasswordContents>
-				<PassrLogo width="300px" height="300px" />
+	const EmailField = () => {
+		console.log('EMAIL');
+		return (
+			<TextInput
+				value={email}
+				onChange={(e) => {
+					if (validEmail(e.target.value)) setEmailErr(false);
+					setEmail(e.target.value);
+				}}
+				onBlur={(e) => {
+					if (!validEmail(e.target.value)) setEmailErr(true);
+				}}
+				label="Email"
+				required
+				error={emailErr}
+				placeholder="example@example.com"
+			/>
+		);
+	};
+
+	const ValidationCodeField = () => {
+		console.log('CODE');
+		return (
+			<TextInput
+				value={validationCode}
+				onChange={(e) => {
+					if (validEmail(e.target.value)) setEmailErr(false);
+					setEmail(e.target.value);
+				}}
+				onBlur={(e) => {
+					if (!validEmail(e.target.value)) setEmailErr(true);
+				}}
+				label="Confirmation Code"
+				required
+				error={emailErr}
+				placeholder="Confirmation Code"
+			/>
+		);
+	};
+
+	const NewPasswordField = () => {
+		console.log('PASWWORD');
+		return (
+			<>
 				<TextInput
-					value={email}
+					value={password}
 					onChange={(e) => {
 						if (validEmail(e.target.value)) setEmailErr(false);
 						setEmail(e.target.value);
@@ -102,11 +148,36 @@ function ForgotPasswordPage() {
 					onBlur={(e) => {
 						if (!validEmail(e.target.value)) setEmailErr(true);
 					}}
-					label="Email"
+					label="Set New Password"
 					required
 					error={emailErr}
-					placeholder="Email"
+					placeholder="New Password"
 				/>
+				<TextInput
+					value={confirmPass}
+					onChange={(e) => {
+						if (validEmail(e.target.value)) setEmailErr(false);
+						setEmail(e.target.value);
+					}}
+					onBlur={(e) => {
+						if (!validEmail(e.target.value)) setEmailErr(true);
+					}}
+					label="Confirm New Password"
+					required
+					error={emailErr}
+					placeholder="Confirm New Password"
+				/>
+			</>
+		);
+	};
+
+	return (
+		<ForgotPasswordPageContainer>
+			<ForgotPasswordContents>
+				<PassrLogo width="300px" height="300px" />
+				<EmailField />
+				<ValidationCodeField />
+				<NewPasswordField />
 				<SubmitButton
 					variant="primary"
 					disabled={emailErr}

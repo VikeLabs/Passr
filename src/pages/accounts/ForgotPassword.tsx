@@ -57,6 +57,7 @@ interface InputData {
 	value: string;
 	error: boolean;
 	errorMessage: string;
+	valueSet: boolean;
 }
 
 function inputReducer(state: InputData, action: Partial<InputData>) {
@@ -67,6 +68,7 @@ const initialInputValue: InputData = {
 	value: '',
 	error: false,
 	errorMessage: '',
+	valueSet: false,
 };
 
 function validEmail(email: string) {
@@ -97,6 +99,8 @@ function ForgotPasswordPage() {
 		inputReducer,
 		initialInputValue
 	);
+
+	const [emailStep, setEmailStep] = useState(false);
 	const [codeStep, setCodeStep] = useState(false);
 	const [passStep, setPassStep] = useState(false);
 
@@ -137,7 +141,8 @@ function ForgotPasswordPage() {
 		}
 
 		if (codeStep && validCode(validationCode.value)) {
-			setValidationCode({ error: false });
+			setEmail({ valueSet: true });
+			setValidationCode({ error: false, valueSet: true });
 			setPassStep(true);
 		} else {
 			validationCode.errorMessage = VALIDATION_CODE_ERROR_MESSAGE;
@@ -180,6 +185,7 @@ function ForgotPasswordPage() {
 					error={email.error}
 					errorMessage={email.errorMessage}
 					placeholder="example@example.com"
+					disabled={email.valueSet}
 					onChange={(e) => {
 						if (
 							validEmail(e.target.value) ||
@@ -198,6 +204,7 @@ function ForgotPasswordPage() {
 						}
 					}}
 				/>
+
 				{codeStep && (
 					<TextInput
 						value={validationCode.value}
@@ -206,6 +213,7 @@ function ForgotPasswordPage() {
 						error={validationCode.error}
 						placeholder="Validation Code"
 						errorMessage={validationCode.errorMessage}
+						disabled={validationCode.valueSet}
 						onChange={(e) => {
 							setValidationCode({ value: e.target.value });
 						}}

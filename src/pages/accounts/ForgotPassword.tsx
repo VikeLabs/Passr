@@ -100,7 +100,6 @@ function ForgotPasswordPage() {
 		initialInputValue
 	);
 
-	const [emailStep, setEmailStep] = useState(false);
 	const [codeStep, setCodeStep] = useState(false);
 	const [passStep, setPassStep] = useState(false);
 

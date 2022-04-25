@@ -127,33 +127,44 @@ function ForgotPasswordPage() {
 
 	const handleSubmit = async () => {
 		// EMAIL
-		if (!validEmail(email.value)) {
+		if (validEmail(email.value)) {
+			setEmail({ error: false });
+			setCodeStep(true); // Send validation code
+		} else {
 			email.errorMessage = EMAIL_ERROR_MESSAGE;
 			setEmail({ error: true });
 			return;
-		} else {
-			setEmail({ error: false });
-			setCodeStep(true); // Send validation code
 		}
 
-		if (codeStep && !validCode(validationCode.value)) {
-			validationCode.errorMessage = VALIDATION_CODE_ERROR_MESSAGE;
-			setValidationCode({ error: true });
-			return;
-		} else {
+		if (codeStep && validCode(validationCode.value)) {
 			setValidationCode({ error: false });
-			// setPassStep(true);
-		}
-
-		if (passStep && !validPass(password.value)) {
-			password.errorMessage = PASS_ERROR_MESSAGE;
-			setPassword({ error: true });
+			setPassStep(true);
+		} else {
+			validationCode.errorMessage = VALIDATION_CODE_ERROR_MESSAGE;
+			if (validationCode.value !== '') {
+				setValidationCode({ error: true });
+			}
 			return;
 		}
 
-		if (passStep && password.value !== confirmPass.value) {
+		if (passStep && validPass(password.value)) {
+			setPassword({ error: false });
+		} else {
+			password.errorMessage = PASS_ERROR_MESSAGE;
+			if (password.value !== '') {
+				setPassword({ error: true });
+			}
+			return;
+		}
+
+		if (passStep && password.value === confirmPass.value) {
+			setConfirmPass({ error: false });
+			console.log('Complete!');
+		} else {
 			confirmPass.errorMessage = CONFIRM_PASS_ERROR_MESSAGE;
-			setConfirmPass({ error: true });
+			if (confirmPass.value !== '') {
+				setConfirmPass({ error: true });
+			}
 			return;
 		}
 	};
@@ -196,13 +207,16 @@ function ForgotPasswordPage() {
 						placeholder="Validation Code"
 						errorMessage={validationCode.errorMessage}
 						onChange={(e) => {
-							// if (
-							// 	validCode(e.target.value) ||
-							// 	e.target.value === ''
-							// ) {
-							// 	setValidationCode({ error: false });
-							// }
 							setValidationCode({ value: e.target.value });
+						}}
+						onBlur={() => {
+							if (
+								!validCode(validationCode.value) &&
+								validationCode.value !== ''
+							) {
+								validationCode.errorMessage = VALIDATION_CODE_ERROR_MESSAGE;
+								setValidationCode({ error: true });
+							}
 						}}
 					/>
 				)}

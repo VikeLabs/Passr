@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
 import AddCourseModal, { AddCourseData } from './AddCourseModal';
+import SemesterPicker from './SemesterPicker';
+import { Fall2020, Fall2021 } from 'api/mock';
 export interface SideBarInterface {
 	currentSemester?: Semester;
 	updateSemester: (semester: Semester) => void;
@@ -51,6 +53,15 @@ const AddCourseButtonContainer = styled.div`
 	margin: 2em 1em;
 	font-size: ${({ theme }) => theme.fontSizes.s};
 `;
+const AddSemesterButtonContainer = styled.div`
+	margin: 2em 1em;
+	font-size: ${({ theme }) => theme.fontSizes.s};
+`;
+const PickSemesterButtonContainer = styled.div`
+	margin: 2em 1em;
+	font-size: ${({ theme }) => theme.fontSizes.s};
+	border-radius: 12px;
+`;
 
 function SideBar({
 	currentSemester,
@@ -72,6 +83,7 @@ function SideBar({
 		const newCourses = [...currentSemester.courses, newCourse];
 		updateSemester({ ...currentSemester, courses: newCourses });
 	}
+
 	return (
 		<SideBarContainer {...props}>
 			<SideBarLogo width="8em" height="8em" />
@@ -113,6 +125,18 @@ function SideBar({
 					handleClose={handleModalClose}
 				/>
 			)}
+			<AddSemesterButtonContainer>
+				<ActionButton onClick={openModal} variant="secondary">
+					Add Semester
+				</ActionButton>
+			</AddSemesterButtonContainer>
+			<PickSemesterButtonContainer>
+				<SemesterPicker
+					semesters={[Fall2020, Fall2021]} //Replace mock data
+					onSelect={console.log}
+					current={0}
+				/>
+			</PickSemesterButtonContainer>
 		</SideBarContainer>
 	);
 }

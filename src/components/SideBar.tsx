@@ -4,8 +4,12 @@ import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
 import { Semester, Course } from '../api';
 import AddCourseModal, { AddCourseData } from './AddCourseModal';
+import AddSemesterModal, { AddSemesterData } from './AddSemesterModal';
 import SemesterPicker from './SemesterPicker';
+
 import { Fall2020, Fall2021 } from 'api/mock';
+import { fetchPostSemester } from 'api/semesterOperations';
+
 export interface SideBarInterface {
 	currentSemester?: Semester;
 	updateSemester: (semester: Semester) => void;
@@ -70,18 +74,29 @@ function SideBar({
 	onChange,
 	...props
 }: SideBarInterface) {
-	const [modalOpen, setModalOpen] = useState(false);
+	const [courseModalOpen, setCourseModalOpen] = useState(false);
+	const [semesterModalOpen, setSemesterModalOpen] = useState(false);
+
 	const handleModalClose = () => {
-		setModalOpen(false);
+		courseModalOpen
+			? setCourseModalOpen(false)
+			: setSemesterModalOpen(false);
 	};
-	function openModal() {
-		setModalOpen(true);
-	}
-	function handleSubmit(data: AddCourseData) {
+
+	const openCourseModal = () => setCourseModalOpen(true);
+	const openSemesterModal = () => setSemesterModalOpen(true);
+
+	function handleCourseSubmit(data: AddCourseData) {
 		if (!currentSemester) return;
 		const newCourse: Course = { ...data, courseItems: [] };
 		const newCourses = [...currentSemester.courses, newCourse];
 		updateSemester({ ...currentSemester, courses: newCourses });
+	}
+
+	function handleSemesterSubmit(data: AddSemesterData) {
+		if (!currentSemester) return;
+		const newSemester = { ...data, courses: [] };
+		fetchPostSemester(newSemester);
 	}
 
 	return (
@@ -112,24 +127,30 @@ function SideBar({
 			)}
 			<AddCourseButtonContainer>
 				<ActionButton
-					onClick={openModal}
+					onClick={openCourseModal}
 					variant="secondary"
 					disabled={!currentSemester}
 				>
 					Add course
 				</ActionButton>
 			</AddCourseButtonContainer>
-			{modalOpen && (
+			{courseModalOpen && (
 				<AddCourseModal
-					handleSubmit={handleSubmit}
+					handleSubmit={handleCourseSubmit}
 					handleClose={handleModalClose}
 				/>
 			)}
 			<AddSemesterButtonContainer>
-				<ActionButton onClick={openModal} variant="secondary">
+				<ActionButton onClick={openSemesterModal} variant="secondary">
 					Add Semester
 				</ActionButton>
 			</AddSemesterButtonContainer>
+			{semesterModalOpen && (
+				<AddSemesterModal
+					handleSubmit={handleSemesterSubmit}
+					handleClose={handleModalClose}
+				/>
+			)}
 			<PickSemesterButtonContainer>
 				<SemesterPicker
 					semesters={[Fall2020, Fall2021]} //Replace mock data

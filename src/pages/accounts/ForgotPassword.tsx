@@ -128,8 +128,7 @@ function ForgotPasswordPage() {
 		};
 	}, [email]);
 
-	const handleSubmit = async () => {
-		// EMAIL
+	const handleEmailStep = () => {
 		if (validEmail(email.value)) {
 			setEmail({ error: false });
 			setCodeStep(true); // Send validation code
@@ -138,7 +137,9 @@ function ForgotPasswordPage() {
 			setEmail({ error: true });
 			return;
 		}
+	};
 
+	const handleCodeStep = () => {
 		if (codeStep && validCode(validationCode.value)) {
 			setEmail({ valueSet: true });
 			setValidationCode({ error: false, valueSet: true });
@@ -150,7 +151,9 @@ function ForgotPasswordPage() {
 			}
 			return;
 		}
+	};
 
+	const handlePassStep = () => {
 		if (passStep && validPass(password.value)) {
 			setPassword({ error: false });
 		} else {
@@ -170,6 +173,16 @@ function ForgotPasswordPage() {
 				setConfirmPass({ error: true });
 			}
 			return;
+		}
+	};
+
+	const handleSubmit = async () => {
+		if (!codeStep && !passStep) {
+			handleEmailStep();
+		} else if (codeStep && !passStep) {
+			handleCodeStep();
+		} else if (passStep) {
+			handlePassStep();
 		}
 	};
 

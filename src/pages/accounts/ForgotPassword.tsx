@@ -132,6 +132,9 @@ function ForgotPasswordPage() {
 		if (validEmail(email.value)) {
 			setEmail({ error: false });
 			setCodeStep(true); // Send validation code
+			Auth.forgotPassword('seiyaterada123@gmail.com')
+				.then((data) => console.log(data))
+				.catch((err) => console.log(err));
 		} else {
 			email.errorMessage = EMAIL_ERROR_MESSAGE;
 			setEmail({ error: true });

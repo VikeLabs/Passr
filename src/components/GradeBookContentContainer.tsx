@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import ActionButton from './ActionButton';
-import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
+
+import { Course, CourseItem } from '../api';
+import { useCreateCourseItem } from '../hooks/useCourseItem';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
@@ -71,9 +74,13 @@ interface Props {
 
 function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
+	const courseItemCreate = useCreateCourseItem();
+
 	function handleItemSubmit(data: AddItemData) {
-		return data;
+		console.log(data);
+		courseItemCreate.mutate(data);
 	}
+
 	const handleModalClose = () => {
 		setModalOpen(false);
 	};

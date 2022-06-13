@@ -6,7 +6,10 @@ import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
 
 import { Course, CourseItem } from '../api';
-import { useCreateCourseItem } from '../hooks/useCourseItem';
+import {
+	useCreateCourseItem,
+	useUpdateCourseItem,
+} from '../hooks/useCourseItem';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
@@ -69,12 +72,12 @@ const CourseItemTitle = styled.div`
 
 interface Props {
 	course: Course;
-	updateCourse: (course: Course) => void;
 }
 
-function GradeBookContentContainer({ course, updateCourse }: Props) {
+function GradeBookContentContainer({ course }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const courseItemCreate = useCreateCourseItem();
+	const courseItemUpdate = useUpdateCourseItem();
 
 	function handleItemSubmit(data: AddItemData) {
 		console.log(data);
@@ -87,10 +90,9 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 	function openModal() {
 		setModalOpen(true);
 	}
-	function updateCourseItem(item: CourseItem, index: number) {
-		const newCourseItems = [...course.courseItems];
-		newCourseItems[index] = item;
-		updateCourse({ ...course, courseItems: newCourseItems });
+
+	function updateCourseItem(item: Partial<CourseItem>, index: number) {
+		courseItemUpdate.mutate({ ...item, id: course.courseItems[index].id });
 	}
 
 	return (

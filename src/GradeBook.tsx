@@ -125,7 +125,6 @@ function GradeBook() {
 					<GradeBookContentContainer
 						// todo replace mock data
 						course={Fall2020.courses[0]}
-						updateCourse={(course) => course}
 					/>
 				</AccordianContainer>
 				<Empty />

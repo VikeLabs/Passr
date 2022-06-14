@@ -8,7 +8,9 @@ import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
 const EMAIL_ERROR_MESSAGE = 'Invalid Email';
-const VALIDATION_CODE_ERROR_MESSAGE = 'Invalid Code';
+const VALIDATION_CODE_EMPTY_MESSAGE = 'Code cannot be empty';
+const VALIDATION_CODE_MISMATCH_MESSAGE = 'Invalid verification code provided';
+const PASS_EMPTY_MESSAGE = 'Password does cannot be empty';
 const PASS_ERROR_MESSAGE = 'Password does not meet requirements';
 const CONFIRM_PASS_ERROR_MESSAGE = 'Password does not match';
 
@@ -57,7 +59,6 @@ interface InputData {
 	value: string;
 	error: boolean;
 	errorMessage: string;
-	valueSet: boolean;
 }
 
 function inputReducer(state: InputData, action: Partial<InputData>) {
@@ -68,17 +69,10 @@ const initialInputValue: InputData = {
 	value: '',
 	error: false,
 	errorMessage: '',
-	valueSet: false,
 };
 
 function validEmail(email: string) {
 	return !!email.match(/.+@.+\..{2,}/);
-}
-
-function validCode(code: string) {
-	// TODO: Change hard code values when validation code is implemented
-	if (code !== 'code') return false;
-	return true;
 }
 
 function validPass(password: string) {
@@ -100,8 +94,7 @@ function ForgotPasswordPage() {
 		initialInputValue
 	);
 
-	const [codeStep, setCodeStep] = useState(false);
-	const [passStep, setPassStep] = useState(false);
+	const [codeAndPassStep, setCodeAndPassStep] = useState(false);
 
 	const history = useHistory();
 
@@ -131,62 +124,71 @@ function ForgotPasswordPage() {
 	const handleEmailStep = () => {
 		if (validEmail(email.value)) {
 			setEmail({ error: false });
-			setCodeStep(true); // Send validation code
-			Auth.forgotPassword('seiyaterada123@gmail.com')
+			setCodeAndPassStep(true); // Send validation code
+			Auth.forgotPassword(email.value)
 				.then((data) => console.log(data))
 				.catch((err) => console.log(err));
 		} else {
-			email.errorMessage = EMAIL_ERROR_MESSAGE;
-			setEmail({ error: true });
+			setEmail({ error: true, errorMessage: EMAIL_ERROR_MESSAGE });
 			return;
 		}
 	};
 
-	const handleCodeStep = () => {
-		if (codeStep && validCode(validationCode.value)) {
-			setEmail({ valueSet: true });
-			setValidationCode({ error: false, valueSet: true });
-			setPassStep(true);
-		} else {
-			validationCode.errorMessage = VALIDATION_CODE_ERROR_MESSAGE;
-			if (validationCode.value !== '') {
-				setValidationCode({ error: true });
-			}
+	const handleCodeAndPassStep = () => {
+		if (!validationCode.value) {
+			setValidationCode({
+				error: true,
+				errorMessage: VALIDATION_CODE_EMPTY_MESSAGE,
+			});
+		}
+		if (!password.value && !confirmPass.value) {
+			setPassword({ error: true, errorMessage: PASS_EMPTY_MESSAGE });
+		}
+		if (!validPass(password.value) && password.value !== '') {
+			setPassword({ error: true, errorMessage: PASS_ERROR_MESSAGE });
 			return;
 		}
-	};
-
-	const handlePassStep = () => {
-		if (passStep && validPass(password.value)) {
-			setPassword({ error: false });
-		} else {
-			password.errorMessage = PASS_ERROR_MESSAGE;
-			if (password.value !== '') {
-				setPassword({ error: true });
-			}
+		if (
+			!(password.value === confirmPass.value) &&
+			confirmPass.value !== ''
+		) {
+			setConfirmPass({
+				error: true,
+				errorMessage: CONFIRM_PASS_ERROR_MESSAGE,
+			});
 			return;
 		}
-
-		if (passStep && password.value === confirmPass.value) {
-			setConfirmPass({ error: false });
-			console.log('Complete!');
-		} else {
-			confirmPass.errorMessage = CONFIRM_PASS_ERROR_MESSAGE;
-			if (confirmPass.value !== '') {
-				setConfirmPass({ error: true });
-			}
-			return;
-		}
+		Auth.forgotPasswordSubmit(
+			email.value,
+			validationCode.value,
+			password.value
+		)
+			.then((data) => console.log(data))
+			.catch((err) => {
+				if (err.code === 'CodeMismatchException') {
+					setValidationCode({
+						error: true,
+						errorMessage: VALIDATION_CODE_MISMATCH_MESSAGE,
+					});
+				}
+				console.log(err);
+			});
 	};
 
 	const handleSubmit = async () => {
-		if (!codeStep && !passStep) {
+		if (!codeAndPassStep) {
 			handleEmailStep();
-		} else if (codeStep && !passStep) {
-			handleCodeStep();
-		} else if (passStep) {
-			handlePassStep();
+		} else if (codeAndPassStep) {
+			handleCodeAndPassStep();
 		}
+	};
+
+	const refreshInputs = () => {
+		setEmail(initialInputValue);
+		setValidationCode(initialInputValue);
+		setPassword(initialInputValue);
+		setConfirmPass(initialInputValue);
+		setCodeAndPassStep(false);
 	};
 
 	return (
@@ -200,7 +202,7 @@ function ForgotPasswordPage() {
 					error={email.error}
 					errorMessage={email.errorMessage}
 					placeholder="example@example.com"
-					disabled={email.valueSet}
+					disabled={codeAndPassStep}
 					onChange={(e) => {
 						if (
 							validEmail(e.target.value) ||
@@ -219,37 +221,27 @@ function ForgotPasswordPage() {
 						}
 					}}
 				/>
-
-				{codeStep && (
-					<TextInput
-						value={validationCode.value}
-						required
-						label="Validation Code"
-						error={validationCode.error}
-						placeholder="Validation Code"
-						errorMessage={validationCode.errorMessage}
-						disabled={validationCode.valueSet}
-						onChange={(e) => {
-							setValidationCode({ value: e.target.value });
-						}}
-						onBlur={() => {
-							if (
-								!validCode(validationCode.value) &&
-								validationCode.value !== ''
-							) {
-								validationCode.errorMessage = VALIDATION_CODE_ERROR_MESSAGE;
-								setValidationCode({ error: true });
-							}
-						}}
-					/>
-				)}
-				{passStep && (
+				{codeAndPassStep && (
 					<>
+						<TextInput
+							value={validationCode.value}
+							required
+							label="Validation Code"
+							error={validationCode.error}
+							placeholder="Validation Code"
+							errorMessage={validationCode.errorMessage}
+							onChange={(e) => {
+								setValidationCode({ value: e.target.value });
+								if (validationCode.value)
+									setValidationCode({ error: false });
+							}}
+						/>
 						<TextInput
 							value={password.value}
 							label="Set New Password"
 							required
 							type="password"
+							placeholder="Password"
 							error={password.error}
 							errorMessage={password.errorMessage}
 							onChange={(e) => {
@@ -276,6 +268,7 @@ function ForgotPasswordPage() {
 							label="Confirm New Password"
 							required
 							type="password"
+							placeholder="Confirm Password"
 							error={confirmPass.error}
 							errorMessage={confirmPass.errorMessage}
 							onChange={(e) => {
@@ -301,6 +294,9 @@ function ForgotPasswordPage() {
 				<SubmitButton variant="primary" onClick={handleSubmit}>
 					Submit
 				</SubmitButton>
+				{codeAndPassStep && (
+					<TextLink text="Restart" onClick={refreshInputs} />
+				)}
 				<TextLinkContainer>
 					<TextLink
 						text="Already have an account? Sign in"

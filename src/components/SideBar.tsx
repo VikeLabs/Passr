@@ -9,6 +9,8 @@ import SemesterPicker from './SemesterPicker';
 
 import { Fall2020, Fall2021 } from 'api/mock';
 import { createSemester } from 'api/semesterOperations';
+import { useCreateCourse } from 'hooks/useCourse';
+import { useUpdateSemester } from 'hooks/useSemester';
 
 export interface SideBarInterface {
 	currentSemester?: Semester;
@@ -69,13 +71,15 @@ const PickSemesterButtonContainer = styled.div`
 
 function SideBar({
 	currentSemester,
-	updateSemester,
+	// updateSemester,
 	activeCourse,
 	onChange,
 	...props
 }: SideBarInterface) {
 	const [courseModalOpen, setCourseModalOpen] = useState(false);
 	const [semesterModalOpen, setSemesterModalOpen] = useState(false);
+	const createCourse = useCreateCourse();
+	const updateSemester = useUpdateSemester();
 
 	const handleModalClose = () => {
 		courseModalOpen
@@ -86,11 +90,14 @@ function SideBar({
 	const openCourseModal = () => setCourseModalOpen(true);
 	const openSemesterModal = () => setSemesterModalOpen(true);
 
-	function handleCourseSubmit(data: AddCourseData) {
+	async function handleCourseSubmit(data: AddCourseData) {
 		if (!currentSemester) return;
-		const newCourse: Course = { ...data, courseItems: [] };
-		const newCourses = [...currentSemester.courses, newCourse];
-		updateSemester({ ...currentSemester, courses: newCourses });
+
+		const course = await createCourse.mutateAsync(data);
+		updateSemester.mutate({
+			id: currentSemester.id,
+			courses: [...currentSemester.courses, course],
+		});
 	}
 
 	function handleSemesterSubmit(data: AddSemesterData) {

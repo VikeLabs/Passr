@@ -71,6 +71,7 @@ interface Props {
 	required?: boolean;
 	type?: 'text' | 'password';
 	placeholder?: string;
+	disabled?: boolean;
 }
 
 /**
@@ -94,6 +95,7 @@ function TextInput({
 	required = false,
 	type = 'text',
 	placeholder = '',
+	disabled = false,
 	...props
 }: Props) {
 	return (
@@ -111,6 +113,7 @@ function TextInput({
 				onChange={onChange}
 				onBlur={onBlur}
 				placeholder={placeholder}
+				disabled={disabled}
 			/>
 			{error && errorMessage && (
 				<ErrorMessage>{errorMessage}</ErrorMessage>

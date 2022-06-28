@@ -63,6 +63,7 @@ const GradebookHeaderContainer = styled.div`
 
 const Account = styled.div`
 	grid-area: account;
+	background-color: ${({ theme }) => theme.colors.main[0]};
 `;
 
 const Header = styled(HeaderComponent)`

@@ -12,6 +12,12 @@ const DropdownButton = styled.button`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	background: white;
+	border: none;
+	:hover {
+		border: 1px solid;
+		cursor: pointer;
+	}
 `;
 
 const DropdownMenu = styled.div<{ componentVisible: boolean }>`
@@ -36,6 +42,7 @@ const Container = styled.div`
 	flex-direction: column;
 	height: 100%;
 	width: 100%;
+	padding: 0.5rem;
 `;
 
 export const ListLink = styled(Link)`

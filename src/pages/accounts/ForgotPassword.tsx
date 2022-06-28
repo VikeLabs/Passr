@@ -10,8 +10,9 @@ import { Auth } from 'aws-amplify';
 const EMAIL_ERROR_MESSAGE = 'Invalid Email';
 const VALIDATION_CODE_EMPTY_MESSAGE = 'Code cannot be empty';
 const VALIDATION_CODE_MISMATCH_MESSAGE = 'Invalid verification code provided';
-const PASS_EMPTY_MESSAGE = 'Password does cannot be empty';
+const PASS_EMPTY_MESSAGE = 'Password cannot be empty';
 const PASS_ERROR_MESSAGE = 'Password does not meet requirements';
+const CONFIRM_PASS_EMPTY_MESSAGE = 'Password cannot be empty';
 const CONFIRM_PASS_ERROR_MESSAGE = 'Password does not match';
 
 const ForgotPasswordPageContainer = styled.div`
@@ -76,10 +77,15 @@ function validEmail(email: string) {
 }
 
 function validPass(password: string) {
-	if (!password.match(/.{8,}/)) return false; // 8 Characters
-	if (!password.match(/[A-Z]/)) return false; // Upper-Case
-	if (!password.match(/[a-z]/)) return false; // Lower-Case
-	return true; // Passed all checks
+	if (
+		!password.match(/.{8,}/) && // 8 Characters
+		!password.match(/[A-Z]/) && // Upper-Case
+		!password.match(/[a-z]/) // Lower-Case
+	) {
+		return true; // Passed all checks
+	}
+
+	return false; // Passed all checks
 }
 
 function ForgotPasswordPage() {
@@ -141,17 +147,21 @@ function ForgotPasswordPage() {
 				errorMessage: VALIDATION_CODE_EMPTY_MESSAGE,
 			});
 		}
-		if (!password.value && !confirmPass.value) {
+		if (!password.value) {
 			setPassword({ error: true, errorMessage: PASS_EMPTY_MESSAGE });
 		}
 		if (!validPass(password.value) && password.value !== '') {
 			setPassword({ error: true, errorMessage: PASS_ERROR_MESSAGE });
 			return;
 		}
-		if (
-			!(password.value === confirmPass.value) &&
-			confirmPass.value !== ''
-		) {
+		if (!confirmPass.value) {
+			setConfirmPass({
+				error: true,
+				errorMessage: CONFIRM_PASS_EMPTY_MESSAGE,
+			});
+			return;
+		}
+		if (password.value !== confirmPass.value && confirmPass.value !== '') {
 			setConfirmPass({
 				error: true,
 				errorMessage: CONFIRM_PASS_ERROR_MESSAGE,

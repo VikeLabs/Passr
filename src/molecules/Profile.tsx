@@ -12,21 +12,34 @@ const Button = styled.div`
 `;
 
 const SignInLink = styled(Link)`
-	display: block;
+	display: inline-block;
 	text-decoration: none;
-	padding: 1em;
+	text-align: center;
+	margin: 1em;
+	float: right;
 	color: ${({ theme }) => theme.colors.text[2]};
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary[0]};
 	}
 `;
+const ProfileDropdown = styled(GenericDropdown)`
+	display: inline-block;
+	float: right;
+	// align-items: left;
+	margin-right: 0;
+`;
 
-function ProfileDropdown() {
+function Profile() {
 	const { signedIn, signOut } = useSignedIn();
 	return (
 		<>
-			{signedIn ? (
-				<GenericDropdown
+			{!signedIn ? (
+				<SignInLink to="/sign-in">
+					<i className="fas fa-sign-in-alt" />
+					{'Sign in'}
+				</SignInLink>
+			) : (
+				<ProfileDropdown
 					buttonDisplay={
 						<Button>
 							<i className="fas fa-user-circle" />
@@ -44,15 +57,10 @@ function ProfileDropdown() {
 					<ListButton onClick={signOut}>
 						<i className="fas fa-sign-out-alt" /> {'Sign Out'}
 					</ListButton>
-				</GenericDropdown>
-			) : (
-				<SignInLink to="/sign-in">
-					<i className="fas fa-sign-in-alt" />
-					{'Sign in'}
-				</SignInLink>
+				</ProfileDropdown>
 			)}
 		</>
 	);
 }
 
-export default ProfileDropdown;
+export default Profile;

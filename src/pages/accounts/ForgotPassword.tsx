@@ -82,10 +82,10 @@ function validPass(password: string) {
 		!password.match(/[A-Z]/) && // Upper-Case
 		!password.match(/[a-z]/) // Lower-Case
 	) {
-		return true; // Passed all checks
+		return false; // Passed all checks
 	}
 
-	return false; // Passed all checks
+	return true; // Passed all checks
 }
 
 function ForgotPasswordPage() {

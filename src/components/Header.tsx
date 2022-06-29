@@ -6,10 +6,11 @@ export interface HeaderInterface {
 }
 
 const HeaderStyle = styled.div`
-	display: flex;
+	display: inline-block;
 	flex-direction: column;
 	font-weight: bold;
 	height: 100%;
+	text-align: center;
 	font-size: ${({ theme }) => theme.fontSizes.s};
 	justify-content: center;
 	align-items: center;

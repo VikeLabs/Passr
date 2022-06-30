@@ -2,19 +2,18 @@ import { useQuery, useMutation } from 'react-query';
 import { User } from 'api';
 
 import {
-	fetchGetUser,
-	fetchPostUser,
-	fetchPutUser,
-	fetchDeleteUser,
+	getUser,
+	createUser,
+	updateUser,
+	deleteUser,
 } from 'api/userOperations';
 
-export const useReadUser = () => useQuery('user', () => fetchGetUser());
+export const useReadUser = () => useQuery('user', () => getUser());
 
 export const useCreateUser = () =>
-	useMutation((data: User) => fetchPostUser(data));
+	useMutation((data: User) => createUser(data));
 
 export const useUpdateUser = () =>
-	useMutation((data: Partial<User>) => fetchPutUser(data));
+	useMutation((data: Partial<User>) => updateUser(data));
 
-export const useDeleteUser = () =>
-	useMutation((id: string) => fetchDeleteUser(id));
+export const useDeleteUser = () => useMutation((id: string) => deleteUser(id));

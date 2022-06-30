@@ -3,20 +3,20 @@ import { CourseItem } from 'api';
 import { AddItemData } from 'components/AddItemModal';
 
 import {
-	fetchGetCourseItem,
-	fetchPostCourseItem,
-	fetchPutCourseItem,
-	fetchDeleteCourseItem,
+	getCourseItem,
+	createCourseItem,
+	updateCourseItem,
+	deleteCourseItem,
 } from 'api/courseItemOperations';
 
 export const useReadCourseItem = (id: string) =>
-	useQuery(['courseItem', id], () => fetchGetCourseItem(id));
+	useQuery(['courseItem', id], () => getCourseItem(id));
 
 export const useCreateCourseItem = () =>
-	useMutation((data: AddItemData) => fetchPostCourseItem(data));
+	useMutation((data: AddItemData) => createCourseItem(data));
 
 export const useUpdateCourseItem = () =>
-	useMutation((data: Partial<CourseItem>) => fetchPutCourseItem(data));
+	useMutation((data: Partial<CourseItem>) => updateCourseItem(data));
 
 export const useDeleteCourseItem = () =>
-	useMutation((id: string) => fetchDeleteCourseItem(id));
+	useMutation((id: string) => deleteCourseItem(id));

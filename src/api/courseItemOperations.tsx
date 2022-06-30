@@ -1,39 +1,29 @@
 import { CourseItem } from 'api';
 import { AddItemData } from 'components/AddItemModal';
+import { handleErrors } from './utils';
 
-const handleErrors = (response: Response) => {
-	if (!response.ok) {
-		throw Error('fetch unsuccessful');
-	}
-	return response;
-};
-
-// create
-export const fetchPostCourseItem = async (data: AddItemData) =>
+export const createCourseItem = async (data: AddItemData) =>
 	fetch('/courseItem/', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(data),
 	}).then(handleErrors);
 
-// read
-export const fetchGetCourseItem = async (id: string) =>
+export const getCourseItem = async (id: string) =>
 	fetch(`/courseItem/${id}`, {
 		headers: { userID: 'user1' }, // REMINDER: REMOVE HADRCODED USER ID
 	})
 		.then(handleErrors)
 		.then((res) => res.json());
 
-// update
-export const fetchPutCourseItem = async (change: Partial<CourseItem>) =>
+export const updateCourseItem = async (change: Partial<CourseItem>) =>
 	fetch('/courseItem/', {
 		method: 'PUT',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(change),
 	}).then(handleErrors);
 
-// delete
-export const fetchDeleteCourseItem = async (id: string) =>
+export const deleteCourseItem = async (id: string) =>
 	fetch('/courseItem/', {
 		// append id to end of string
 		method: 'DELETE',

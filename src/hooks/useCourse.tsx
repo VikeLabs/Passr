@@ -3,20 +3,20 @@ import { Course } from 'api';
 import { AddCourseData } from 'components/AddCourseModal';
 
 import {
-	fetchGetCourse,
-	fetchPostCourse,
-	fetchPutCourse,
-	fetchDeleteCourse,
+	getCourse,
+	createCourse,
+	updateCourse,
+	deleteCourse,
 } from 'api/courseOperations';
 
 export const useReadCourse = (id: string) =>
-	useQuery(['course', id], () => fetchGetCourse(id));
+	useQuery(['course', id], () => getCourse(id));
 
 export const useCreateCourse = () =>
-	useMutation((data: AddCourseData) => fetchPostCourse(data));
+	useMutation((data: AddCourseData) => createCourse(data));
 
 export const useUpdateCourse = () =>
-	useMutation((data: Partial<Course>) => fetchPutCourse(data));
+	useMutation((data: Partial<Course>) => updateCourse(data));
 
 export const useDeleteCourse = () =>
-	useMutation((id: string) => fetchDeleteCourse(id));
+	useMutation((id: string) => deleteCourse(id));

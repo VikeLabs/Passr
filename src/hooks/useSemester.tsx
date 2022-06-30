@@ -3,20 +3,20 @@ import { Semester } from 'api';
 import { AddSemesterData } from 'components/AddSemesterModal';
 
 import {
-	fetchGetSemester,
-	fetchPostSemester,
-	fetchPutSemester,
-	fetchDeleteSemester,
+	getSemester,
+	createSemester,
+	updateSemester,
+	deleteSemester,
 } from 'api/semesterOperations';
 
 export const useReadSemester = (id: string) =>
-	useQuery(['semester', id], () => fetchGetSemester(id));
+	useQuery(['semester', id], () => getSemester(id));
 
 export const useCreateSemester = () =>
-	useMutation((data: AddSemesterData) => fetchPostSemester(data));
+	useMutation((data: AddSemesterData) => createSemester(data));
 
 export const useUpdateSemester = () =>
-	useMutation((data: Partial<Semester>) => fetchPutSemester(data));
+	useMutation((data: Partial<Semester>) => updateSemester(data));
 
 export const useDeleteSemester = () =>
-	useMutation((id: string) => fetchDeleteSemester(id));
+	useMutation((id: string) => deleteSemester(id));

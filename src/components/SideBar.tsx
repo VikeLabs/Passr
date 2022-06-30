@@ -8,7 +8,7 @@ import AddSemesterModal, { AddSemesterData } from './AddSemesterModal';
 import SemesterPicker from './SemesterPicker';
 
 import { Fall2020, Fall2021 } from 'api/mock';
-import { fetchPostSemester } from 'api/semesterOperations';
+import { createSemester } from 'api/semesterOperations';
 
 export interface SideBarInterface {
 	currentSemester?: Semester;
@@ -96,7 +96,7 @@ function SideBar({
 	function handleSemesterSubmit(data: AddSemesterData) {
 		if (!currentSemester) return;
 		const newSemester = { ...data, courses: [] };
-		fetchPostSemester(newSemester);
+		createSemester(newSemester);
 	}
 
 	return (

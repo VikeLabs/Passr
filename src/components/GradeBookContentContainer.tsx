@@ -6,6 +6,7 @@ import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
 
 import { Course, CourseItem } from '../api';
+import { useUpdateCourse } from 'hooks/useCourse';
 import {
 	useCreateCourseItem,
 	useUpdateCourseItem,
@@ -78,10 +79,17 @@ function GradeBookContentContainer({ course }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const courseItemCreate = useCreateCourseItem();
 	const courseItemUpdate = useUpdateCourseItem();
+	const courseUpdate = useUpdateCourse();
 
-	function handleItemSubmit(data: AddItemData) {
-		console.log(data);
-		courseItemCreate.mutate(data);
+	async function handleItemSubmit(data: AddItemData) {
+		console.log('data', data);
+		const courseItem = await courseItemCreate.mutateAsync(data);
+		console.log('after mutation', courseItem);
+
+		courseUpdate.mutate({
+			id: course.id,
+			courseItems: [...course.courseItems, courseItem],
+		});
 	}
 
 	const handleModalClose = () => {

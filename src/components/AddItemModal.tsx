@@ -63,7 +63,7 @@ export interface AddItemInterface {
 
 export interface AddItemData {
 	name: string;
-	date: string;
+	date: string | Date;
 	weight: string;
 	grade: string;
 }

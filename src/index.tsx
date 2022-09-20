@@ -6,13 +6,18 @@ import * as serviceWorker from './serviceWorker';
 import Theme from './theme/theme';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 Amplify.configure(awsconfig);
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Theme>
-			<App />
+			<QueryClientProvider client={queryClient}>
+				<App />
+			</QueryClientProvider>
 		</Theme>
 	</React.StrictMode>,
 	document.getElementById('root')

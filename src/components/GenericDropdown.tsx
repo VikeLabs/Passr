@@ -11,6 +11,7 @@ interface Props {
 const DropdownButton = styled.button`
 	display: flex;
 	margin-left: auto;
+	height: 100%;
 	justify-content: space-between;
 	align-items: center;
 	background: white;

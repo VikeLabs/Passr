@@ -21,6 +21,9 @@ const SignInLink = styled(Link)`
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary[0]};
 	}
+	& i {
+		padding-right: 0.5rem;
+	}
 `;
 const ProfileDropdown = styled(GenericDropdown)`
 	display: inline-block;

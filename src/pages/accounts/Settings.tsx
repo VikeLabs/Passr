@@ -89,9 +89,9 @@ function Settings() {
 
 			<SettingsContent>
 				<PersonalInfoCard></PersonalInfoCard>
-				<PrivacyCard></PrivacyCard>
-				<EmailNotificationsCard></EmailNotificationsCard>
-				<HelpCard></HelpCard>
+				{/* <PrivacyCard></PrivacyCard> */}
+				{/* <EmailNotificationsCard></EmailNotificationsCard> */}
+				{/* <HelpCard></HelpCard> */}
 			</SettingsContent>
 
 			<Account>

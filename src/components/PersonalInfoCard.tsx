@@ -11,11 +11,11 @@ const PersonalInfoContainer = styled(Card)`
 const Content = styled.div`
 	margin: 2.5em;
 	display: grid;
-	grid-template-columns: 15em 2fr 2fr 2fr;
+	grid-template-columns: 15em 2fr 2fr;
 	grid-template-rows: auto;
 	grid-template-areas:
-		'title title title title'
-		'avatar Col1 Col2 .';
+		'title title title'
+		'avatar Col1 Col2';
 `;
 
 const PersonalInfoTitle = styled(Title)`
@@ -33,6 +33,20 @@ const TextField = styled(TextInput)`
 `;
 const UpdateButton = styled(ActionButton)`
 	padding: 1em;
+	width: 12em;
+`;
+
+const Subtitle = styled.h3``;
+
+const ChangePasswordButton = styled(ActionButton)`
+	padding: 1em;
+	width: 12em;
+	margin-top: 0.5em;
+`;
+
+const DeleteAccountButton = styled(ActionButton)`
+	padding: 1em;
+	width: 12em;
 `;
 
 function validEmail(email: string) {
@@ -42,9 +56,9 @@ function validEmail(email: string) {
 function validName(name: string) {
 	return !!name.match(/./);
 }
-
-function validUsername(username: string) {
-	return !!username.match(/./);
+function validPassword(password: string) {
+	password;
+	return true;
 }
 
 const Col = styled.div<{ gridArea: string }>`
@@ -55,11 +69,13 @@ const Col = styled.div<{ gridArea: string }>`
 function PersonalInfoCard() {
 	// In the future not all of these (name, username, email will be mutable)
 	const [name, setName] = useState('');
-	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [emailErr, setEmailErr] = useState(false);
 	const [nameErr, setNameErr] = useState(false);
-	const [usernameErr, setUsernameErr] = useState(false);
+	const [currPassword, setCurrPassword] = useState('');
+	const [newPassword, setNewPassword] = useState('');
+	const [rePassword, setRePassword] = useState('');
+	const [passwordErr, setPasswordErr] = useState(false);
 
 	const handleSubmit = async () => {
 		if (!validEmail(email)) {
@@ -70,11 +86,11 @@ function PersonalInfoCard() {
 			setNameErr(true);
 			return;
 		}
-		if (!validUsername(username)) {
-			setUsernameErr(true);
+		if (!validPassword(newPassword)) {
+			setPasswordErr(true);
 			return;
 		}
-		console.log(`name: ${name} email: ${email} username: ${username}`);
+		console.log(`name: ${name} email: ${email}`);
 	};
 
 	return (
@@ -95,10 +111,10 @@ function PersonalInfoCard() {
 						onBlur={(e) => {
 							if (!validName(e.target.value)) setNameErr(true);
 						}}
-						label="Name"
+						label="Nickname"
 						required
 						error={nameErr}
-						placeholder="Name"
+						placeholder="Nickname"
 					/>
 					<TextField
 						value={email}
@@ -116,7 +132,7 @@ function PersonalInfoCard() {
 					/>
 					<UpdateButton
 						variant="primary"
-						disabled={emailErr || nameErr || usernameErr}
+						disabled={emailErr || nameErr}
 						onClick={handleSubmit}
 					>
 						Update
@@ -124,21 +140,74 @@ function PersonalInfoCard() {
 				</Col>
 				<Col gridArea="Col2">
 					<TextField
-						value={username}
+						type="password"
+						value={currPassword}
 						onChange={(e) => {
-							if (validUsername(e.target.value))
-								setUsernameErr(false);
-							setUsername(e.target.value);
+							if (validPassword(e.target.value))
+								setPasswordErr(false);
+							setCurrPassword(e.target.value);
 						}}
 						onBlur={(e) => {
-							if (!validUsername(e.target.value))
-								setUsernameErr(true);
+							if (!validPassword(e.target.value))
+								setPasswordErr(true);
 						}}
-						label="Username"
+						label="Current Password"
 						required
-						error={usernameErr}
-						placeholder="Username"
+						error={passwordErr}
+						placeholder="Current Password"
 					/>
+					<TextField
+						type="password"
+						value={newPassword}
+						onChange={(e) => {
+							if (validPassword(e.target.value))
+								setPasswordErr(false);
+							setNewPassword(e.target.value);
+						}}
+						onBlur={(e) => {
+							if (!validPassword(e.target.value))
+								setPasswordErr(true);
+						}}
+						label="New Password"
+						required
+						error={passwordErr}
+						placeholder="New Password"
+					/>
+					<TextField
+						type="password"
+						value={rePassword}
+						onChange={(e) => {
+							if (validPassword(e.target.value))
+								setPasswordErr(false);
+							setRePassword(e.target.value);
+						}}
+						onBlur={(e) => {
+							if (!validPassword(e.target.value))
+								setPasswordErr(true);
+						}}
+						label="Re-enter New Password"
+						required
+						error={passwordErr}
+						placeholder="New Password"
+					/>
+					<ChangePasswordButton
+						variant="primary"
+						disabled={passwordErr}
+						onClick={handleSubmit}
+					>
+						Change Password
+					</ChangePasswordButton>
+
+					<Subtitle style={{ marginTop: '3em' }}>
+						{' '}
+						Delete Account
+					</Subtitle>
+					<DeleteAccountButton
+						variant="negative"
+						onClick={handleSubmit}
+					>
+						Delete Account
+					</DeleteAccountButton>
 				</Col>
 			</Content>
 		</PersonalInfoContainer>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SideBarContent from './components/SideBar';
 import { Auth } from 'aws-amplify';
 import HeaderComponent from './components/Header';
-import ProfileDropdown from 'molecules/ProfileDropdown';
+import Profile from 'molecules/Profile';
 import { getCurrentSemester, Semester } from 'api';
 import GradeBookContentContainer from './components/GradeBookContentContainer';
 import GradeBookHeader from 'components/GradeBookHeader';
@@ -63,6 +63,8 @@ const GradebookHeaderContainer = styled.div`
 
 const Account = styled.div`
 	grid-area: account;
+	background-color: ${({ theme }) => theme.colors.main[0]};
+	padding-right: 1rem;
 `;
 
 const Header = styled(HeaderComponent)`
@@ -131,7 +133,7 @@ function GradeBook() {
 			</MainContent>
 
 			<Account>
-				<ProfileDropdown />
+				<Profile />
 			</Account>
 		</GradeBookContainer>
 	);

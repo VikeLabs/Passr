@@ -10,8 +10,16 @@ interface Props {
 
 const DropdownButton = styled.button`
 	display: flex;
+	margin-left: auto;
+	height: 100%;
 	justify-content: space-between;
 	align-items: center;
+	background: white;
+	border: none;
+	font-size: ${({ theme }) => theme.fontSizes.l};
+	:hover {
+		cursor: pointer;
+	}
 `;
 
 const DropdownMenu = styled.div<{ componentVisible: boolean }>`
@@ -51,11 +59,11 @@ export const ListLink = styled(Link)`
 export const ListButton = styled.div`
 	display: block;
 	text-decoration: none;
-	text-align: center;
 	padding: 1em;
 	color: ${({ theme }) => theme.colors.text[2]};
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary[0]};
+		cursor: pointer;
 	}
 `;
 

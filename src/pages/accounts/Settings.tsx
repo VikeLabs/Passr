@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import ProfileDropdown from 'molecules/ProfileDropdown';
 import HeaderComponent from 'components/Header';
 import PersonalInfoCard from 'components/PersonalInfoCard';
-import PrivacyCard from 'components/PrivacyCard';
-import EmailNotificationsCard from 'components/EmailNotificationsCard';
-import HelpCard from 'components/HelpCard';
 
 const SettingsPageContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.main[1]};

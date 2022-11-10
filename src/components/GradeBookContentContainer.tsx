@@ -81,14 +81,35 @@ function GradeBookContentContainer({ course }: Props) {
 	const courseItemUpdate = useUpdateCourseItem();
 	const courseUpdate = useUpdateCourse();
 
-	async function handleItemSubmit(data: AddItemData) {
-		console.log('data', data);
-		const courseItem = await courseItemCreate.mutateAsync(data);
-		console.log('after mutation', courseItem);
+	// TODO: test these functions once in-app API testing is ready
+	function handleItemSubmit(item: AddItemData) {
+		courseItemCreate.mutate(item, {
+			onSuccess: (data) => {
+				courseUpdate.mutate({
+					id: course.id,
+					courseItems: [...course.courseItems, data],
+				});
+			},
+		});
+	}
 
-		courseUpdate.mutate({
-			id: course.id,
-			courseItems: [...course.courseItems, courseItem],
+	function updateCourseItem(itemData: Partial<CourseItem>, index: number) {
+		const item = {
+			...itemData,
+			id: course.courseItems[index].id,
+		};
+		courseItemUpdate.mutate(item, {
+			onSuccess: (data) => {
+				courseUpdate.mutate({
+					id: course.id,
+					courseItems: [
+						...course.courseItems.filter(
+							(oldItem) => oldItem.id != item.id
+						),
+						data,
+					],
+				});
+			},
 		});
 	}
 
@@ -97,10 +118,6 @@ function GradeBookContentContainer({ course }: Props) {
 	};
 	function openModal() {
 		setModalOpen(true);
-	}
-
-	function updateCourseItem(item: Partial<CourseItem>, index: number) {
-		courseItemUpdate.mutate({ ...item, id: course.courseItems[index].id });
 	}
 
 	return (

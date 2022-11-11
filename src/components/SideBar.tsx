@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Logo from '../molecules/Logo';
 import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
-import { Semester, Course } from '../api';
+import { Semester } from '../api';
 import AddCourseModal, { AddCourseData } from './AddCourseModal';
 import AddSemesterModal, { AddSemesterData } from './AddSemesterModal';
 import SemesterPicker from './SemesterPicker';
@@ -71,15 +71,14 @@ const PickSemesterButtonContainer = styled.div`
 
 function SideBar({
 	currentSemester,
-	// updateSemester,
 	activeCourse,
 	onChange,
 	...props
 }: SideBarInterface) {
 	const [courseModalOpen, setCourseModalOpen] = useState(false);
 	const [semesterModalOpen, setSemesterModalOpen] = useState(false);
-	const createCourse = useCreateCourse();
-	const updateSemester = useUpdateSemester();
+	const courseCreate = useCreateCourse();
+	const semesterUpdate = useUpdateSemester();
 
 	const handleModalClose = () => {
 		courseModalOpen
@@ -90,13 +89,17 @@ function SideBar({
 	const openCourseModal = () => setCourseModalOpen(true);
 	const openSemesterModal = () => setSemesterModalOpen(true);
 
-	async function handleCourseSubmit(data: AddCourseData) {
+	function handleCourseSubmit(course: AddCourseData) {
 		if (!currentSemester) return;
 
-		const course = await createCourse.mutateAsync(data);
-		updateSemester.mutate({
-			id: currentSemester.id,
-			courses: [...currentSemester.courses, course],
+		courseCreate.mutate(course, {
+			onSuccess: (data) => {
+				// TODO: update semester in backend instead
+				semesterUpdate.mutate({
+					id: currentSemester.id,
+					courses: [...currentSemester.courses, data],
+				});
+			},
 		});
 	}
 

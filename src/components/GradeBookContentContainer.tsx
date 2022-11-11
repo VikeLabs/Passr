@@ -151,6 +151,7 @@ function GradeBookContentContainer({ course }: Props) {
 						<GradeItemAccordion
 							key={index}
 							item={item}
+							course={course} // TODO: pass course through context
 							updateItem={(newItem) =>
 								updateCourseItem(newItem, index)
 							}

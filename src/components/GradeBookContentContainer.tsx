@@ -72,11 +72,7 @@ interface Props {
 function GradeBookContentContainer({ course, updateCourse }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
 	function handleItemSubmit(data: AddItemData) {
-		const { name, date, weight, grade } = data;
-		console.log(name);
-		console.log(date);
-		console.log(weight);
-		console.log(grade);
+		return data;
 	}
 	const handleModalClose = () => {
 		setModalOpen(false);
@@ -117,7 +113,6 @@ function GradeBookContentContainer({ course, updateCourse }: Props) {
 
 			<CourseItemRow>
 				{course.courseItems.map((item, index) => {
-					console.log({ item, index });
 					return (
 						<GradeItemAccordion
 							key={index}

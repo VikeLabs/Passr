@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ProfileDropdown from 'molecules/ProfileDropdown';
+import Profile from 'molecules/Profile';
 import HeaderComponent from 'components/Header';
 import PersonalInfoCard from 'components/PersonalInfoCard';
 
@@ -92,7 +92,7 @@ function Settings() {
 			</SettingsContent>
 
 			<Account>
-				<ProfileDropdown />
+				<Profile />
 			</Account>
 		</SettingsPageContainer>
 	);

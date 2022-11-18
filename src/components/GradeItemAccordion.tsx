@@ -5,13 +5,11 @@ import TextInput from './TextInput';
 import ActionButton from './ActionButton';
 
 import { gradeToString, parseGrade } from '../Utils';
-import { CourseItem, Course } from 'api';
+import { CourseItem } from 'api';
 import { useDeleteCourseItem } from 'hooks/useCourseItem';
-import { useUpdateCourse } from 'hooks/useCourse';
 
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
-	course: Course;
 	updateItem: (item: CourseItem) => void;
 }
 
@@ -49,11 +47,7 @@ const DeleteButton = styled(ActionButton)`
 	padding-right: 0.5em;
 `;
 
-function GradeItemAccordion({
-	item,
-	course,
-	updateItem,
-}: GradeItemAccordionInterface) {
+function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	const { name, weight, grade, dueDate } = item;
 	const [expanded, setExpanded] = useState(false);
 	const [tempName, setTempName] = useState(name);
@@ -61,22 +55,9 @@ function GradeItemAccordion({
 	const [tempGrade, setTempGrade] = useState(gradeToString(grade));
 	const [tempDate, setTempDate] = useState('');
 	const courseItemDelete = useDeleteCourseItem();
-	const courseUpdate = useUpdateCourse();
 
 	function deleteCourseItem(id: string) {
-		courseItemDelete.mutate(id, {
-			onSuccess: () => {
-				// TODO: update course in backend instead
-				courseUpdate.mutate({
-					id: course.id,
-					courseItems: [
-						...course.courseItems.filter(
-							(oldItem) => oldItem.id != id
-						),
-					],
-				});
-			},
-		});
+		courseItemDelete.mutate(id);
 	}
 
 	function handleChange(change: Partial<CourseItem>) {

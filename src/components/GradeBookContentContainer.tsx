@@ -6,7 +6,6 @@ import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
 
 import { Course, CourseItem } from '../api';
-import { useUpdateCourse } from 'hooks/useCourse';
 import {
 	useCreateCourseItem,
 	useUpdateCourseItem,
@@ -79,18 +78,10 @@ function GradeBookContentContainer({ course }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const courseItemCreate = useCreateCourseItem();
 	const courseItemUpdate = useUpdateCourseItem();
-	const courseUpdate = useUpdateCourse();
 
 	// TODO: test these functions once in-app API testing is ready
 	function handleItemSubmit(item: AddItemData) {
-		courseItemCreate.mutate(item, {
-			onSuccess: (data) => {
-				courseUpdate.mutate({
-					id: course.id,
-					courseItems: [...course.courseItems, data],
-				});
-			},
-		});
+		courseItemCreate.mutate(item);
 	}
 
 	function updateCourseItem(itemData: Partial<CourseItem>, index: number) {
@@ -98,19 +89,7 @@ function GradeBookContentContainer({ course }: Props) {
 			...itemData,
 			id: course.courseItems[index].id,
 		};
-		courseItemUpdate.mutate(item, {
-			onSuccess: (data) => {
-				courseUpdate.mutate({
-					id: course.id,
-					courseItems: [
-						...course.courseItems.filter(
-							(oldItem) => oldItem.id != item.id
-						),
-						data,
-					],
-				});
-			},
-		});
+		courseItemUpdate.mutate(item);
 	}
 
 	const handleModalClose = () => {
@@ -151,7 +130,6 @@ function GradeBookContentContainer({ course }: Props) {
 						<GradeItemAccordion
 							key={index}
 							item={item}
-							course={course} // TODO: pass course through context
 							updateItem={(newItem) =>
 								updateCourseItem(newItem, index)
 							}

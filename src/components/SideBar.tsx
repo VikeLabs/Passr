@@ -10,7 +10,6 @@ import SemesterPicker from './SemesterPicker';
 import { Fall2020, Fall2021 } from 'api/mock';
 import { createSemester } from 'api/semesterOperations';
 import { useCreateCourse } from 'hooks/useCourse';
-import { useUpdateSemester } from 'hooks/useSemester';
 
 export interface SideBarInterface {
 	currentSemester?: Semester;
@@ -78,7 +77,6 @@ function SideBar({
 	const [courseModalOpen, setCourseModalOpen] = useState(false);
 	const [semesterModalOpen, setSemesterModalOpen] = useState(false);
 	const courseCreate = useCreateCourse();
-	const semesterUpdate = useUpdateSemester();
 
 	const handleModalClose = () => {
 		courseModalOpen
@@ -91,16 +89,7 @@ function SideBar({
 
 	function handleCourseSubmit(course: AddCourseData) {
 		if (!currentSemester) return;
-
-		courseCreate.mutate(course, {
-			onSuccess: (data) => {
-				// TODO: update semester in backend instead
-				semesterUpdate.mutate({
-					id: currentSemester.id,
-					courses: [...currentSemester.courses, data],
-				});
-			},
-		});
+		courseCreate.mutate(course);
 	}
 
 	function handleSemesterSubmit(data: AddSemesterData) {

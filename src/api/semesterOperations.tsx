@@ -7,7 +7,9 @@ export const createSemester = async (data: AddSemesterData) =>
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(data),
-	}).then(handleErrors);
+	})
+		.then(handleErrors)
+		.then((res) => res.json());
 
 export const getSemester = async (id: string) =>
 	fetch(`/semester/${id}`, {
@@ -21,7 +23,9 @@ export const updateSemester = async (change: Partial<Semester>) =>
 		method: 'PUT',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(change),
-	}).then(handleErrors);
+	})
+		.then(handleErrors)
+		.then((res) => res.json());
 
 export const deleteSemester = async (id: string) =>
 	fetch('/semester/', {

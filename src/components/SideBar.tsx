@@ -8,8 +8,8 @@ import AddSemesterModal, { AddSemesterData } from './AddSemesterModal';
 import SemesterPicker from './SemesterPicker';
 
 import { Fall2020, Fall2021 } from 'api/mock';
-import { createSemester } from 'api/semesterOperations';
 import { useCreateCourse } from 'hooks/useCourse';
+import { useCreateSemester } from 'hooks/useSemester';
 
 export interface SideBarInterface {
 	currentSemester?: Semester;
@@ -77,6 +77,9 @@ function SideBar({
 	const [courseModalOpen, setCourseModalOpen] = useState(false);
 	const [semesterModalOpen, setSemesterModalOpen] = useState(false);
 	const courseCreate = useCreateCourse();
+	const semesterCreate = useCreateSemester();
+
+	const semesters = [Fall2020, Fall2021]; // replace with semesters from user data
 
 	const handleModalClose = () => {
 		courseModalOpen
@@ -94,8 +97,7 @@ function SideBar({
 
 	function handleSemesterSubmit(data: AddSemesterData) {
 		if (!currentSemester) return;
-		const newSemester = { ...data, courses: [] };
-		createSemester(newSemester);
+		semesterCreate.mutate(data);
 	}
 
 	return (
@@ -152,7 +154,7 @@ function SideBar({
 			)}
 			<PickSemesterButtonContainer>
 				<SemesterPicker
-					semesters={[Fall2020, Fall2021]} //Replace mock data
+					semesters={semesters}
 					onSelect={console.log}
 					current={0}
 				/>

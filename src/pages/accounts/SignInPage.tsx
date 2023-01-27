@@ -98,7 +98,7 @@ function SignInPage() {
 			}
 		} catch (err) {
 			console.error(err);
-			if (err.code === 'UserNotConfirmedException') {
+			if (err && err.code === 'UserNotConfirmedException') {
 				history.push(`/confirm-sign-up?email=${encodeURI(email)}`);
 			} else {
 				setUserPassError(true);

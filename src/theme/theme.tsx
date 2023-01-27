@@ -132,7 +132,7 @@ const theme: DefaultTheme = {
 	...buttonVariants,
 };
 
-const Theme: React.FC = ({ children }) => {
+const Theme = ({ children }: React.PropsWithChildren) => {
 	return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 

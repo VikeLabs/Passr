@@ -4,9 +4,8 @@ export default function useComponentVisible(
 	ref: React.RefObject<HTMLElement>,
 	initialIsVisible = false
 ) {
-	const [componentVisible, setComponentVisible] = useState<boolean>(
-		initialIsVisible
-	);
+	const [componentVisible, setComponentVisible] =
+		useState<boolean>(initialIsVisible);
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {

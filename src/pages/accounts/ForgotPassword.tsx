@@ -290,7 +290,8 @@ function ForgotPasswordPage() {
 							onBlur={() => {
 								if (password.value !== confirmPass.value) {
 									if (confirmPass.value !== '') {
-										confirmPass.errorMessage = CONFIRM_PASS_ERROR_MESSAGE;
+										confirmPass.errorMessage =
+											CONFIRM_PASS_ERROR_MESSAGE;
 										setConfirmPass({ error: true });
 									} else {
 										confirmPass.errorMessage = '';

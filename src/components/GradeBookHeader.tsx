@@ -7,10 +7,11 @@ import {
 	currentGradeCalculator,
 	averageGradeNeededCalculator,
 } from './GradeCalculator';
+import { useUpdateCourse } from 'hooks/useCourse';
 export interface GradeBookHeaderInterface {
 	currentCourse: Course;
-	updateCurrentCourse: (course: Course) => void;
 }
+
 const Body = styled.div`
 	display: grid;
 	grid-template-columns: 5fr 5fr 5fr;
@@ -41,18 +42,18 @@ const DesiredGrade = styled(TextInput)`
 	padding-bottom: 1em;
 	min-width: 15em;
 `;
-function GradeBookHeader({
-	currentCourse,
-	updateCurrentCourse,
-}: GradeBookHeaderInterface) {
+function GradeBookHeader({ currentCourse }: GradeBookHeaderInterface) {
 	const { name, desiredGrade } = currentCourse;
+	const courseUpdate = useUpdateCourse();
+
 	const [tempDesiredGrade, setTempDesiredGrade] = useState(
 		desiredGrade?.toString() || ''
 	);
+
 	function handleChange(change: Partial<Course>) {
-		const newCourse = { ...currentCourse, ...change };
-		updateCurrentCourse(newCourse);
+		courseUpdate.mutate({ ...change, id: currentCourse.id });
 	}
+
 	return (
 		<Header>
 			<CourseTitle>{name}</CourseTitle>

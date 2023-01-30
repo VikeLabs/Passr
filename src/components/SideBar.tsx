@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import Logo from '../molecules/Logo';
 import styled, { css } from 'styled-components';
 import ActionButton from './ActionButton';
-import { Semester, Course } from '../api';
+import { Semester } from '../api';
 import AddCourseModal, { AddCourseData } from './AddCourseModal';
 import AddSemesterModal, { AddSemesterData } from './AddSemesterModal';
 import SemesterPicker from './SemesterPicker';
 
 import { Fall2020, Fall2021 } from 'api/mock';
+import { useCreateCourse } from 'hooks/useCourse';
 import { useCreateSemester } from 'hooks/useSemester';
 
 export interface SideBarInterface {
@@ -69,13 +70,13 @@ const PickSemesterButtonContainer = styled.div`
 
 function SideBar({
 	currentSemester,
-	updateSemester,
 	activeCourse,
 	onChange,
 	...props
 }: SideBarInterface) {
 	const [courseModalOpen, setCourseModalOpen] = useState(false);
 	const [semesterModalOpen, setSemesterModalOpen] = useState(false);
+	const courseCreate = useCreateCourse();
 	const semesterCreate = useCreateSemester();
 
 	const semesters = [Fall2020, Fall2021]; // replace with semesters from user data
@@ -89,11 +90,9 @@ function SideBar({
 	const openCourseModal = () => setCourseModalOpen(true);
 	const openSemesterModal = () => setSemesterModalOpen(true);
 
-	function handleCourseSubmit(data: AddCourseData) {
+	function handleCourseSubmit(course: AddCourseData) {
 		if (!currentSemester) return;
-		const newCourse: Course = { ...data, courseItems: [] };
-		const newCourses = [...currentSemester.courses, newCourse];
-		updateSemester({ ...currentSemester, courses: newCourses });
+		courseCreate.mutate(course);
 	}
 
 	function handleSemesterSubmit(data: AddSemesterData) {

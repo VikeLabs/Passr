@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import TextInput from './TextInput';
+import ActionButton from './ActionButton';
+
 import { gradeToString, parseGrade } from '../Utils';
 import { CourseItem } from 'api';
-import ActionButton from './ActionButton';
+import { useDeleteCourseItem } from 'hooks/useCourseItem';
 
 export interface GradeItemAccordionInterface {
 	item: CourseItem;
@@ -44,10 +47,6 @@ const DeleteButton = styled(ActionButton)`
 	padding-right: 0.5em;
 `;
 
-function submit() {
-	console.log('changed');
-}
-
 function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	const { name, weight, grade, dueDate } = item;
 	const [expanded, setExpanded] = useState(false);
@@ -55,6 +54,11 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 	const [tempWeight, setTempWeight] = useState(weight?.toString() || '');
 	const [tempGrade, setTempGrade] = useState(gradeToString(grade));
 	const [tempDate, setTempDate] = useState('');
+	const courseItemDelete = useDeleteCourseItem();
+
+	function deleteCourseItem(id: string) {
+		courseItemDelete.mutate(id);
+	}
 
 	function handleChange(change: Partial<CourseItem>) {
 		const newItem = { ...item, ...change };
@@ -91,7 +95,10 @@ function GradeItemAccordion({ item, updateItem }: GradeItemAccordionInterface) {
 							label="Name"
 							placeholder="Name"
 						/>
-						<DeleteButton onClick={submit} variant="secondary">
+						<DeleteButton
+							onClick={() => deleteCourseItem(item.id)}
+							variant="secondary"
+						>
 							<i className="fas fa-trash"></i>
 							&nbsp; &nbsp;Delete Item
 						</DeleteButton>

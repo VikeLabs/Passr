@@ -7,7 +7,9 @@ export const createCourseItem = async (data: AddItemData) =>
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(data),
-	}).then(handleErrors);
+	})
+		.then(handleErrors)
+		.then((res) => res.json());
 
 export const getCourseItem = async (id: string) =>
 	fetch(`/courseItem/${id}`, {
@@ -21,7 +23,9 @@ export const updateCourseItem = async (change: Partial<CourseItem>) =>
 		method: 'PUT',
 		headers: { 'Content-Type': 'application/json', userID: 'user1' },
 		body: JSON.stringify(change),
-	}).then(handleErrors);
+	})
+		.then(handleErrors)
+		.then((res) => res.json());
 
 export const deleteCourseItem = async (id: string) =>
 	fetch('/courseItem/', {

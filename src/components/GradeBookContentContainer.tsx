@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import ActionButton from './ActionButton';
-import { Course, CourseItem } from '../api';
 import GradeItemAccordion from './GradeItemAccordion';
 import AddItemModal, { AddItemData } from './AddItemModal';
+
+import { Course, CourseItem } from '../api';
+import {
+	useCreateCourseItem,
+	useUpdateCourseItem,
+} from '../hooks/useCourseItem';
 
 const ContentContainer = styled.div`
 	color: ${(props) => props.theme.colors.text[1]};
@@ -66,24 +72,31 @@ const CourseItemTitle = styled.div`
 
 interface Props {
 	course: Course;
-	updateCourse: (course: Course) => void;
 }
 
-function GradeBookContentContainer({ course, updateCourse }: Props) {
+function GradeBookContentContainer({ course }: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
-	function handleItemSubmit(data: AddItemData) {
-		return data;
+	const courseItemCreate = useCreateCourseItem();
+	const courseItemUpdate = useUpdateCourseItem();
+
+	// TODO: test these functions once in-app API testing is ready
+	function handleItemSubmit(item: AddItemData) {
+		courseItemCreate.mutate(item);
 	}
+
+	function updateCourseItem(itemData: Partial<CourseItem>, index: number) {
+		const item = {
+			...itemData,
+			id: course.courseItems[index].id,
+		};
+		courseItemUpdate.mutate(item);
+	}
+
 	const handleModalClose = () => {
 		setModalOpen(false);
 	};
 	function openModal() {
 		setModalOpen(true);
-	}
-	function updateCourseItem(item: CourseItem, index: number) {
-		const newCourseItems = [...course.courseItems];
-		newCourseItems[index] = item;
-		updateCourse({ ...course, courseItems: newCourseItems });
 	}
 
 	return (

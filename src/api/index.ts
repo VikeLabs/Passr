@@ -8,7 +8,7 @@ export interface Fraction {
 }
 
 export interface CourseItem {
-	id?: string;
+	id: string;
 	owner?: string;
 	createdAt?: Date;
 	updatedAt?: Date;

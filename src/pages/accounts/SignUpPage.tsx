@@ -212,7 +212,8 @@ function SignUpPage() {
 					onBlur={() => {
 						if (email.value !== confirmEmail.value) {
 							if (confirmEmail.value !== '') {
-								confirmEmail.errorMessage = CONFIRM_EMAIL_ERROR_MESSAGE;
+								confirmEmail.errorMessage =
+									CONFIRM_EMAIL_ERROR_MESSAGE;
 								setConfirmEmail({ error: true });
 							} else {
 								confirmEmail.errorMessage = '';
@@ -270,7 +271,8 @@ function SignUpPage() {
 					onBlur={() => {
 						if (password.value !== confirmPass.value) {
 							if (confirmPass.value !== '') {
-								confirmPass.errorMessage = CONFIRM_PASS_ERROR_MESSAGE;
+								confirmPass.errorMessage =
+									CONFIRM_PASS_ERROR_MESSAGE;
 								setConfirmPass({ error: true });
 							} else {
 								confirmPass.errorMessage = '';

@@ -6,6 +6,8 @@ import TextButton from 'components/TextButton';
 import TextInput from 'components/TextInput';
 import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
+import { User } from 'api';
+import { useCreateUser } from 'hooks/useUser';
 
 const EMAIL_ERROR_MESSAGE = 'Invalid Email';
 const CONFIRM_EMAIL_ERROR_MESSAGE = 'Email does not match';
@@ -144,8 +146,11 @@ function SignUpPage() {
 			const { user, userConfirmed } = await Auth.signUp({
 				username: email.value,
 				password: password.value,
+				attributes: {
+					updated_at: Date.now().toString(),
+				},
 			});
-			console.log({ user });
+			console.log(user)
 			if (userConfirmed) {
 				history.push('/');
 			} else {

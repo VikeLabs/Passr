@@ -147,7 +147,7 @@ function SignUpPage() {
 				username: email.value,
 				password: password.value,
 				attributes: {
-					updatedAt: Date.now(),
+					updated_at: Date.now().toString(),
 				},
 			});
 			console.log(user)

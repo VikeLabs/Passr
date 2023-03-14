@@ -146,10 +146,12 @@ function SignUpPage() {
 			const { user, userConfirmed } = await Auth.signUp({
 				username: email.value,
 				password: password.value,
+				attributes: {
+					updatedAt: Date.now(),
+				},
 			});
 			console.log(user)
 			if (userConfirmed) {
-				useCreateUser();
 				history.push('/');
 			} else {
 				history.push(
